@@ -1,47 +1,59 @@
-import { Category, Income, Expenses } from "@/type/categoty";
+import { Category } from "@/type/categoty";
 import { apiNext } from "./api";
 import { User } from "@/type/user";
+import { Transaction } from "@/type/transaction";
+import { UserInfo } from "@/type/userInfo";
 
-type UserCategory = {
+interface UserCategory {
   type: string;
   categoryName: string;
-};
+}
 
-type UpdateCategory = {
+interface UpdateCategory {
   _id: string;
   categoryName: string;
-};
+}
 
-type RegisterRequest = {
+interface RegisterRequest {
   name: string;
   email: string;
   password: string;
-};
+}
 
-type LoginRequest = {
+interface LoginRequest {
   email: string;
   password: string;
-};
+}
 
-type UserInfo = {
-  _id: string;
-  email: string;
-  name: string;
-  avatarUrl: string | null;
-  currency: string;
-  categories: {
-    incomes: Income[];
-    expenses: Expenses[];
-  };
-  transactionsTotal: {
-    incomes: number;
-    expenses: number;
-  };
-};
-
-type SessionResponse = {
+interface SessionResponse {
   success: boolean;
-};
+}
+
+interface ChangeUser {
+  name: string;
+  currency: string;
+}
+
+interface UpdatePhoto {
+  avatarUrl: string;
+}
+
+interface CreateTransaction {
+  type: string;
+  date: string;
+  time: string;
+  category: string;
+  sum: number;
+  comment: string;
+}
+
+interface UpdateTransaction {
+  date: string;
+  time: string;
+  category: string;
+  sum: number;
+  comment: string;
+}
 
 //Category
 
