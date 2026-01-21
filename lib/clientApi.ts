@@ -1,47 +1,59 @@
-import { Category, Income, Expenses } from "@/type/categoty";
+import { Category } from "@/type/categoty";
 import { apiNext } from "./api";
 import { User } from "@/type/user";
+import { Transaction } from "@/type/transaction";
+import { UserInfo } from "@/type/userInfo";
 
-type UserCategory = {
+interface UserCategory {
   type: string;
   categoryName: string;
-};
+}
 
-type UpdateCategory = {
+interface UpdateCategory {
   _id: string;
   categoryName: string;
-};
+}
 
-type RegisterRequest = {
+interface RegisterRequest {
   name: string;
   email: string;
   password: string;
-};
+}
 
-type LoginRequest = {
+interface LoginRequest {
   email: string;
   password: string;
-};
+}
 
-type UserInfo = {
-  _id: string;
-  email: string;
-  name: string;
-  avatarUrl: string | null;
-  currency: string;
-  categories: {
-    incomes: Income[];
-    expenses: Expenses[];
-  };
-  transactionsTotal: {
-    incomes: number;
-    expenses: number;
-  };
-};
-
-type SessionResponse = {
+interface SessionResponse {
   success: boolean;
-};
+}
+
+interface ChangeUser {
+  name: string;
+  currency: string;
+}
+
+interface UpdatePhoto {
+  avatarUrl: string;
+}
+
+interface CreateTransaction {
+  type: string;
+  date: string;
+  time: string;
+  category: string;
+  sum: number;
+  comment: string;
+}
+
+interface UpdateTransaction {
+  date: string;
+  time: string;
+  category: string;
+  sum: number;
+  comment: string;
+}
 
 //Category
 
@@ -93,8 +105,48 @@ export async function checkSession(): Promise<boolean> {
 
 //UserInfo
 
-// export async function getUser(): Promise<UserInfo> {
-//     const res = await apiNext.get<UserInfo>("/users/current");
+export async function getUser(): Promise<UserInfo> {
+  const res = await apiNext.get<UserInfo>("/users/current");
 
-//     return res
-// }
+  return res.data;
+}
+
+export async function changeUser(body: ChangeUser): Promise<void> {
+  await apiNext.patch<void>("/users/info", body);
+}
+
+export async function updatePhoto(photo: UpdatePhoto): Promise<void> {
+  await apiNext.patch<void>("/users/avatar", photo);
+}
+
+export async function deletePhoto(): Promise<void> {
+  await apiNext.delete<void>("/users/avatar");
+}
+
+//Transaction
+
+export async function createTransaction(
+  body: CreateTransaction,
+): Promise<void> {
+  await apiNext.post("/transactions", body);
+}
+
+export async function getTransactionByType(
+  type: string,
+): Promise<Transaction[]> {
+  const { data } = await apiNext.get<Transaction[]>(`/transactions/${type}`);
+
+  return data;
+}
+
+export async function deleteTransaction(id: string): Promise<void> {
+  await apiNext.delete<void>(`/transactions/${id}`);
+}
+
+export async function updateTransaction(
+  type: string,
+  id: string,
+  body: UpdateTransaction,
+): Promise<void> {
+  await apiNext.patch(`/transactions/${type}/${id}`, body);
+}
