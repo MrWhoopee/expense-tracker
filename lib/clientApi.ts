@@ -93,8 +93,8 @@ export async function checkSession(): Promise<boolean> {
 
 //UserInfo
 
-// export async function getUser(): Promise<UserInfo> {
-//     const res = await apiNext.get<UserInfo>("/users/current");
+export async function getUser(): Promise<UserInfo> {
+  const res = await apiNext.get<UserInfo>("/users/current");
 
-//     return res
-// }
+  return res.data;
+}
