@@ -1,11 +1,11 @@
 export const dynamic = "force-dynamic";
 
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { api } from "../../api";
 import { cookies } from "next/headers";
 import { logErrorResponse } from "../../_utils/utils";
 import { isAxiosError } from "axios";
-export async function PATCH(request: Request) {
+export async function PATCH(request: NextRequest) {
   try {
     const cookieStore = await cookies();
     const body = await request.json();

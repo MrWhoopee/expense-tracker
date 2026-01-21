@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import AuthProvider from "@/components/AuthProvider/AuthProvider";
+import TanStackProvider from "@/components/TanStackProvider/TanStackProvider";
 
 const inter = Inter({
   weight: ["400", "500", "700"],
@@ -23,7 +24,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable}`}>
-        <AuthProvider>{children}</AuthProvider>
+        <TanStackProvider>
+          <AuthProvider>{children}</AuthProvider>
+        </TanStackProvider>
       </body>
     </html>
   );
