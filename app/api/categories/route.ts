@@ -1,17 +1,16 @@
 export const dynamic = "force-dynamic";
-
 import { NextRequest, NextResponse } from "next/server";
-import { api } from "../../api";
 import { cookies } from "next/headers";
-import { logErrorResponse } from "../../_utils/utils";
 import { isAxiosError } from "axios";
+import { api } from "../api";
+import { logErrorResponse } from "../_utils/utils";
 
-export async function PATCH(request: NextRequest) {
+export async function POST(request: NextRequest) {
   try {
     const cookieStore = await cookies();
-    const formData = await request.formData();
+    const body = await request.json();
 
-    const res = await api.patch("/users/avatar", formData, {
+    const res = await api.post("/categories", body, {
       headers: {
         Cookie: cookieStore.toString(),
       },
@@ -33,11 +32,11 @@ export async function PATCH(request: NextRequest) {
   }
 }
 
-export async function DELETE() {
+export async function GET() {
   try {
     const cookieStore = await cookies();
 
-    const res = await api.delete("/users/avatar", {
+    const res = await api.get("/categories", {
       headers: {
         Cookie: cookieStore.toString(),
       },

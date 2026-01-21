@@ -1,17 +1,21 @@
 export const dynamic = "force-dynamic";
-
 import { NextRequest, NextResponse } from "next/server";
-import { api } from "../../api";
 import { cookies } from "next/headers";
-import { logErrorResponse } from "../../_utils/utils";
 import { isAxiosError } from "axios";
+import { api } from "../../api";
+import { logErrorResponse } from "../../_utils/utils";
 
-export async function PATCH(request: NextRequest) {
+interface Params {
+  params: Promise<{ id: string }>;
+}
+
+export async function PATCH(request: NextRequest, { params }: Params) {
   try {
     const cookieStore = await cookies();
-    const formData = await request.formData();
+    const body = await request.json();
+    const { id } = await params;
 
-    const res = await api.patch("/users/avatar", formData, {
+    const res = await api.patch(`/categories/${id}`, body, {
       headers: {
         Cookie: cookieStore.toString(),
       },
@@ -33,11 +37,12 @@ export async function PATCH(request: NextRequest) {
   }
 }
 
-export async function DELETE() {
+export async function DELETE({ params }: Params) {
   try {
     const cookieStore = await cookies();
+    const { id } = await params;
 
-    const res = await api.delete("/users/avatar", {
+    const res = await api.delete(`/categories/${id}`, {
       headers: {
         Cookie: cookieStore.toString(),
       },
