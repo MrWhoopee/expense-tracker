@@ -1,0 +1,50 @@
+.navigationList {
+  display: flex;
+  gap: 20px;
+}
+
+.signUpBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 40px;
+  padding: 14px 44px;
+  min-width: 146px;
+  height: 47px;
+  background: #0ef387;
+
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 16px;
+  letter-spacing: -0.02em;
+  color: #0c0d0d;
+
+  &:focus,
+  &:hover {
+    background: #0ebb69;
+  }
+}
+
+.signInBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(250, 250, 250, 0.4);
+  border-radius: 40px;
+  padding: 14px 44px;
+  min-width: 138px;
+  height: 47px;
+
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 16px;
+  letter-spacing: -0.02em;
+  color: #fafafa;
+
+  &:focus,
+  &:hover {
+    border: 1px solid #0ef387;
+  }
+}

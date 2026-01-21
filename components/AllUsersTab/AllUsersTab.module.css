@@ -1,0 +1,54 @@
+.container {
+  display: none;
+
+  @media only screen and (min-width: 1440px) {
+    display: flex;
+    align-items: start;
+    gap: 32px;
+    max-width: 367px;
+  }
+}
+
+.avatarGroup {
+  display: flex;
+}
+
+.avatarWrapper {
+  margin-right: -12px;
+}
+
+.avatarWrapper:last-child {
+  margin-right: 0;
+}
+
+.avatarWrapper:nth-child(1) {
+  z-index: 3;
+}
+.avatarWrapper:nth-child(2) {
+  z-index: 2;
+}
+.avatarWrapper:nth-child(3) {
+  z-index: 1;
+}
+
+.textContent {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.title {
+  font-family: var(--font-inter), sans-serif;
+  font-weight: 400;
+  font-size: 28px;
+  letter-spacing: -0.02em;
+  color: #fafafa;
+}
+
+.description {
+  font-family: var(--font-inter), sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  letter-spacing: -0.02em;
+  color: rgba(250, 250, 250, 0.4);
+}
