@@ -1,0 +1,24 @@
+/* h1 {
+  color: black;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+
+  @media screen and (max-width: 374px) {
+    flex-direction: row;
+  }
+
+  @media screen and (min-width: 375px) {
+    color: red;
+  }
+  @media screen and (min-width: 768px) {
+    color: green;
+  }
+
+  @media screen and (min-width: 1440px) {
+    color: blue;
+  }
+
+  ::after {
+  }
+} */

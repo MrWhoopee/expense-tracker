@@ -1,15 +1,1 @@
-h1 {
-  @media screen and (min-width: 375px) {
-    color: red;
-  }
-  @media screen and (min-width: 768px) {
-    color: green;
-  }
 
-  @media screen and (min-width: 1440px) {
-    color: blue;
-  }
-
-  ::after {
-  }
-}
