@@ -9,11 +9,17 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "ag-grid-community": "^35.0.0",
+    "ag-grid-react": "^35.0.0",
     "axios": "^1.13.2",
     "cookie": "^1.1.1",
+    "formik": "^2.4.9",
     "next": "16.1.4",
     "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "react-datepicker": "^9.1.0",
+    "react-dom": "19.2.3",
+    "react-select": "^5.10.2",
+    "yup": "^1.7.1"
   },
   "devDependencies": {
     "@types/node": "^20",

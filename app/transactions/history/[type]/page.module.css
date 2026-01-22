@@ -1,0 +1,26 @@
+.container {
+  padding: 60px 100px;
+  max-width: 100%;
+}
+
+/* .title {
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+
+.description {
+  color: var(--grey-text);
+  font-size: 14px;
+  margin-bottom: 40px;
+} */
+
+.historyContent {
+  display: flex;
+  flex-direction: column;
+  border-radius: 30px;
+  width: 1240px;
+  height: 450px;
+  background: #171719;
+}

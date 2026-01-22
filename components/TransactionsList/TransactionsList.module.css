@@ -1,0 +1,148 @@
+.gridContainer :global(.ag-header-cell-text) {
+  background: linear-gradient(
+    90deg,
+    #0ef387,
+    #43f1a0,
+    #6f6f70,
+    #6f6f70,
+    #6f6f70,
+    #43f1a0
+  );
+  animation: animatedTextGradient 2.5s linear infinite;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% auto;
+}
+
+@keyframes animatedTextGradient {
+  to {
+    background-position: -200% center;
+  }
+}
+
+.gridContainer :global(.ag-header-cell) {
+  padding: 0;
+}
+
+.gridContainer :global(:where(.ag-ltr) .ag-header-cell-resize) {
+  &:after {
+    background-color: #6f6f70;
+  }
+}
+
+.gridContainer :global(:where(.ag-ltr) .ag-header-cell-resize) {
+  right: 10px;
+}
+
+.gridContainer :global(.ag-cell) {
+  font-weight: 100;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.gridContainer :global(.ag-header-cell-label) {
+  padding: 0;
+}
+
+.gridContainer :global(.ag-column-first) {
+  padding-left: 40px;
+}
+
+.gridContainer :global(.ag-column-last) {
+  padding-right: 66px;
+}
+
+/* .gridContainer :global(.header) {
+  padding-right: 66px;
+} */
+
+.gridContainer {
+  font-weight: 100;
+
+  /* Modern Browsers */
+  scrollbar-width: 8px;
+  scrollbar-color: #434345 transparent;
+}
+
+/* Older Browsers */
+.gridContainer::-webkit-scrollbar {
+  width: 8px;
+}
+.gridContainer::-webkit-scrollbar-track {
+  background: transparent;
+}
+.gridContainer::-webkit-scrollbar-thumb {
+  background: #434345;
+}
+
+/* buttons */
+
+.actionsCell {
+  display: flex;
+  gap: 8px;
+  height: 100%;
+}
+
+.editBtn {
+  border-radius: 40px;
+  padding: 14px 32px 14px 58px;
+  width: 119px;
+
+  background: #0ef387;
+
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 16px;
+  letter-spacing: -0.02em;
+  color: #0c0d0d;
+
+  border: none;
+  cursor: pointer;
+}
+
+.deleteBtn {
+  border-radius: 40px;
+  padding: 14px 30px 14px 56px;
+  width: 134px;
+
+  background: #0c0d0d;
+
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 16px;
+  letter-spacing: -0.02em;
+  color: #fafafa;
+
+  border: none;
+  cursor: pointer;
+}
+
+.editButtonContainer {
+  position: relative;
+}
+
+.editSvgContainer {
+  position: absolute;
+  top: 50%;
+  left: 32px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.deleteButtonContainer {
+  position: relative;
+}
+
+.deleteSvgContainer {
+  position: absolute;
+  top: 50%;
+  left: 30px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
