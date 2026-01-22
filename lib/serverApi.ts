@@ -1,4 +1,4 @@
-import { Category } from "@/type/categoty";
+import { Category } from "@/type/category";
 import { apiServer } from "./api";
 import { cookies } from "next/headers";
 import { UserInfo } from "@/type/userInfo";
