@@ -1,0 +1,129 @@
+.container {
+  background-color: #171719;
+  padding: 28px 20px 48px 20px;
+  border-radius: 30px;
+  color: #ffffff;
+  width: 100%;
+
+  @media only screen and (min-width: 768px) {
+    padding: 40px 60px 57px 40px;
+  }
+
+  @media only screen and (min-width: 1440px) {
+    max-width: 630px;
+    padding: 40px 40px 57px 40px;
+  }
+}
+
+.title {
+  font-family: var(--font-inter), sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: rgba(250, 250, 250, 0.5);
+  margin-bottom: 54px;
+
+  @media only screen and (min-width: 768px) {
+    margin-bottom: 40px;
+  }
+}
+
+.contentWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 59px;
+
+  @media only screen and (min-width: 768px) {
+    flex-direction: row;
+    gap: 95px;
+  }
+
+  @media only screen and (min-width: 1440px) {
+    gap: 41px;
+  }
+}
+
+.chartContainer {
+  height: 143px;
+  position: relative;
+
+  @media only screen and (min-width: 768px) {
+    width: 292px;
+  }
+}
+
+.totalLabel {
+  font-family: var(--font-inter), sans-serif;
+  position: absolute;
+  bottom: -17px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 24px;
+  font-weight: 700;
+  color: #fafafa;
+}
+
+.categoryList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex: 1;
+  max-height: 126px;
+  overflow-y: auto;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.categoryList.scrollable {
+  padding-right: 22px;
+}
+
+.categoryItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.categoryInfo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.marker {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.categoryName {
+  font-family: var(--font-inter), sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: rgba(250, 250, 250, 0.5);
+}
+
+.categoryPercentage {
+  font-family: var(--font-inter), sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: #fafafa;
+}
+
+/* полоса прокрутки */
+.categoryList::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* «ползунок» */
+.categoryList::-webkit-scrollbar-thumb {
+  background-color: #444446;
+  border-radius: 12px;
+}
+
+/* фон полосы прокрутки */
+.categoryList::-webkit-scrollbar-track {
+  background: #0c0d0d;
+  border-radius: 8px;
+}
