@@ -43,20 +43,24 @@
   background-color: transparent;
 }
 
+.dateClearBtn {
+  display: none;
+}
+
 /* date picker */
 .arrowRight {
   opacity: 0.5;
-  right: -3px;
+  right: -6px;
   position: absolute;
-  top: 7px;
+  top: 1px;
   transform: translateY(-50%);
   border: none;
 }
 
 .arrowLeft {
   opacity: 0.5;
-  left: -3px;
-  top: 7px;
+  left: -6px;
+  top: 1px;
   transform: translateY(-50%);
   position: absolute;
   border: none;
@@ -79,10 +83,6 @@
   height: 236px; */
 }
 
-.datePickerWrapper :global(.react-datepicker__triangle) {
-  display: none;
-}
-
 .datePickerWrapper :global(.react-datepicker__day--outside-month) {
   color: rgba(12, 13, 13, 0.2) !important;
   pointer-events: none;
@@ -95,6 +95,18 @@
 .datePickerWrapper
   :global(.react-datepicker__navigation-icon--previous:before) {
   display: none;
+}
+
+.datePickerWrapper :global(.react-datepicker__navigation--next) {
+  right: 5px;
+  top: 8px;
+  border-radius: 100%;
+}
+
+.datePickerWrapper :global(.react-datepicker__navigation--previous) {
+  left: 5px;
+  top: 8px;
+  border-radius: 100%;
 }
 
 .datePickerWrapper :global(.react-datepicker__header) {
@@ -128,6 +140,11 @@
 }
 
 .datePickerWrapper :global(.react-datepicker__day--keyboard-selected) {
+  background-color: transparent;
+}
+
+.datePickerWrapper :global(.react-datepicker__day--selected) {
+  border: 1px solid #040404;
   background-color: transparent;
 }
 
