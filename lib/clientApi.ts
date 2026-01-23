@@ -1,4 +1,4 @@
-import { Category } from "@/type/categoty";
+import { Category } from "@/type/category";
 import { apiNext } from "./api";
 import { User } from "@/type/user";
 import { Transaction } from "@/type/transaction";
