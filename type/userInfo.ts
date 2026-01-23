@@ -1,4 +1,4 @@
-import { Income, Expenses } from "./categoty";
+import { Income, Expenses } from "./category";
 
 export interface UserInfo {
   _id: string;
