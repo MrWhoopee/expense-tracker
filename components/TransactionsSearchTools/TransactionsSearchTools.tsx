@@ -7,6 +7,7 @@ import DatePicker from "react-datepicker";
 import Select from "react-select";
 import css from "@/components/TransactionsSearchTools/TransactionsSearchTools.module.css";
 import Image from "next/image";
+import "react-datepicker/dist/react-datepicker.css";
 
 interface data {}
 
@@ -55,7 +56,7 @@ const TransactionsSearchTools = (data: data) => {
             </div>
           </div>
 
-          <div className={css.dateInputWrapper}>
+          <div className={css.datePickerWrapper}>
             <DatePicker
               selected={values.date}
               //   onChange={(date) => {
@@ -65,8 +66,30 @@ const TransactionsSearchTools = (data: data) => {
               dateFormat="dd/MM/yyyy"
               placeholderText="dd/mm/yyyy"
               className={css.dateInput}
-              isClearable
               autoComplete="off"
+              calendarStartDay={1}
+              timeZone="UTC"
+              isClearable
+              previousMonthButtonLabel={
+                <Image
+                  src="/arrow-left.svg"
+                  width={6}
+                  height={10}
+                  alt="previous month"
+                  className={css.arrowLeft}
+                  priority
+                />
+              }
+              nextMonthButtonLabel={
+                <Image
+                  src="/arrow-right.svg"
+                  width={6}
+                  height={10}
+                  alt="next month"
+                  className={css.arrowRight}
+                  priority
+                />
+              }
             />
             <div className={css.calendarSvgContainer}>
               <Image

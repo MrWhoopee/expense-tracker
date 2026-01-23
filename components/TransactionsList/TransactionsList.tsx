@@ -58,7 +58,12 @@ const ActionsRenderer = (props: any) => {
   );
 };
 
-const TransactionsList = ({ type }: { type: string }) => {
+interface Props {
+  type: string;
+  data: Transaction[];
+}
+
+const TransactionsList = ({ type, data }: Props) => {
   // Row Data: The data to be displayed.
   const [rowData, setRowData] = useState<Transaction[]>([
     {
@@ -183,6 +188,7 @@ const TransactionsList = ({ type }: { type: string }) => {
         height: "100%",
         padding: "0 0 30px 0",
         borderRadius: "0",
+        zIndex: "9",
       }}
     >
       <AgGridReact
