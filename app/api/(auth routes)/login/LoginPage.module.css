@@ -1,0 +1,121 @@
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  overflow: hidden;
+}
+
+.mainContent {
+  flex: 1;
+}
+
+/* @media only screen and (min-width: 768px) {
+    width: 640px;
+    padding: 64px 32px 64px;
+    max-height: 688px;
+  }
+
+  @media only screen and (min-width: 1440px) {
+    width: 736px;
+    padding: 64px;
+  } */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+  max-width: 400px;
+  margin: 169px auto;
+  padding: 19px;
+  background-color: initial;
+}
+
+.logicalWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.logicalWrapper button {
+  margin-top: 112px;
+}
+.formTitle {
+  font-size: 56px;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+.formWelcomeText {
+  font-weight: 400;
+  font-size: 16px;
+  letter-spacing: -0.02em;
+  color: rgba(250, 250, 250, 0.4);
+}
+
+.input {
+  padding: 8px 12px;
+  font-size: 14px;
+  /* border-style: inherit; */
+  border: 1px solid rgba(250, 250, 250, 0.2);
+  background-color: inherit;
+  border-radius: 4px;
+  outline: none;
+
+  color: rgba(250, 250, 250, 0.4);
+  &:hover,
+  &focus {
+    border-color: #0ef387;
+    color: #fafafa;
+  }
+}
+
+.submitButton {
+  border-radius: 40px;
+  padding-block: 14px;
+  padding-inline: 44px;
+  width: 139px;
+  height: 45px;
+  border: initial;
+  background: #0ef387;
+  letter-spacing: -0.02em;
+  color: #0c0d0d;
+  outline: none;
+  &:hover,
+  &:focus {
+    background-color: inherit;
+    border: 1px solid #0ef387;
+    color: #fafafa;
+  }
+}
+
+.actionText {
+  /* font-weight: 400; */
+  font-size: 12px;
+
+  line-height: 150%;
+  color: rgba(250, 250, 250, 0.6);
+}
+
+.actionTextLink {
+  text-decoration: underline;
+  text-decoration-skip-ink: none;
+  color: #fafafa;
+  &:hover,
+  &focus {
+    color: #0ebb69;
+  }
+}
+.error {
+  color: #dc3545;
+  font-size: 12px;
+  margin-top: 4px;
+  text-align: center;
+}
+
+.correct {
+  border: 1px solid #097b45;
+}
