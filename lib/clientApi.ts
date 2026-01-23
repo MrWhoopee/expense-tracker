@@ -14,7 +14,7 @@ interface UpdateCategory {
   categoryName: string;
 }
 
-interface RegisterRequest {
+export interface RegisterRequest {
   name: string;
   email: string;
   password: string;
