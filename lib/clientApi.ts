@@ -1,4 +1,4 @@
-import { Category } from "@/type/categoty";
+import { Category } from "@/type/category";
 import { apiNext } from "./api";
 import { User } from "@/type/user";
 import { Transaction } from "@/type/transaction";
@@ -14,7 +14,7 @@ interface UpdateCategory {
   categoryName: string;
 }
 
-interface RegisterRequest {
+export interface RegisterRequest {
   name: string;
   email: string;
   password: string;
