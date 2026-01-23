@@ -15,10 +15,10 @@ interface LayerItem extends DataItem {
 
 export default function TransactionsChart() {
   const data: DataItem[] = [
-    { name: "Hobby", value: 45, fill: "#00D685" },
-    { name: "Products", value: 25, fill: "#009D5C" },
-    { name: "Cinema", value: 20, fill: "#FFFFFF" },
-    { name: "Health", value: 10, fill: "#4A4A4A" },
+    { name: "Hobby", value: 45, fill: "#0ef387" },
+    { name: "Products", value: 25, fill: "#0ebb69" },
+    { name: "Cinema", value: 20, fill: "#fafafa" },
+    { name: "Health", value: 10, fill: "rgba(250, 250, 250, 0.2) " },
   ];
 
   const layers: LayerItem[] = [];
@@ -56,15 +56,18 @@ export default function TransactionsChart() {
                   cornerRadius={10}
                   stroke="none"
                   isAnimationActive={true}
-                  animationDuration={800 + index * 200}
+                  animationBegin={200}
+                  animationDuration={1200}
+                  animationEasing="ease-out"
                 />
               ))}
             </PieChart>
           </ResponsiveContainer>
           <p className={css.totalLabel}>100%</p>
         </div>
+
         <ul
-          className={`${css.categoryList} ${data.length > 4 && css.scrollable}`}
+          className={`${css.categoryList} ${data.length > 4 ? css.scrollable : ""}`}
         >
           {data.map((item, index) => (
             <li key={index} className={css.categoryItem}>
