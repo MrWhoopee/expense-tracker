@@ -1,49 +1,175 @@
 "use client";
 
-import { ErrorMessage, Field, FieldProps, Form, Formik } from "formik";
+import {
+  ErrorMessage,
+  Field,
+  FieldProps,
+  Form,
+  Formik,
+  FormikValues,
+} from "formik";
 import css from "./CategoriesModal.module.css";
 import * as Yup from "yup";
-import { Expenses, Income } from "@/type/category";
+import { Category } from "@/type/category";
 import { createPortal } from "react-dom";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import {
+  createCategory,
+  deleteCategory,
+  getCategories,
+  updateCategory,
+} from "@/lib/clientApi";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useRef } from "react";
+import { FormikProps } from "formik";
+import Loader from "../Loader/Loader";
+import { useTransactionStore } from "@/store/useTransactionStore";
 
-interface Categories {
-  incomes: Income[];
-  expenses: Expenses[];
+interface UserCategory {
+  type: string;
+  categoryName: string;
+}
+
+interface UpdateCategory {
+  _id: string;
+  categoryName: string;
 }
 
 interface CategoriesModalProps {
-  categories: Categories | undefined;
   type: "Expense" | "Income";
   closeModal: () => void;
+  setCategory: (name: string) => void;
+  setCategoryId: Dispatch<SetStateAction<string>>;
+  isModalOpen: boolean;
 }
 
 const CategoriesModal = ({
-  categories,
   type,
   closeModal,
+  setCategory,
+  setCategoryId,
+  isModalOpen,
 }: CategoriesModalProps) => {
+  const queryClient = useQueryClient();
+  const formikRef = useRef<FormikProps<FormikValues>>(null);
+  const [currentEditId, setCurrentEditId] = useState("");
+  const [isLoader, setIsLoader] = useState(false);
+  const firstFocusRef = useRef<HTMLButtonElement | null>(null);
+  const draftCategoryId = useTransactionStore((s) => s.draftCategoryId);
+  const setDraftCategoryId = useTransactionStore((s) => s.setDraftCategoryId);
+  const clearDraftCategoryId = useTransactionStore(
+    (s) => s.clearDraftCategoryId,
+  );
+
+  const { data, error, isLoading } = useQuery({
+    queryKey: ["getCategories"],
+    queryFn: () => getCategories(),
+    refetchOnMount: false,
+  });
+  const categories = type === "Expense" ? data?.expenses : data?.incomes;
   const [isEditMode, setIsEditMode] = useState(false);
 
-  const toggleEditMode = () => {
-    setIsEditMode((prev) => !prev);
+  const toggleEditMode = (id: string) => {
+    if (currentEditId === id) {
+      clearEdit();
+    } else {
+      setCurrentEditId(id);
+      setIsEditMode(true);
+      const selectedCategory = categories?.find((x) => x._id === id);
+      const selectedCategoryName = selectedCategory?.categoryName;
+      if (formikRef.current) {
+        formikRef.current.setFieldValue(
+          "newNameCategory",
+          selectedCategoryName,
+        );
+      }
+    }
+  };
+  const clearEdit = () => {
+    setCurrentEditId("");
+    setIsEditMode(false);
+    if (formikRef.current) {
+      formikRef.current.setFieldValue("newNameCategory", "");
+    }
+  };
+
+  // * MUTATIONS
+  const createCategoryMutation = useMutation({
+    mutationKey: ["addNewCategory"],
+    mutationFn: (params: UserCategory) => createCategory(params),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["getCategories"] });
+    },
+  });
+
+  const deleteCategoryMutation = useMutation({
+    mutationKey: ["deleteCategory"],
+    mutationFn: (id: string) => deleteCategory(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["getCategories"] });
+    },
+  });
+
+  const updateCategoryMutation = useMutation({
+    mutationKey: ["updateCategory"],
+    mutationFn: (params: UpdateCategory) => updateCategory(params),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["getCategories"] });
+    },
+  });
+  //* MUTATIONS END
+
+  //& CATEGORIES HANDLES
+  const handleSubmit = async (formData: FormikValues) => {
+    setIsLoader(true);
+    const categoryType = type === "Expense" ? "expenses" : "incomes";
+    const newNameCategory = formData?.newNameCategory;
+
+    if (!isEditMode) {
+      const createCategoryParams = {
+        type: categoryType,
+        categoryName: newNameCategory,
+      };
+
+      try {
+        createCategoryMutation.mutate(createCategoryParams);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        clearEdit();
+        setIsLoader(false);
+      }
+    } else {
+      const updateCategoryParams = {
+        _id: currentEditId,
+        categoryName: newNameCategory,
+      };
+
+      try {
+        updateCategoryMutation.mutate(updateCategoryParams);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        clearEdit();
+        setIsLoader(false);
+      }
+    }
   };
 
   const handleDelete = (id: string) => {
-    console.log(`hello ${id}`);
+    try {
+      setIsLoader(true);
+      deleteCategoryMutation.mutate(id);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      clearEdit();
+      setIsLoader(false);
+    }
   };
-
-  const handleSubmit = () => console.log("hello");
+  //& CATEGORIES HANDLES END
 
   const initialValues = {
-    category:
-      type === "Income"
-        ? categories?.incomes.length !== 0
-          ? categories?.incomes[0]
-          : "You don't have income categories"
-        : categories?.expenses.length !== 0
-          ? categories?.expenses[0]
-          : "You don't have expense categories",
     newNameCategory: "",
   };
 
@@ -51,6 +177,13 @@ const CategoriesModal = ({
     newNameCategory: Yup.string().min(2, "Min 2 chars").max(16, "Max 16 chars"),
   });
 
+  useEffect(() => {
+    if (isModalOpen && categories?.length && firstFocusRef.current) {
+      firstFocusRef.current.focus();
+    }
+  }, [isModalOpen, categories]);
+
+  //? FOR MODAL
   const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) {
       closeModal();
@@ -73,6 +206,8 @@ const CategoriesModal = ({
     };
   }, [closeModal]);
 
+  //? FOR MODAL END
+
   return createPortal(
     <div
       className={css.backdrop}
@@ -80,100 +215,63 @@ const CategoriesModal = ({
       aria-modal="true"
       onClick={handleBackdropClick}
     >
-      <div className={css.modal}>
-        <button type="button" className={css.closeButton} onClick={closeModal}>
-          <svg className={css["icon-close"]}>
-            <use href="../../img/sprite.svg#icon-x"></use>
-          </svg>
-        </button>
-        <Formik
-          initialValues={initialValues}
-          onSubmit={handleSubmit}
-          validationSchema={FormSchema}
-        >
-          <Form className={css.form}>
-            <div className={css.formGroup}>
-              <div className={css["container-item"]}>
-                <h3 className={css.formCategoryTitle}>
-                  {type === "Income" ? "Incomes" : "Expenses"}
-                </h3>
-                <p className={css.allCategory}>All category</p>
-              </div>
+      {isLoading || isLoader ? (
+        <Loader />
+      ) : (
+        <div className={css.modal}>
+          {/* BUTTON CLOSE */}
+          <button
+            type="button"
+            className={css.closeButton}
+            onClick={closeModal}
+            aria-label="Close modal"
+          >
+            <svg className={css["icon-close"]}>
+              <use href="../../img/sprite.svg#icon-x"></use>
+            </svg>
+          </button>
+          <Formik
+            initialValues={initialValues}
+            onSubmit={handleSubmit}
+            validationSchema={FormSchema}
+            innerRef={formikRef}
+          >
+            <Form className={css.form}>
+              <div className={css.formGroup}>
+                <div className={css["container-item"]}>
+                  {/* TITTLE */}
+                  <h3 className={css.formCategoryTitle}>
+                    {type === "Income" ? "Incomes" : "Expenses"}
+                  </h3>
+                  {/* PARAGRAPH */}
+                  <p className={css.allCategory}>All category</p>
+                </div>
 
-              <ul className={css.categoryList}>
-                {type === "Income"
-                  ? categories?.incomes?.map((cat) => (
-                      <li
-                        className={`${css.categoryItem} ${css.containerBig}`}
-                        key={cat._id}
-                      >
-                        <label
-                          htmlFor="newNameCategory"
-                          className={css.categoryLabel}
-                        >
-                          <Field
-                            id="newNameCategory"
-                            type="radio"
-                            name="category"
-                            value={cat.categoryName}
-                          />
-                          {cat.categoryName}
-                        </label>
-                        <div className={css.buttonWrapper}>
-                          <button type="button" className={css.buttonModal}>
-                            <svg
-                              width="16"
-                              height="16"
-                              className={css.iconModal}
-                            >
-                              <use href="../../img/sprite.svg#icon-check"></use>
-                            </svg>
-                          </button>
-                          <button
-                            type="button"
-                            className={css.buttonModal}
-                            onClick={toggleEditMode}
-                          >
-                            <svg
-                              width="16"
-                              height="16"
-                              className={css.iconModal}
-                            >
-                              <use href="../../img/sprite.svg#icon-edit"></use>
-                            </svg>
-                          </button>
-                          <button
-                            type="button"
-                            className={css.buttonModal}
-                            onClick={() => handleDelete(cat._id)}
-                          >
-                            <svg
-                              width="16"
-                              height="16"
-                              className={css.iconModal}
-                            >
-                              <use href="../../img/sprite.svg#icon-trash"></use>
-                            </svg>
-                          </button>
-                        </div>
-                      </li>
-                    ))
-                  : categories?.expenses?.map((cat) => (
+                {/* CATEGORIES */}
+                {!categories ? (
+                  <p
+                    className={`${css.emptyCategoryList} ${css["container-item"]}`}
+                  >
+                    You don&apos;t have any categories, you can add some now.
+                  </p>
+                ) : (
+                  <ul className={css.categoryList}>
+                    {categories?.map((cat, index) => (
                       <li className={css.categoryItem} key={cat._id}>
-                        <label
-                          htmlFor="newNameCategory"
-                          className={css.categoryLabel}
-                        >
-                          <Field
-                            id="newNameCategory"
-                            type="radio"
-                            name="category"
-                            value={cat.categoryName}
-                          />
-                          {cat.categoryName}
-                        </label>
+                        <p className={css.categoryText}>{cat.categoryName}</p>
+
                         <div className={css.buttonWrapper}>
-                          <button type="button" className={css.buttonModal}>
+                          <button
+                            type="button"
+                            className={css.buttonModal}
+                            onClick={() => {
+                              setCategory(cat.categoryName);
+                              setCategoryId(cat._id);
+                              setDraftCategoryId(cat._id);
+                            }}
+                            ref={index === 0 ? firstFocusRef : null}
+                            aria-label={`Select category ${cat.categoryName}`}
+                          >
                             <svg
                               width="16"
                               height="16"
@@ -182,10 +280,12 @@ const CategoriesModal = ({
                               <use href="../../img/sprite.svg#icon-check"></use>
                             </svg>
                           </button>
+
                           <button
                             type="button"
                             className={css.buttonModal}
-                            onClick={toggleEditMode}
+                            onClick={() => toggleEditMode(cat._id)}
+                            aria-label={`Edit category ${cat.categoryName}`}
                           >
                             <svg
                               width="16"
@@ -195,10 +295,12 @@ const CategoriesModal = ({
                               <use href="../../img/sprite.svg#icon-edit"></use>
                             </svg>
                           </button>
+
                           <button
                             type="button"
                             className={css.buttonModal}
                             onClick={() => handleDelete(cat._id)}
+                            aria-label={`Delete category ${cat.categoryName}`}
                           >
                             <svg
                               width="16"
@@ -211,48 +313,62 @@ const CategoriesModal = ({
                         </div>
                       </li>
                     ))}
-              </ul>
-              <ErrorMessage
-                component="span"
-                name="category"
-                className={css.error}
-              />
-            </div>
-
-            <div className={`${css["container-item"]} ${css.formGroup}`}>
-              <label className={css.newCategoryLabel} htmlFor="newNameCategory">
-                New Category
-              </label>
-
-              <Field name="newNameCategory">
-                {({ field, meta }: FieldProps) => (
-                  <div className={css.inputButtonWrapper}>
-                    <input
-                      {...field}
-                      id="newNameCategory"
-                      type="text"
-                      placeholder="Enter the text"
-                      className={`${css.input} ${
-                        meta.touched && meta.error ? css.errorInput : ""
-                      }`}
-                    />
-
-                    <button type="submit" className={css.buttonAddEdit}>
-                      {!isEditMode ? "Add" : "Edit"}
-                    </button>
-                  </div>
+                  </ul>
                 )}
-              </Field>
 
-              <ErrorMessage
-                component="span"
-                name="newNameCategory"
-                className={css.error}
-              />
-            </div>
-          </Form>
-        </Formik>
-      </div>
+                <ErrorMessage
+                  component="span"
+                  name="category"
+                  className={css.error}
+                />
+              </div>
+
+              {/* NEW CATEGORY */}
+              <div className={`${css["container-item"]} ${css.formGroup}`}>
+                <label
+                  className={css.newCategoryLabel}
+                  htmlFor="newNameCategory"
+                >
+                  {!isEditMode ? "New Category" : "Edit Category"}
+                </label>
+
+                <Field name="newNameCategory">
+                  {({ field, meta }: FieldProps) => (
+                    <div className={css.inputButtonWrapper}>
+                      <input
+                        {...field}
+                        id="newNameCategory"
+                        type="text"
+                        placeholder="Enter the text"
+                        className={`${css.input} ${
+                          meta.touched && meta.error ? css.errorInput : ""
+                        }`}
+                        aria-invalid={!!meta.error}
+                        aria-describedby={
+                          meta.error ? "newNameCategory-error" : undefined
+                        }
+                      />
+
+                      <button type="submit" className={css.buttonAddEdit}>
+                        {!isEditMode ? "Add" : "Edit"}
+                      </button>
+                    </div>
+                  )}
+                </Field>
+
+                <div className={css.errorPlaceholder}>
+                  <ErrorMessage
+                    component="span"
+                    id="newNameCategory-error"
+                    name="newNameCategory"
+                    className={css.error}
+                  />
+                </div>
+              </div>
+            </Form>
+          </Formik>
+        </div>
+      )}
     </div>,
     document.body,
   );

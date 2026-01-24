@@ -70,13 +70,17 @@ export async function createCategory(
 }
 
 export async function deleteCategory(id: string): Promise<void> {
-  await apiNext.delete<void>(`/categories${id}`);
+  await apiNext.delete<void>(`/categories/${id}`);
 }
 
-export async function updateCatecory(
+export async function updateCategory(
   userCategory: UpdateCategory,
 ): Promise<void> {
-  await apiNext.patch<void>(`/categories/${userCategory._id}`, userCategory);
+  const id = userCategory._id;
+  const newParams = {
+    categoryName: userCategory.categoryName,
+  };
+  await apiNext.patch<void>(`/categories/${id}`, newParams);
 }
 
 //Auth
