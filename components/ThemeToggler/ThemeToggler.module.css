@@ -1,0 +1,55 @@
+.button {
+  width: 36px;
+  height: 36px;
+  padding: 8px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s linear;
+  cursor: pointer;
+  border: none;
+
+  @media only screen and (min-width: 768px) {
+    width: 43px;
+    height: 43px;
+    border-radius: 13px;
+  }
+
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px var(--color-contrast);
+  }
+
+  &:active {
+    transform: scale(0.95);
+
+    .iconSun,
+    .iconMoon {
+      transform: rotate(45deg) scale(0.8);
+    }
+  }
+}
+
+.iconSun,
+.iconMoon {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.iconSun {
+  color: #0ef387;
+}
+
+.iconMoon {
+  color: #1be0e0;
+}
+
+:global([data-theme="light"]) .button {
+  background-color: #171719;
+}
+
+:global([data-theme="dark"]) .button {
+  background-color: #f4f4f4;
+}
