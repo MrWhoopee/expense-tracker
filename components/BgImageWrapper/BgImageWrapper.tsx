@@ -1,25 +1,20 @@
-import css from "./BgImageWrapper.module.css"
+import css from "./BgImageWrapper.module.css";
 
-export default function BgImageWrapper(){
+export default function BgImageWrapper() {
   return (
-  <div className={css.bgImgWrapper}>
+    <div className={css.bgImgWrapper}>
+      <div className={css.infoCard}>
+        <div className={css.infoCardGrowth}></div>
 
-    <div className={css.infoCard} >
+        <div className={css.infoCardBalance}>
+          <p className={css.infoCardLabelBalance}>Your balance</p>
+          <p className={css.infoCardBalanceAmount}>$632.000</p>
+        </div>
 
-      <div className={css.infoCardGrowth} ></div>
-
-      <div className={css.infoCardBalance}>
-
-      <p className={css.infoCardLabelBalance}>Your balance</p>
-      <p className={css.infoCardBalanceAmount}>$632.000</p>
-
+        <div className={css.infoCardPercentWrapper}>
+          <p className={css.infoCardPercent}>+1.29%</p>
+        </div>
       </div>
-
-      <div className={css.infoCardPercentWrapper}><p className={css.infoCardPercent}>+1.29%</p></div>
-      
-      
-
     </div>
-
-  </div>)
+  );
 }

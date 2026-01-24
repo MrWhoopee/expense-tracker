@@ -1,25 +1,38 @@
 .container {
   max-width: 375px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 40px 20px 20px 20px;
   box-sizing: border-box;
 
   display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+  flex-direction: column-reverse;
+  gap: 29px;
 
   @media only screen and (min-width: 768px) {
     max-width: 768px;
-    padding: 0 32px;
+    padding: 63px 32px 32px 32px;
+    gap: 10px;
   }
 
   @media only screen and (min-width: 1440px) {
     max-width: 1440px;
-    padding: 0 100px;
+    padding: 41px 100px 100px 100px;
+    flex-direction: row;
+    gap: 54px;
+    align-items: stretch;
   }
 }
 
-.wrapper {
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.container > div:last-child > :last-child {
+  margin-top: auto;
+}
+
+.text-wrapper {
   max-width: 575px;
 }
 
@@ -67,6 +80,6 @@
     margin-bottom: 40px;
   }
 }
-.container > :last-child {
+/* .container > :last-child {
   margin-top: auto;
-}
+} */
