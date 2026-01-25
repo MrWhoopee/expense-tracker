@@ -1,8 +1,9 @@
-import { Category } from "@/type/categoty";
+import { Category } from "@/type/category";
 import { apiNext } from "./api";
 import { User } from "@/type/user";
 import { Transaction } from "@/type/transaction";
 import { UserInfo } from "@/type/userInfo";
+import { GetStatistic } from "@/type/statistics";
 
 interface UserCategory {
   type: string;
@@ -14,7 +15,7 @@ interface UpdateCategory {
   categoryName: string;
 }
 
-interface RegisterRequest {
+export interface RegisterRequest {
   name: string;
   email: string;
   password: string;
@@ -70,13 +71,17 @@ export async function createCategory(
 }
 
 export async function deleteCategory(id: string): Promise<void> {
-  await apiNext.delete<void>(`/categories${id}`);
+  await apiNext.delete<void>(`/categories/${id}`);
 }
 
-export async function updateCatecory(
+export async function updateCategory(
   userCategory: UpdateCategory,
 ): Promise<void> {
-  await apiNext.patch<void>(`/categories/${userCategory._id}`, userCategory);
+  const id = userCategory._id;
+  const newParams = {
+    categoryName: userCategory.categoryName,
+  };
+  await apiNext.patch<void>(`/categories/${id}`, newParams);
 }
 
 //Auth
@@ -149,4 +154,14 @@ export async function updateTransaction(
   body: UpdateTransaction,
 ): Promise<void> {
   await apiNext.patch(`/transactions/${type}/${id}`, body);
+}
+
+//Statistics
+
+export async function getStastics(): Promise<GetStatistic[]> {
+  const res = await apiNext.get<GetStatistic[]>(
+    "/stats/categories/current-month",
+  );
+
+  return res.data;
 }

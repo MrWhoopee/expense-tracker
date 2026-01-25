@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import AuthProvider from "@/components/AuthProvider/AuthProvider";
 import TanStackProvider from "@/components/TanStackProvider/TanStackProvider";
+import Header from "@/components/Header/Header";
 
 const inter = Inter({
   weight: ["400", "500", "700"],
@@ -25,7 +26,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.variable}`}>
         <TanStackProvider>
-          <AuthProvider>{children}</AuthProvider>
+          <AuthProvider>
+            <Header />
+            <main>{children}</main>
+          </AuthProvider>
         </TanStackProvider>
       </body>
     </html>

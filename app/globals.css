@@ -1,49 +1,142 @@
+@import "normalize.css";
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Fonts */
+  --font-family: "Inter", sans-serif;
+
+  --transition: 250ms ease-in-out;
+  /* в прошлых проектах был линеар, но этот вроде как-то посимпатичней, */
+
+  /* DARK THEME (Default) */
+  --bg-page: #0c0d0d;
+  --bg-component: #171719;
+  --color-titles: #fafafa;
+  --color-paragraph: rgba(250, 250, 250, 0.4);
+  --color-contrast: #0ef387;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* LIGHT THEME */
+[data-theme="light"] {
+  --bg-page: #f4f4f4;
+  --bg-component: #e9e0e0;
+  --color-titles: #111111;
+  --color-paragraph: rgba(17, 17, 17, 0.6);
+  --color-contrast: #1be0e0;
 }
 
-html,
+/* Base reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+
+  transition:
+    background-color var(--transition),
+    color var(--transition);
+}
+
 body {
-  max-width: 100vw;
-  overflow-x: hidden;
-  font-family: var(--font-inter), sans-serif;
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: var(--font-inter), sans-serif;
+  background-color: var(--bg-page);
+  color: var(--color-titles);
+  font-family: var(--font-family);
+  font-size: 14px;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
+h1,
+h2,
+h3,
+h4,
+p {
   margin: 0;
+}
+
+ul,
+ol {
+  list-style: none;
 }
 
 a {
-  color: inherit;
   text-decoration: none;
+  color: inherit;
+  transition: opacity var(--transition);
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+  transition:
+    transform var(--transition),
+    background-color var(--transition),
+    box-shadow var(--transition);
+}
+
+input,
+select,
+textarea {
+  font-family: inherit;
+  outline: none;
+  background: none;
+  border: none;
+  color: inherit;
+}
+
+/*----- общая стилизация для скроллбаров - почистить перед финалом все компоненты, где они есть  */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-page);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-paragraph);
+}
+
+/* общий контейнер */
+.container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+@media screen and (min-width: 768px) {
+  .container {
+    padding: 0 32px;
   }
 }
 
-ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
+@media screen and (min-width: 1440px) {
+  .container {
+    max-width: 1440px;
+    padding: 0 100px;
+  }
 }
+
+/* ---- Часть ниже для того, кто делает календарь - если не пригодится, то в чистовой версии удалим. Пока пусть тут полежит  ----- */
+/* Скрытие стандартных иконок календаря и адаптация под тему */
+/* input::-webkit-calendar-picker-indicator {
+  cursor: pointer; */
+/* Инверсия иконки: в темной теме — белая, в светлой — черная */
+/* filter: invert(var(--theme-invert, 1));
+} */
+
+/* [data-theme="light"] {
+  --theme-invert: 0;
+} */

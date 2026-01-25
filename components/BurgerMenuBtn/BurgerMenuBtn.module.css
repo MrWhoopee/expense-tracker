@@ -1,0 +1,11 @@
+.burgerBtn {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    color: var(--color-titles);
+    transition: color 0.3s;
+
+    &:hover {
+        color: var(--color-contrast);
+    }
+}

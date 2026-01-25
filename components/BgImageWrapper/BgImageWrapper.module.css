@@ -1,6 +1,5 @@
 .bgImgWrapper {
   position: relative;
-  overflow: hidden;
   width: 335px;
   height: 381px;
   border-radius: 20px;
@@ -34,19 +33,11 @@
 
 @keyframes moveX {
   0% {
-    left: 0;
-  }
-
-  15% {
-    left: 0;
-  }
-
-  85% {
-    left: calc(100% - var(--card-width));
+    left: calc(-1 * var(--offset));
   }
 
   100% {
-    left: calc(100% - var(--card-width));
+    left: calc(100% - var(--card-width) + var(--offset));
   }
 }
 
@@ -54,7 +45,9 @@
   --card-width: 248px;
   position: absolute;
   bottom: 60px;
-  left: 0px;
+  left: calc(-1 * var(--offset));
+  --offset: 10px;
+  --duration: 2s;
 
   display: flex;
   flex-direction: row;
@@ -68,10 +61,12 @@
   box-sizing: border-box;
   background-color: #fafafa;
 
-  animation: moveX 6s linear infinite alternate;
+  animation: moveX var(--duration) linear infinite alternate;
   animation-play-state: running;
 
   @media screen and (min-width: 768px) {
+    --offset: 16px;
+    --duration: 5.5s;
     --card-width: 303px;
     bottom: 46px;
     width: var(--card-width);
@@ -79,6 +74,8 @@
   }
 
   @media screen and (min-width: 1440px) {
+    --offset: 50px;
+    --duration: 5s;
     bottom: 132px;
   }
   &:hover,
