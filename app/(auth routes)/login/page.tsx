@@ -70,7 +70,7 @@ export default function SignIn() {
         onSubmit={handleSubmit}
         validationSchema={validationSchema}
       >
-        {({ errors, touched }) => (
+        {({ errors, touched, handleChange }) => (
           <Form className={css.form}>
             <h1 className={css.formTitle}>Sign in</h1>
             <p className={css.formWelcomeText}>
@@ -83,47 +83,59 @@ export default function SignIn() {
             {/* <label htmlFor="email" className={css.visuallyHidden}>
                 Email
               </label> */}
-            <Field
-              className={clsx(css.input, {
-                [css.errorInput]: errors.email && touched.email,
-              })}
-              type="email"
-              name="email"
-              placeholder="Email"
-              autoComplete="email"
-            />
-            <ErrorMessage name="email" component="span" className={css.error} />
+            <div className={css.passwordInputContainer}>
+              <Field
+                className={clsx(css.input, {
+                  [css.errorInput]: errors.email && touched.email,
+                })}
+                type="email"
+                name="email"
+                placeholder="Email"
+                autoComplete="email"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  handleChange(e);
+                  setServerError(null);
+                }}
+              />
+              <ErrorMessage
+                name="email"
+                component="span"
+                className={css.error}
+              />
+            </div>
 
             {/* Password Field */}
 
-            <label htmlFor="password" className={css.visuallyHidden}>
+            {/* <label htmlFor="password" className={css.visuallyHidden}>
               Password
-            </label>
-
-            <Field
-              className={css.input}
-              type={showPassword ? "text" : "password"}
-              name="password"
-              placeholder="Password"
-              autoComplete="current-password"
-            />
-            <button
-              type="button"
-              className={css.passwordToggle}
-              onClick={togglePasswordVisibility}
-              aria-label="Toggle password visibility"
-            >
-              {showPassword ? <FaEyeSlash /> : <FaEye />}
-            </button>
-
-            <ErrorMessage
-              name="password"
-              component="span"
-              className={css.error}
-            />
-
-            {/* Вивід помилки сервера */}
-            {serverError && <div className={css.error}>{serverError}</div>}
+            </label> */}
+            <div className={css.passwordInputContainer}>
+              <Field
+                className={css.input}
+                type={showPassword ? "text" : "password"}
+                name="password"
+                placeholder="Password"
+                autoComplete="current-password"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  handleChange(e);
+                  setServerError(null);
+                }}
+              />
+              <button
+                type="button"
+                className={css.passwordToggle}
+                onClick={togglePasswordVisibility}
+                aria-label="Toggle password visibility"
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </button>
+              <ErrorMessage
+                name="password"
+                component="span"
+                className={css.error}
+              />
+              {serverError && <div className={css.error}>{serverError}</div>}
+            </div>
 
             <button
               className={css.submitButton}
