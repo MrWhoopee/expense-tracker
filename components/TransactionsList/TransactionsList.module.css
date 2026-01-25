@@ -21,7 +21,7 @@
 }
 
 .gridContainer :global(.ag-header-cell) {
-  padding: 0;
+  padding: 0 0 0 8px;
 }
 
 .gridContainer :global(:where(.ag-ltr) .ag-header-cell-resize) {
@@ -31,12 +31,12 @@
 }
 
 .gridContainer :global(:where(.ag-ltr) .ag-header-cell-resize) {
-  right: 10px;
+  right: 4px;
 }
 
 .gridContainer :global(.ag-cell) {
   font-weight: 100;
-  padding-left: 0;
+  padding-left: 8px;
   padding-right: 0;
 }
 
@@ -51,10 +51,6 @@
 .gridContainer :global(.ag-column-last) {
   padding-right: 66px;
 }
-
-/* .gridContainer :global(.header) {
-  padding-right: 66px;
-} */
 
 .gridContainer {
   font-weight: 100;
@@ -81,6 +77,7 @@
   display: flex;
   gap: 8px;
   height: 100%;
+  margin-left: 1px;
 }
 
 .editBtn {
@@ -97,7 +94,24 @@
   color: #0c0d0d;
 
   border: none;
+  outline: none;
   cursor: pointer;
+
+  /* transition:
+    outline 250ms linear,
+    opacity 250ms linear; */
+
+  &:hover {
+    background: #0ebb69;
+  }
+
+  &:focus {
+    outline: 1px solid #fafafa;
+  }
+
+  &:active {
+    outline: 1px solid #fafafa;
+  }
 }
 
 .deleteBtn {
@@ -114,7 +128,24 @@
   color: #fafafa;
 
   border: none;
+  outline: none;
   cursor: pointer;
+
+  /* transition:
+    outline 250ms linear,
+    opacity 250ms linear; */
+
+  &:hover {
+    opacity: 0.7;
+  }
+
+  &:focus {
+    outline: 1px solid #fafafa;
+  }
+
+  &:active {
+    outline: 1px solid #fafafa;
+  }
 }
 
 .editButtonContainer {
@@ -145,4 +176,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.deleteButtonContainer:hover .deleteSvg {
+  opacity: 0.7;
 }

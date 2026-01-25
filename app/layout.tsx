@@ -30,24 +30,31 @@ export default function RootLayout({
         <Toaster
           position="bottom-right"
           toastOptions={{
-            duration: 3000,
+            duration: 13000,
             style: {
               color: "#fff",
               backgroundColor: "#17171a",
               borderRadius: "12px",
+              border: "1px solid #fff",
             },
             success: {
-              duration: 3000,
+              duration: 13000,
               iconTheme: {
                 primary: "#0EF387",
                 secondary: "#fff",
               },
+              style: {
+                border: "1px solid #0EF387",
+              },
             },
             error: {
-              duration: 3000,
+              duration: 13000,
               iconTheme: {
                 primary: "#E74A3B",
                 secondary: "#fff",
+              },
+              style: {
+                border: "1px solid #E74A3B",
               },
             },
           }}
