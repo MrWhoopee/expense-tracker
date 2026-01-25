@@ -56,6 +56,12 @@ interface UpdateTransaction {
   comment: string;
 }
 
+export interface CategoryStats {
+  _id: string;
+  totalAmount: number;
+  category: string;
+}
+
 //Category
 
 export async function getCategories(): Promise<Category> {
@@ -156,6 +162,12 @@ export async function updateTransaction(
   await apiNext.patch(`/transactions/${type}/${id}`, body);
 }
 
+export async function getStatsCurrentMonth(): Promise<CategoryStats[]> {
+  const { data } = await apiNext.get<CategoryStats[]>(
+    "/stats/categories/current-month",
+  );
+  return data;
+}
 //Statistics
 
 export async function getStastics(): Promise<GetStatistic[]> {

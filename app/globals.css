@@ -13,6 +13,13 @@
   --color-titles: #fafafa;
   --color-paragraph: rgba(250, 250, 250, 0.4);
   --color-contrast: #0ef387;
+
+  --chart-color-1: #076d3a;
+  --chart-color-2: #0ebb69;
+  --chart-color-3: #0ef387;
+  --chart-color-4: #61f7b1;
+  --chart-color-5: #fafafa;
+  --chart-color-6: rgba(250, 250, 250, 0.2);
 }
 
 /* LIGHT THEME */
@@ -22,6 +29,13 @@
   --color-titles: #111111;
   --color-paragraph: rgba(17, 17, 17, 0.6);
   --color-contrast: #1be0e0;
+
+  --chart-color-1: #057272;
+  --chart-color-2: #099191;
+  --chart-color-3: #1be0e0;
+  --chart-color-4: #61f7b1;
+  --chart-color-5: rgba(250, 250, 250, 0.2);
+  --chart-color-6: rgba(17, 17, 17, 0.6);
 }
 
 /* Base reset */

@@ -8,14 +8,14 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
-
-  padding: 20px 0;
+  width: 100%;
+  /* padding: 20px 0; */
   border-radius: 20px;
 
   @media only screen and (min-width: 768px) {
     flex-direction: row;
     gap: 24px;
-    padding: 32px 0;
+    /* padding: 32px 0; */
   }
 
   @media only screen and (min-width: 1440px) {
@@ -31,7 +31,8 @@
   align-items: center;
   padding: 20px 20px;
   width: 100%;
-  background-color: var(--background-component-dark);
+  background-color: var(--bg-component);
+  /* margin: 0 auto; */
 
   @media only screen and (min-width: 768px) {
     padding: 32px 0 34px 24px;
@@ -49,7 +50,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--contrast-color-dark);
+  background-color: var(--color-contrast);
 
   @media only screen and (min-width: 768px) {
     width: 43px;
@@ -64,7 +65,7 @@
 .icon {
   /* background-color: #00d97d; */
 
-  fill: #171719;
+  fill: var(--bg-page);
   width: 14px;
   height: 16px;
 }
@@ -72,7 +73,7 @@
 .title {
   font-size: 12px;
   font-weight: 400;
-  color: rgba(250, 250, 250, 0.5);
+  color: var(--color-paragraph);
   margin: 0 0 4px 0;
 
   @media only screen and (min-width: 768px) {
@@ -84,7 +85,7 @@
 .amount {
   font-size: 18px;
   font-weight: 700;
-  color: #fafafa;
+  color: var(--color-titles);
   margin: 0;
   @media only screen and (min-width: 768px) {
     font-size: 24px;
@@ -94,6 +95,7 @@
   }
 }
 
+/* !!!!!!!Доделать для светлой темы!!!! */
 .skeleton {
   height: 81px;
   background: linear-gradient(90deg, #171719 25%, #222224 50%, #171719 75%);
@@ -103,8 +105,8 @@
     height: 121px;
   }
 
-  @media only screen and (min-width: 1440px) {
-  }
+  /* @media only screen and (min-width: 1440px) {
+  } */
 }
 
 @keyframes loading-pulse {
