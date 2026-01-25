@@ -5,7 +5,7 @@ import { isAxiosError } from "axios";
 import { logErrorResponse } from "../../_utils/utils";
 
 interface RouteParams {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string[] }>;
 }
 
 export async function GET(request: NextRequest, { params }: RouteParams) {
@@ -17,7 +17,7 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
     const date = searchParams.get("date");
     const search = searchParams.get("search");
 
-    const res = await api.get(`/transactions/${slug}`, {
+    const res = await api.get(`/transactions/${slug[0]}`, {
       params: {
         ...(date && { date }),
         ...(search && { search }),
@@ -33,15 +33,12 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
   }
 }
 
-export async function DELETE(
-  request: NextRequest,
-  { params }: { params: Promise<{ slug: string }> },
-) {
+export async function DELETE(request: NextRequest, { params }: RouteParams) {
   try {
     const cookieStore = await cookies();
     const { slug } = await params;
 
-    const res = await api.delete(`/transactions/${slug}`, {
+    const res = await api.delete(`/transactions/${slug[0]}`, {
       headers: {
         Cookie: cookieStore.toString(),
       },
