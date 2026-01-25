@@ -8,6 +8,7 @@ import * as Yup from "yup";
 import { RegisterRequest, userRegister } from "@/lib/clientApi";
 import clsx from "clsx";
 import { FaBeer, FaEye, FaEyeSlash } from "react-icons/fa";
+import { useUserStore } from "@/store/useUserStore";
 
 const initialValues: RegisterRequest = {
   name: "",
@@ -35,7 +36,7 @@ export default function SignUp() {
   const router = useRouter();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const { setUser } = useUserStore();
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -54,6 +55,7 @@ export default function SignUp() {
       const res = await userRegister(values);
 
       if (res) {
+        setUser(res);
         router.push("/transactions/[transactionsType]");
       }
     } catch (err) {

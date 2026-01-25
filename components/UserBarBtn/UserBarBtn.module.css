@@ -1,0 +1,73 @@
+.userBar {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    border-radius: 30px;
+    padding: 6px 16px;
+    height: 46px;
+    border: none;
+    background: var(--bg-component);
+    color: var(--color-paragraph);
+    font-size: 14px;
+    letter-spacing: -0.02em;
+    transition: all var(--transition);
+    cursor: pointer;
+    position: relative;
+    z-index: 2;
+
+    @media only screen and (min-width: 768px) {
+        height: 56px;
+    }
+}
+
+.avatarThumb {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--color-contrast);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.avatarImg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.avatarLetter {
+    color: var(--bg-page);
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.username {
+    font-size: 14px;
+    letter-spacing: -0.02em;
+    color: var(--color-titles);
+    max-width: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.chevron {
+    color: var(--color-contrast);
+    transition: transform var(--transition), stroke var(--transition);
+}
+
+.rotate {
+    transform: rotate(180deg);
+}
+
+.userWrapper {
+    margin-bottom: 8px;
+}
+
+.relativeWrapper {
+    position: relative;
+    width: fit-content;
+    display: inline-block;
+}

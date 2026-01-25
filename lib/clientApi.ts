@@ -3,6 +3,7 @@ import { apiNext } from "./api";
 import { User } from "@/type/user";
 import { Transaction } from "@/type/transaction";
 import { UserInfo } from "@/type/userInfo";
+import { GetStatistic } from "@/type/statistics";
 
 interface UserCategory {
   type: string;
@@ -76,13 +77,17 @@ export async function createCategory(
 }
 
 export async function deleteCategory(id: string): Promise<void> {
-  await apiNext.delete<void>(`/categories${id}`);
+  await apiNext.delete<void>(`/categories/${id}`);
 }
 
-export async function updateCatecory(
+export async function updateCategory(
   userCategory: UpdateCategory,
 ): Promise<void> {
-  await apiNext.patch<void>(`/categories/${userCategory._id}`, userCategory);
+  const id = userCategory._id;
+  const newParams = {
+    categoryName: userCategory.categoryName,
+  };
+  await apiNext.patch<void>(`/categories/${id}`, newParams);
 }
 
 //Auth
@@ -162,4 +167,13 @@ export async function getStatsCurrentMonth(): Promise<CategoryStats[]> {
     "/stats/categories/current-month",
   );
   return data;
+}
+//Statistics
+
+export async function getStastics(): Promise<GetStatistic[]> {
+  const res = await apiNext.get<GetStatistic[]>(
+    "/stats/categories/current-month",
+  );
+
+  return res.data;
 }
