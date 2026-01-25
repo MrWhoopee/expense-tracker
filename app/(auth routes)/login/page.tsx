@@ -51,7 +51,9 @@ export default function SignIn() {
       }
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
-        setServerError(err.response?.data?.message || "Login failed. Please try again.");
+        setServerError(
+          err.response?.data?.message || "Login failed. Please try again.",
+        );
       } else {
         setServerError("An unexpected error occurred");
       }
@@ -70,74 +72,72 @@ export default function SignIn() {
       >
         {({ errors, touched }) => (
           <Form className={css.form}>
-            <div className={css.logicalWrapper}>
-              <h1 className={css.formTitle}>Sign in</h1>
-              <p className={css.formWelcomeText}>
-                Welcome back to effortless expense tracking! Your financial
-                dashboard awaits.
-              </p>
-            </div>
+            <h1 className={css.formTitle}>Sign in</h1>
+            <p className={css.formWelcomeText}>
+              Welcome back to effortless expense tracking! Your financial
+              dashboard awaits.
+            </p>
 
-            <div className={css.logicalWrapper}>
-              {/* Email Field */}
-              <div className={css.inputFieldWrapper}>
-                <label htmlFor="email" className={css.visuallyHidden}>Email</label>
-                <Field
-                  className={clsx(css.input, {
-                    [css.errorInput]: errors.email && touched.email,
-                  })}
-                  type="email"
-                  name="email"
-                  placeholder="Email"
-                  autoComplete="email"
-                />
-                <ErrorMessage name="email" component="span" className={css.error} />
-              </div>
+            {/* Email Field */}
 
-              {/* Password Field */}
-              <div className={css.inputFieldWrapper}>
-                <label htmlFor="password" className={css.visuallyHidden}>Password</label>
-                <div className={css.passwordInputContainer}>
-                  <Field
-                    className={clsx(css.input, {
-                      [css.errorInput]: errors.password && touched.password,
-                    })}
-                    type={showPassword ? "text" : "password"}
-                    name="password"
-                    placeholder="Password"
-                    autoComplete="current-password"
-                  />
-                  <button
-                    type="button"
-                    className={css.passwordToggle}
-                    onClick={togglePasswordVisibility}
-                    aria-label="Toggle password visibility"
-                  >
-                    {showPassword ? <FaEyeSlash /> : <FaEye />}
-                  </button>
-                </div>
-                <ErrorMessage name="password" component="span" className={css.error} />
-              </div>
-            </div>
+            {/* <label htmlFor="email" className={css.visuallyHidden}>
+                Email
+              </label> */}
+            <Field
+              className={clsx(css.input, {
+                [css.errorInput]: errors.email && touched.email,
+              })}
+              type="email"
+              name="email"
+              placeholder="Email"
+              autoComplete="email"
+            />
+            <ErrorMessage name="email" component="span" className={css.error} />
+
+            {/* Password Field */}
+
+            <label htmlFor="password" className={css.visuallyHidden}>
+              Password
+            </label>
+
+            <Field
+              className={css.input}
+              type={showPassword ? "text" : "password"}
+              name="password"
+              placeholder="Password"
+              autoComplete="current-password"
+            />
+            <button
+              type="button"
+              className={css.passwordToggle}
+              onClick={togglePasswordVisibility}
+              aria-label="Toggle password visibility"
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </button>
+
+            <ErrorMessage
+              name="password"
+              component="span"
+              className={css.error}
+            />
 
             {/* Вивід помилки сервера */}
             {serverError && <div className={css.error}>{serverError}</div>}
 
-            <div className={css.logicalWrapper}>
-              <button 
-                className={css.submitButton} 
-                type="submit" 
-                disabled={loading}
-              >
-                {loading ? "Signing in..." : "Sign in"}
-              </button>
-              <p className={css.actionText}>
-                {"Don't have an account?"} &#160;
-                <Link className={css.actionTextLink} href="/register">
-                  Sign up
-                </Link>
-              </p>
-            </div>
+            <button
+              className={css.submitButton}
+              type="submit"
+              disabled={loading}
+            >
+              {loading ? "Signing in..." : "Sign in"}
+            </button>
+            <p className={css.actionText}>
+              {"Don't have an account?"} &#160;
+              <Link className={css.actionTextLink} href="/register">
+                Sign up
+              </Link>
+            </p>
           </Form>
         )}
       </Formik>
