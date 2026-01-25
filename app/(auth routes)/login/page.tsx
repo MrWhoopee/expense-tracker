@@ -1,4 +1,5 @@
 "use client";
+import BgImageWrapper from "@/components/BgImageWrapper/BgImageWrapper";
 import css from "./LoginPage.module.css";
 import Link from "next/link";
 
@@ -7,6 +8,7 @@ export default function SignIn() {
 
   return (
     <section className={css.mainContent}>
+      <BgImageWrapper />
       <form action={handleSubmit} className={css.form}>
         <div className={css.logicalWrapper}>
           <h1 className={css.formTitle}>Sign in</h1>
