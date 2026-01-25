@@ -1,0 +1,26 @@
+.logo {
+    display: flex;
+    justify-content: center;
+}
+
+.logoMobile {
+    display: block;
+    color: var(--color-titles);
+    --logo-color: var(--color-contrast);
+    transition: color var(--transition), fill var(--transition);
+
+    @media screen and (min-width: 768px) {
+        display: none;
+    }
+}
+
+.logoDesktop {
+    display: none;
+    color: var(--color-titles);
+    --logo-color: var(--color-contrast);
+    transition: color var(--transition), fill var(--transition);
+
+    @media screen and (min-width: 768px) {
+        display: block;
+    }
+}
