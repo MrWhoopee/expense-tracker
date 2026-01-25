@@ -9,6 +9,7 @@ import { RegisterRequest, userRegister } from "@/lib/clientApi";
 import clsx from "clsx";
 import { FaBeer, FaEye, FaEyeSlash } from "react-icons/fa";
 import { useUserStore } from "@/store/useUserStore";
+import BgImageWrapper from "@/components/BgImageWrapper/BgImageWrapper";
 
 const initialValues: RegisterRequest = {
   name: "",
@@ -67,27 +68,28 @@ export default function SignUp() {
   };
 
   return (
-    <Formik
-      initialValues={initialValues}
-      onSubmit={handleSubmit}
-      validationSchema={validationSchema}
-      className={css.mainContent}
-    >
-      {({ errors, touched }) => (
-        <Form className={css.form}>
-          <div className={css.logicalWrapper}>
-            <h1 className={css.formTitle}>Sign up</h1>
-            <p className={css.formWelcomeText}>
-              Step into a world of hassle-free expense management! Your journey
-              towards financial mastery begins here.
-            </p>
-          </div>
+    <div className={css.mainContent}>
+      <BgImageWrapper />
+      <Formik
+        initialValues={initialValues}
+        onSubmit={handleSubmit}
+        validationSchema={validationSchema}
+        className={css.mainContent}
+      >
+        {({ errors, touched }) => (
+          <Form className={css.form}>
+            <div className={css.logicalWrapper}>
+              <h1 className={css.formTitle}>Sign up</h1>
+              <p className={css.formWelcomeText}>
+                Step into a world of hassle-free expense management! Your
+                journey towards financial mastery begins here.
+              </p>
+            </div>
 
-          <div className={css.logicalWrapper}>
-            <div className={css.inputFieldWrapper}>
-              <label htmlFor="name" className={css.visuallyHidden}>
+            <div className={css.passwordInputContainer}>
+              {/* <label htmlFor="name" className={css.visuallyHidden}>
                 Name
-              </label>
+              </label> */}
               <Field
                 className={clsx(css.input, {
                   [css.errorInput]: errors.name && touched.name, // Додаємо клас для помилки
@@ -104,10 +106,10 @@ export default function SignUp() {
               />
             </div>
 
-            <div className={css.inputFieldWrapper}>
-              <label htmlFor="email" className={css.visuallyHidden}>
+            <div className={css.passwordInputContainer}>
+              {/* <label htmlFor="email" className={css.visuallyHidden}>
                 Email
-              </label>
+              </label> */}
               <Field
                 className={clsx(css.input, {
                   [css.errorInput]: errors.email && touched.email,
@@ -124,10 +126,10 @@ export default function SignUp() {
               />
             </div>
 
-            <div className={css.inputFieldWrapper}>
-              <label htmlFor="password" className={css.visuallyHidden}>
+            <div className={css.passwordInputContainer}>
+              {/* <label htmlFor="password" className={css.visuallyHidden}>
                 Password
-              </label>
+              </label> */}
               <Field
                 className={clsx(css.input, {
                   [css.errorInput]: errors.password && touched.password,
@@ -152,9 +154,7 @@ export default function SignUp() {
                 className={css.error}
               />
             </div>
-          </div>
 
-          <div className={css.logicalWrapper}>
             <button className={css.submitButton} type="submit">
               {loading ? "Signing up..." : "Sign up"}
             </button>
@@ -164,9 +164,9 @@ export default function SignUp() {
                 Sign in
               </Link>
             </p>
-          </div>
-        </Form>
-      )}
-    </Formik>
+          </Form>
+        )}
+      </Formik>
+    </div>
   );
 }
