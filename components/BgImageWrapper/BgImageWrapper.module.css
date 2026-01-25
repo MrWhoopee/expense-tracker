@@ -8,16 +8,16 @@
   background-position: center;
   background-repeat: no-repeat;
   background-image: image-set(
-    url(/bgImage/bgImg\ mob.jpg) 1x,
-    url(/bgImage/bgImg\ mob\ 2x.jpg) 2x
+    url(/bgImage/bgImg-mob.jpg) 1x,
+    url(/bgImage/bgImg-mob-2x.jpg) 2x
   );
 
   @media screen and (min-width: 768px) {
     width: 704px;
     height: 482px;
     background-image: image-set(
-      url(/bgImage/bgImg\ tab.jpg) 1x,
-      url(/bgImage/bgImg\ tab\ 2x.jpg) 2x
+      url(/bgImage/bgImg-tab.jpg) 1x,
+      url(/bgImage/bgImg-tab-2x.jpg) 2x
     );
   }
 
@@ -25,8 +25,8 @@
     width: 611px;
     height: 568px;
     background-image: image-set(
-      url(/bgImage/bgImg\ desc.jpg) 1x,
-      url(/bgImage/bgImg\ desc\ 2x.jpg) 2x
+      url(/bgImage/bgImg-desc.jpg) 1x,
+      url(/bgImage/bgImg-desc-2x.jpg) 2x
     );
   }
 }
@@ -52,7 +52,7 @@
   display: flex;
   flex-direction: row;
   gap: 12px;
-  align-items: center;
+  align-items: flex-end;
 
   border-radius: 20px;
   width: var(--card-width);
@@ -89,14 +89,22 @@
   width: 36px;
   height: 36px;
   box-sizing: border-box;
-  padding: 18px;
   background-color: #0ef387;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0c0d0d;
 
   @media screen and (min-width: 768px) {
     border-radius: 13px;
     width: 43px;
     height: 43px;
   }
+}
+.icon {
+  width: 24px;
+  height: 24px;
+  display: block;
 }
 
 .infoCardBalance {

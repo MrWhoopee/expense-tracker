@@ -4,7 +4,11 @@ export default function BgImageWrapper() {
   return (
     <div className={css.bgImgWrapper}>
       <div className={css.infoCard}>
-        <div className={css.infoCardGrowth}></div>
+        <div className={css.infoCardGrowth}>
+          <svg className={css.icon}>
+            <use href="/bgImage.svg#icon-arrow-up-right"></use>
+          </svg>
+        </div>
 
         <div className={css.infoCardBalance}>
           <p className={css.infoCardLabelBalance}>Your balance</p>
