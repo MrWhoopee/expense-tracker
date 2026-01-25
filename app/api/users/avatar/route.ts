@@ -22,7 +22,7 @@ export async function PATCH(request: NextRequest) {
       logErrorResponse(error.response?.data);
       return NextResponse.json(
         { error: error.message, response: error.response?.data },
-        { status: error.status },
+        { status: error.response?.status || 500 },
       );
     }
     logErrorResponse({ message: (error as Error).message });
@@ -42,19 +42,21 @@ export async function DELETE() {
         Cookie: cookieStore.toString(),
       },
     });
-    return NextResponse.json(res.data, { status: res.status });
-  } catch (error) {
+    return NextResponse.json({ success: true }, { status: 200 });
+  } catch (error: any) {
     if (isAxiosError(error)) {
-      logErrorResponse(error.response?.data);
-      return NextResponse.json(
-        { error: error.message, response: error.response?.data },
-        { status: error.status },
-      );
+      // Логуємо помилку в термінал, щоб ти бачив, що не так
+      console.error("DELETE ERROR:", error.response?.data || error.message);
+      // logErrorResponse(error.response?.data);
+      // return NextResponse.json(
+      //   { error: error.message, response: error.response?.data },
+      //   { status: error.response?.status || 500 },
+      // );
     }
-    logErrorResponse({ message: (error as Error).message });
+    // logErrorResponse({ message: (error as Error).message });
     return NextResponse.json(
       { error: "Internal Server Error" },
-      { status: 500 },
+      { status: error.response?.status || 500 },
     );
   }
 }
