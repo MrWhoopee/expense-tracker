@@ -1,5 +1,5 @@
 import { Category } from "@/type/category";
-import { apiServer } from "./api";
+import { apiNext } from "./api";
 import { cookies } from "next/headers";
 import { UserInfo } from "@/type/userInfo";
 import { GetStatistic } from "@/type/statistics";
@@ -8,7 +8,7 @@ export async function getCategoriesServer(): Promise<Category> {
   const cookieStore = await cookies();
   const cookieString = cookieStore.toString();
 
-  const res = await apiServer.get<Category>("/categories", {
+  const res = await apiNext.get<Category>("/categories", {
     headers: {
       Cookie: cookieString,
     },
@@ -20,7 +20,7 @@ export async function getCategoriesServer(): Promise<Category> {
 export async function checkSessionServer(): Promise<boolean> {
   const cookieStore = await cookies();
   const cookieString = cookieStore.toString();
-  const res = await apiServer.get("/auth/session", {
+  const res = await apiNext.get("/auth/session", {
     headers: {
       Cookie: cookieString,
     },
@@ -32,7 +32,7 @@ export async function checkSessionServer(): Promise<boolean> {
 export async function getUserServer(): Promise<UserInfo> {
   const cookieStore = await cookies();
   const cookieString = cookieStore.toString();
-  const res = await apiServer.get<UserInfo>("/users/current", {
+  const res = await apiNext.get<UserInfo>("/users/current", {
     headers: {
       Cookie: cookieString,
     },
@@ -44,7 +44,7 @@ export async function getUserServer(): Promise<UserInfo> {
 export async function getStasticsServer(): Promise<GetStatistic[]> {
   const cookieStore = await cookies();
   const cookieString = cookieStore.toString();
-  const res = await apiServer.get<GetStatistic[]>(
+  const res = await apiNext.get<GetStatistic[]>(
     "/stats/categories/current-month",
     {
       headers: {

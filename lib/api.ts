@@ -5,7 +5,7 @@ export const apiNext = axios.create({
   withCredentials: true,
 });
 
-export const apiServer = axios.create({
-  baseURL: `${process.env.SERVER_PUBLIC_API_URL}`,
-  withCredentials: true,
-});
+// export const apiServer = axios.create({
+//   baseURL: `${process.env.SERVER_PUBLIC_API_URL}`,
+//   withCredentials: true,
+// });
