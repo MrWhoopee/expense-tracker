@@ -1,5 +1,6 @@
 "use client";
-
+import BgImageWrapper from "@/components/BgImageWrapper/BgImageWrapper";
+import css from "./LoginPage.module.css";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -8,9 +9,7 @@ import * as Yup from "yup";
 import clsx from "clsx";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import axios from "axios";
-
 import { userLogin } from "@/lib/clientApi";
-import css from "./LoginPage.module.css";
 
 // Схема валідації (ідентична реєстрації, але без name)
 const validationSchema = Yup.object().shape({
@@ -63,6 +62,7 @@ export default function SignIn() {
 
   return (
     <section className={css.mainContent}>
+      <BgImageWrapper />
       <Formik
         initialValues={initialValues}
         onSubmit={handleSubmit}

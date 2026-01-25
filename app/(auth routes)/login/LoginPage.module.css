@@ -10,22 +10,37 @@
 }
 
 .mainContent {
-  flex: 1;
   display: flex;
-  align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  padding: 106px 20px 169px 20px;
+
+  @media only screen and (min-width: 768px) {
+    padding: 171px 0 262px 0;
+  }
+
+  @media only screen and (min-width: 1440px) {
+    gap: 54px;
+    padding: 41px 100px 100px 100px;
+  }
+}
+
+.mainContent > :first-child {
+  display: none;
+
+  @media only screen and (min-width: 1440px) {
+    display: block;
+  }
 }
 
 .form {
   display: flex;
   flex-direction: column;
   gap: 35px;
-  width: 100%;
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 19px;
   background-color: initial;
+
+  @media only screen and (min-width: 768px) {
+    max-width: 400px;
+  }
 }
 
 /* Адаптивність як у реєстрації */
@@ -80,46 +95,33 @@
 }
 
 .input {
-  width: 100%;
-  padding: 12px 14px;
+  font-family: var(--font-inter), sans-serif;
+  padding: 8px 12px;
   font-size: 14px;
   border: 1px solid rgba(250, 250, 250, 0.2);
-  background-color: transparent;
-  border-radius: 12px;
+  background-color: rgba(250, 250, 250, 0);
+  border-radius: 4px;
   outline: none;
-  color: #fafafa;
-  transition: border-color 0.3s ease;
-}
-
-.input::placeholder {
   color: rgba(250, 250, 250, 0.4);
-}
 
-.input:hover,
-.input:focus {
-  border-color: #0ef387;
-}
+  transition:
+    border-color 0.3s ease,
+    color 0.3s ease;
 
-.errorInput {
-  border-color: #eb4444 !important;
-}
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px #0c0d0d inset !important;
+    -webkit-text-fill-color: rgba(250, 250, 250, 0.4) !important;
+    -webkit-text-fill-font: var(--font-inter), sans-serif !important;
+    transition: background-color 5000s ease-in-out 0s;
+  }
 
-.passwordToggle {
-  position: absolute;
-  right: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  color: rgba(250, 250, 250, 0.4);
-  display: flex;
-  align-items: center;
-  padding: 0;
-}
-
-.passwordToggle:hover {
-  color: #0ef387;
+  &:hover,
+  &:focus {
+    border-color: #0ef387;
+    color: #fafafa;
+  }
 }
 
 .submitButton {
