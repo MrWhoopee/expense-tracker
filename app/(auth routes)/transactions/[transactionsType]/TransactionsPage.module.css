@@ -1,0 +1,44 @@
+.pageWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Центрируем всё содержимое по вертикали */
+  min-height: calc(100vh - 80px); /* 100vh минус примерная высота хедера */
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.headerSection {
+  margin-bottom: 40px;
+}
+
+.mainContent {
+  display: flex;
+  flex-direction: column; /* На мобилках всё в ряд */
+  gap: 40px;
+}
+
+@media screen and (min-width: 1440px) {
+  .mainContent {
+    flex-direction: row; /* На десктопе — две колонки */
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+}
+
+.leftColumn {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.rightColumn {
+  width: 100%;
+}
+
+@media screen and (min-width: 1440px) {
+  .rightColumn {
+    width: 500px; /* Фиксируем ширину формы на десктопе */
+  }
+}
