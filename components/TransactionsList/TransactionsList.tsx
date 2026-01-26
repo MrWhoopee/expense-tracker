@@ -1,29 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo } from "react";
 import css from "./TransactionsList.module.css";
 import {
   AllCommunityModule,
   ColDef,
   ModuleRegistry,
   themeQuartz,
+  // ValueFormatterParams,
 } from "ag-grid-community";
 import { ICellRendererParams } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
 import Image from "next/image";
+import { Transaction } from "@/type/transaction";
 
 // Register all Community features
 ModuleRegistry.registerModules([AllCommunityModule]);
-
-interface Transaction {
-  _id: string;
-  category: string;
-  comment: string;
-  date: string;
-  time: string;
-  sum: string; //number?
-  type?: "income" | "expense";
-}
 
 // buttons renderer
 const ActionsRenderer = (props: ICellRendererParams<Transaction>) => {
@@ -65,127 +57,132 @@ const ActionsRenderer = (props: ICellRendererParams<Transaction>) => {
 };
 
 interface TransactionsListProps {
-  type: string;
   data: Transaction[];
 }
 
-const TransactionsList = ({ type, data }: TransactionsListProps) => {
+const TransactionsList = ({ data }: TransactionsListProps) => {
   // Row Data: The data to be displayed.
-  const [rowData, setRowData] = useState<Transaction[]>([
-    {
-      _id: "1",
-      category: "type",
-      comment: "Model Y",
-      date: "83293293",
-      time: "5:55",
-      sum: "100 / UAH",
-    },
-    {
-      _id: "2",
-      category: "type",
-      comment: "Model Model Model Model Model",
-      date: "64950",
-      time: "23:23",
-      sum: "10 / UAH",
-    },
-    {
-      _id: "3",
-      category: "type",
-      comment: "Model X",
-      date: "64950",
-      time: "23:45",
-      sum: "3992399283820 / UAH",
-    },
-    {
-      _id: "4",
-      category: "gifts",
-      comment: "Model T",
-      date: "64950",
-      time: "13:33",
-      sum: "10430 / UAH",
-    },
-    {
-      _id: "5",
-      category: "fun",
-      comment: "Model L",
-      date: "40750",
-      time: "16:07",
-      sum: "2 / UAH",
-    },
-    {
-      _id: "6",
-      category: "food",
-      comment: "Model N",
-      date: "64950",
-      time: "2:24",
-      sum: "3400 / UAH",
-    },
-    {
-      _id: "7",
-      category: "type",
-      comment: "Model M",
-      date: "64950",
-      time: "5:23",
-      sum: "2300 / UAH",
-    },
-  ]);
+  // const [rowData, setRowData] = useState<Transaction[]>([
+  //   {
+  //     _id: "1",
+  //     category: "type",
+  //     comment: "Model Y",
+  //     date: "83293293",
+  //     time: "5:55",
+  //     sum: "100 / UAH",
+  //   },
+  //   {
+  //     _id: "2",
+  //     category: "type",
+  //     comment: "Model Model Model Model Model",
+  //     date: "64950",
+  //     time: "23:23",
+  //     sum: "10 / UAH",
+  //   },
+  //   {
+  //     _id: "3",
+  //     category: "type",
+  //     comment: "Model X",
+  //     date: "64950",
+  //     time: "23:45",
+  //     sum: "3992399283820 / UAH",
+  //   },
+  //   {
+  //     _id: "4",
+  //     category: "gifts",
+  //     comment: "Model T",
+  //     date: "64950",
+  //     time: "13:33",
+  //     sum: "10430 / UAH",
+  //   },
+  //   {
+  //     _id: "5",
+  //     category: "fun",
+  //     comment: "Model L",
+  //     date: "40750",
+  //     time: "16:07",
+  //     sum: "2 / UAH",
+  //   },
+  //   {
+  //     _id: "6",
+  //     category: "food",
+  //     comment: "Model N",
+  //     date: "64950",
+  //     time: "2:24",
+  //     sum: "3400 / UAH",
+  //   },
+  //   {
+  //     _id: "7",
+  //     category: "type",
+  //     comment: "Model M",
+  //     date: "64950",
+  //     time: "5:23",
+  //     sum: "2300 / UAH",
+  //   },
+  // ]);
 
   // Column Definitions: Defines the columns to be displayed.
-  const [columnDefs, setColumnDefs] = useState<ColDef<Transaction>[]>([
-    {
-      field: "category",
-      headerName: "Category",
-      minWidth: 150,
-      sortable: false,
-      filter: false,
-    },
-    {
-      field: "comment",
-      headerName: "Comment",
-      minWidth: 150,
-      sortable: false,
-      filter: false,
-    },
-    {
-      field: "date",
-      headerName: "Date",
-      minWidth: 170,
-      sortable: false,
-      filter: false,
-    },
-    {
-      field: "time",
-      headerName: "Time",
-      maxWidth: 100,
-      sortable: false,
-      filter: false,
-    },
-    {
-      field: "sum",
-      headerName: "Sum",
-      minWidth: 150,
-      sortable: false,
-      filter: false,
-    },
-    {
-      headerName: "Action",
-      cellRenderer: ActionsRenderer,
-      minWidth: 327,
-      resizable: false,
-      sortable: false,
-      filter: false,
-      // suppress this keyboard event in the (ag) grid cell
-      suppressKeyboardEvent: (params) => {
-        const { event } = params;
-        if (event.key === "Tab") return true;
-        return false;
+  const columnDefs = useMemo<ColDef<Transaction>[]>(
+    () => [
+      {
+        field: "category",
+        headerName: "Category",
+        minWidth: 150,
       },
-    },
-  ]);
+      {
+        field: "comment",
+        headerName: "Comment",
+        minWidth: 150,
+      },
+      {
+        field: "date",
+        headerName: "Date",
+        minWidth: 170,
+        // valueFormatter: (params: ValueFormatterParams) => {
+        //   if (!params.value) return "";
+        //   const date = new Date(params.value);
+        //   return date.toLocaleDateString("uk-UA");
+        // },
+        // !Number(params.value)???
+      },
+      {
+        field: "time",
+        headerName: "Time",
+        maxWidth: 100,
+      },
+      {
+        field: "sum",
+        headerName: "Sum",
+        minWidth: 150,
+        // valueFormatter: (params: ValueFormatterParams) => {
+        //   return params.value != null ? `${params.value} UAH` : "";
+        // },
+      },
+      {
+        headerName: "Action",
+        cellRenderer: ActionsRenderer,
+        minWidth: 327,
+        resizable: false,
 
-  const defaultColDef = {
-    flex: 1,
-  };
+        // suppress this keyboard event in the (ag) grid cell
+        suppressKeyboardEvent: (params) => {
+          const { event } = params;
+          if (event.key === "Tab") return true;
+          return false;
+        },
+      },
+    ],
+    [],
+  );
+
+  const defaultColDef = useMemo(
+    () => ({
+      flex: 1,
+      sortable: false,
+      filter: false,
+    }),
+    [],
+  );
 
   //   const autoSizeStrategy = useMemo<AutoSizeStrategy>(() => {
   //     return {
@@ -241,7 +238,7 @@ const TransactionsList = ({ type, data }: TransactionsListProps) => {
     >
       <AgGridReact
         className={css.gridContainer}
-        rowData={rowData}
+        rowData={data}
         columnDefs={columnDefs}
         defaultColDef={defaultColDef}
         theme={myTheme}
