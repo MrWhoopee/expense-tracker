@@ -26,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable}`}>
-         <Toaster
+        <Toaster
           position="bottom-right"
           toastOptions={{
             duration: 13000,
