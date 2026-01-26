@@ -1,0 +1,50 @@
+.form {
+  display: flex;
+  gap: 13px;
+  padding: 20px 40px;
+  z-index: 999;
+}
+
+.searchInputWrapper {
+  position: relative;
+}
+
+.searchInput {
+  width: 261px;
+  border: 1px solid rgba(17, 17, 17, 0.1);
+  border-radius: 30px;
+  padding: 15px 80px 15px 30px;
+  outline: none;
+
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: #fafafa;
+  background-color: #0c0d0d;
+
+  transition:
+    outline-color 250ms linear,
+    border-color 250ms linear;
+
+  &:focus {
+    outline-color: #fafafa;
+    border-color: #fafafa;
+  }
+}
+
+.searchInput::placeholder {
+  color: rgba(250, 250, 250, 0.4);
+}
+
+/* svg */
+.searchSvgContainer {
+  position: absolute;
+  top: 50%;
+  right: 30px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
