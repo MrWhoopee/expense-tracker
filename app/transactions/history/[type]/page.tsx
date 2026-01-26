@@ -10,12 +10,12 @@ interface HistoryPageProps {
   params: Promise<{ type: string }>;
 }
 
-export default async function TransactionsHistoryPage(
-  params: HistoryPageProps,
-) {
-  const { type } = await params.params;
+export default async function TransactionsHistoryPage({
+  params,
+}: HistoryPageProps) {
+  const { type } = await params;
 
-  const transactionType = type === "income" ? "income" : "expense";
+  const transactionType = type === "incomes" ? "incomes" : "expenses";
 
   const data = await getTransactionByType(transactionType);
 
