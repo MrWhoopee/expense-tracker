@@ -21,12 +21,18 @@ const validationSchema = Yup.object().shape({
   name: Yup.string()
     .min(2, "Name must contain at least 2 characters")
     .max(32, "Name must contain no more than 32 characters")
+    .matches(
+      /^[a-zA-Z\s]+$/,
+      "Name can only contain latin letters and spaces (no dots or special characters)",
+    )
     .required("Name is required"),
   email: Yup.string()
     .required("Email is required")
-    .email()
     .max(64, "Email must contain no more than 64 characters")
-    .email("Invalid email address"),
+    .matches(
+      /^[a-zA-Z0-9_-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+      "Email format is invalid (dots are not allowed before @)",
+    ),
   password: Yup.string()
     .min(8, "Password must be at least 8 characters")
     .max(64, "Password must contain no more than 64 characters")
@@ -53,10 +59,11 @@ export default function SignUp() {
 
       if (res) {
         setUser(res);
-        router.push("/transactions/[transactionsType]");
+        router.push("/");
       }
     } catch (err) {
       setServerError("Registration failed. Please try again.");
+      console.log(err);
     } finally {
       setLoading(false);
     }
@@ -152,6 +159,7 @@ export default function SignUp() {
                   component="span"
                   className={css.error}
                 />
+                {serverError && <p className={css.error}>{serverError}</p>}
               </label>
 
               <button className={css.submitButton} type="submit">
