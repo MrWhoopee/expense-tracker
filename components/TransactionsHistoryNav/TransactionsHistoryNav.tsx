@@ -11,18 +11,18 @@ export default function TransactionsHistoryNav({ onClick }: Props) {
   return (
     <nav className={css.transactionsNav}>
       <Link
-        href={"/transactions/expense"}
+        href={"/transactions/history/expenses"}
         className={css.transactionsLink}
         onClick={onClick}
       >
-        All expense
+        All expenses
       </Link>
       <Link
-        href={"/transactions/income"}
+        href={"/transactions/history/incomes"}
         className={css.transactionsLink}
         onClick={onClick}
       >
-        All income
+        All incomes
       </Link>
     </nav>
   );
