@@ -60,11 +60,12 @@
   @media screen and (min-width: 1440px) {
     width: 566px;
     min-height: 600px;
-    margin: 0 0 0 44px;
+    margin: 0;
   }
 }
 
 .transaction-form-wrapper-with-close {
+  margin: 0;
   padding-top: 40px;
   padding-bottom: 39px;
   @media screen and (min-width: 768px) {
