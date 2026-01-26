@@ -138,7 +138,7 @@ export default function UserSetsModal({ onClose }: Props) {
       <div className={css.modal} onClick={(e) => e.stopPropagation()}>
         <button className={css.closeBtn} onClick={onClose}>
           <svg className={css.closeIcon} width="20" height="20">
-            <use href="/sprite.svg#close-btn"></use>
+            <use href="/img/sprite.svg#close-btn"></use>
           </svg>
         </button>
 
@@ -150,7 +150,7 @@ export default function UserSetsModal({ onClose }: Props) {
               <img src={avatarPreview} alt="User" className={css.avatarImg} />
             ) : (
               <svg width="40" height="40" className={css.userIcon}>
-                <use href="/sprite.svg#user-bold"></use>
+                <use href="/img/sprite.svg#user-bold"></use>
               </svg>
             )}
           </div>
@@ -197,7 +197,7 @@ export default function UserSetsModal({ onClose }: Props) {
                 width="16"
                 height="16"
               >
-                <use href="/sprite.svg#chevron-down"></use>
+                <use href="/img/sprite.svg#chevron-down"></use>
               </svg>
             </button>
 

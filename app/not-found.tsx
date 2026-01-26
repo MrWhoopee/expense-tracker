@@ -1,8 +1,34 @@
 "use client";
 
+import { Metadata } from "next";
 import css from "../components/WelcomeContent/WelcomeContent.module.css";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+
+export const metadata: Metadata = {
+  title: "Page not found | Expense Tracker",
+  description: "Sorry, page you are looking for not found",
+  openGraph: {
+    title: "Page not found",
+    description: "Sorry, page you are looking for not found",
+    url: "https://expense-tracker.app/not-found",
+    siteName: "Expense Tracker",
+    images: [
+      {
+        url: "#",
+        width: 1200,
+        height: 630,
+        alt: "page not found",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Page not found",
+    description: "Sorry, page you are looking for not found",
+    images: ["#"],
+  },
+};
 
 export default function NotFound() {
   const router = useRouter();

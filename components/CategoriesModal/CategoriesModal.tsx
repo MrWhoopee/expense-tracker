@@ -227,7 +227,7 @@ const CategoriesModal = ({
             aria-label="Close modal"
           >
             <svg className={css["icon-close"]}>
-              <use href="../../img/sprite.svg#icon-x"></use>
+              <use href="/img/sprite.svg#icon-x"></use>
             </svg>
           </button>
           <Formik
@@ -277,7 +277,7 @@ const CategoriesModal = ({
                               height="16"
                               className={css.iconModal}
                             >
-                              <use href="../../img/sprite.svg#icon-check"></use>
+                              <use href="/img/sprite.svg#icon-check"></use>
                             </svg>
                           </button>
 
@@ -292,7 +292,7 @@ const CategoriesModal = ({
                               height="16"
                               className={css.iconModal}
                             >
-                              <use href="../../img/sprite.svg#icon-edit"></use>
+                              <use href="/img/sprite.svg#icon-edit"></use>
                             </svg>
                           </button>
 
@@ -307,7 +307,7 @@ const CategoriesModal = ({
                               height="16"
                               className={css.iconModal}
                             >
-                              <use href="../../img/sprite.svg#icon-trash"></use>
+                              <use href="/img/sprite.svg#icon-trash"></use>
                             </svg>
                           </button>
                         </div>

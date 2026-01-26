@@ -28,7 +28,7 @@ export default function BurgerMenu({ onClose }: Props) {
       <div className={css.modal} onClick={(e) => e.stopPropagation()}>
         <button className={css.closeBtn} onClick={onClose}>
           <svg className="" width="20" height="20">
-            <use href="/sprite.svg#close-btn-mobile"></use>
+            <use href="/img/sprite.svg#close-btn-mobile"></use>
           </svg>
         </button>
 

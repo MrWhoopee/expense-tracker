@@ -94,7 +94,9 @@ export default function UserPanel({ onClose }: Props) {
               <svg className={css.iconUser} width="16" height="16">
                 <use
                   href={
-                    theme === "dark" ? "/sprite.svg#sun" : "/sprite.svg#moon"
+                    theme === "dark"
+                      ? "/img/sprite.svg#sun"
+                      : "/img/sprite.svg#moon"
                   }
                 ></use>
               </svg>
@@ -108,7 +110,7 @@ export default function UserPanel({ onClose }: Props) {
               onClick={handleProfileClick}
             >
               <svg className={css.iconUser} width="16" height="16">
-                <use href="/sprite.svg#user"></use>
+                <use href="/img/sprite.svg#user"></use>
               </svg>
               <span>{profileBtnText}</span>
             </button>
@@ -120,7 +122,7 @@ export default function UserPanel({ onClose }: Props) {
               onClick={handleLogoutClick}
             >
               <svg className={css.iconUser} width="16" height="16">
-                <use href="/sprite.svg#log-out"></use>
+                <use href="/img/sprite.svg#log-out"></use>
               </svg>
               Log out
             </button>
