@@ -104,3 +104,35 @@
     margin-bottom: 40px;
   }
 }
+.homeButton {
+  border-radius: 40px;
+  padding: 14px 44px;
+  width: 139px;
+  height: 45px;
+  border: 1px solid transparent;
+  background: #0ef387;
+  letter-spacing: -0.02em;
+  color: #0c0d0d;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  margin-bottom: 20px;
+
+  &:hover:not(:disabled),
+  &:focus {
+    background: #0ebb69;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.not-found-container {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  text-align: center;
+  margin-top: 20%;
+}
