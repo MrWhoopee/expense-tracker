@@ -1,5 +1,5 @@
-export interface GetStatistic {
+export interface Statistic {
   _id: string;
-  totalAmount: number,
-  categoty: string
+  totalAmount: number;
+  categoty: string;
 }
