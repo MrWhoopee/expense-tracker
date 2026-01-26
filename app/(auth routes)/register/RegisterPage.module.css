@@ -180,3 +180,10 @@
   color: #eb4444;
   font-size: 12px;
 }
+
+.statusIcon svg,
+.passwordToggle svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+}

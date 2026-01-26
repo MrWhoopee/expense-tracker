@@ -3,7 +3,7 @@ import css from "./RegisterPage.module.css";
 import { useId, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { RegisterRequest, userRegister } from "@/lib/clientApi";
 import clsx from "clsx";
@@ -41,13 +41,10 @@ export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
-    setShowPassword((prevState) => !prevState); // Перемикаємо стан видимості паролю
+    setShowPassword((prevState) => !prevState);
   };
 
-  const handleSubmit = async (
-    values: RegisterRequest,
-    // actions: FormikHelpers<RegisterRequest>,
-  ) => {
+  const handleSubmit = async (values: RegisterRequest) => {
     try {
       setLoading(true);
       setServerError("");
@@ -62,7 +59,6 @@ export default function SignUp() {
       setServerError("Registration failed. Please try again.");
     } finally {
       setLoading(false);
-      // actions.resetForm();
     }
   };
 
@@ -87,7 +83,7 @@ export default function SignUp() {
                 <span className={css.visuallyHidden}>Name</span>
                 <Field
                   className={clsx(css.input, {
-                    [css.errorInput]: errors.name && touched.name, // Додаємо клас для помилки
+                    [css.errorInput]: errors.name && touched.name,
                   })}
                   type="text"
                   name="name"
@@ -142,6 +138,7 @@ export default function SignUp() {
                     setServerError("");
                   }}
                 />
+
                 <button
                   type="button"
                   className={css.passwordToggle}

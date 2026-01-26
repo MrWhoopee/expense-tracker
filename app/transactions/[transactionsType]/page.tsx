@@ -3,7 +3,7 @@ import TransactionsChart from "@/components/TransactionsChart/TransactionsChart"
 import TransactionForm from "@/components/TransactionForm/TransactionForm";
 
 // import s from "./TransactionsPage.module.css";
-import { ThemeToggler } from "./../../../../components/ThemeToggler/ThemeToggler";
+import { ThemeToggler } from "../../../components/ThemeToggler/ThemeToggler";
 
 export default async function MainTransactionsPage({
   params,
