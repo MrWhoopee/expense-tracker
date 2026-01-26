@@ -10,25 +10,25 @@ interface HistoryPageProps {
   params: Promise<{ type: string }>;
 }
 
-export default async function TransactionsHistoryPage(
-  params: HistoryPageProps,
-) {
-  const { type } = await params.params;
+export default async function TransactionsHistoryPage({
+  params,
+}: HistoryPageProps) {
+  const { type } = await params;
 
-  const transactionType = type === "income" ? "income" : "expense";
+  const transactionType = type === "incomes" ? "incomes" : "expenses";
 
   const data = await getTransactionByType(transactionType);
 
   return (
     <main className={css.container}>
-      {/* <header className={css.header}>
-        <div className={css.titleWrapper}>
-          <h1 className={css.title}>{title}</h1>
-          <p className={css.description}>{description}</p>
-        </div>
-
-        <TransactionsTotalAmount type={transactionType} />
-      </header> */}
+      <h1 className={css.title}>
+        {transactionType === "incomes" ? "All Incomes" : "All Expenses"}
+      </h1>
+      <p className={css.description}>
+        {transactionType === "incomes"
+          ? "Track and celebrate every bit of earnings effortlessly! Gain insights into your total revenue in a snap."
+          : "View and manage every transaction seamlessly! Your entire financial landscape, all in one place."}
+      </p>
 
       <div className={css.historyContent}>
         <TransactionsSearchTools />
