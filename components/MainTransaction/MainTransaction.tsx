@@ -4,17 +4,11 @@ import TransactionForm from "@/components/TransactionForm/TransactionForm";
 
 // import s from "./TransactionsPage.module.css";
 
-export default async function MainTransactionsPage({
-  params,
-}: {
-  params: Promise<{ transactionsType: string }>;
-}) {
-  const { transactionsType } = await params;
-
+export default function MainTransactions() {
   return (
     <div className="container">
       <section>
-        <h1>{transactionsType === "incomes" ? "Incomes" : "Expenses"} Log</h1>
+        <h1>Expenses Log</h1>
         <p>
           Capture and organize every penny spent with ease! A clear view of your
           financial habits at your fingertips.
@@ -25,7 +19,7 @@ export default async function MainTransactionsPage({
         {/* <ThemeToggler /> */}
         <TransactionsTotalAmount />
         <TransactionForm />
-        {transactionsType === "expenses" && <TransactionsChart />}
+        <TransactionsChart />
       </div>
     </div>
   );

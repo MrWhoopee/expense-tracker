@@ -47,7 +47,7 @@ export default function SignIn() {
 
       if (res) {
         router.refresh();
-        router.push("/transactions");
+        router.push("/");
       }
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
