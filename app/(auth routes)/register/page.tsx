@@ -1,6 +1,6 @@
 "use client";
 import css from "./RegisterPage.module.css";
-import { useId, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ErrorMessage, Field, Form, Formik } from "formik";
