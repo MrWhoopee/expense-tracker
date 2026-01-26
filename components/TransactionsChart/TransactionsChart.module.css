@@ -6,12 +6,12 @@
   width: 100%;
 
   @media only screen and (min-width: 768px) {
-    padding: 40px 60px 57px 40px;
+    padding: 40px 60px 53px 40px;
   }
 
   @media only screen and (min-width: 1440px) {
     max-width: 630px;
-    padding: 40px 40px 57px 40px;
+    padding: 40px 40px 53px 40px;
   }
 }
 

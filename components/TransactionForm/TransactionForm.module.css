@@ -1,4 +1,4 @@
-.container {
+TransactionForm .container {
   @media screen and (max-width: 374px) {
     max-width: 299px;
     margin-right: 10px;
@@ -37,21 +37,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0 auto 40px;
   position: relative;
   box-sizing: border-box;
-  @media screen and (max-width: 374px) {
-    max-width: 335px;
-    margin-right: 16px;
-    margin-left: 16px;
-  }
-  @media screen and (min-width: 375px) {
-    width: 335px;
-    min-height: 533px;
-  }
+
   @media screen and (min-width: 768px) {
-    width: 704px;
-    min-height: 600px;
     padding-left: 40px;
     padding-right: 37px;
     padding-top: 40px;
@@ -59,8 +48,6 @@
   }
   @media screen and (min-width: 1440px) {
     width: 566px;
-    min-height: 600px;
-    margin: 0 0 0 44px;
   }
 }
 
