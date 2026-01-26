@@ -3,6 +3,8 @@ import TransactionsSearchTools from "@/components/TransactionsSearchTools/Transa
 import { Suspense } from "react";
 // import TransactionsTotalAmount from "@/components/TransactionsTotalAmount/TransactionsTotalAmount";
 import css from "@/app/transactions/history/[type]/page.module.css";
+import { getTransactionByType } from "@/lib/clientApi";
+import Loader from "@/components/Loader/Loader";
 
 interface HistoryPageProps {
   params: Promise<{ type: string }>;
@@ -15,17 +17,7 @@ export default async function TransactionsHistoryPage(
 
   const transactionType = type === "income" ? "income" : "expense";
 
-  const mockData = [
-    {
-      _id: "1",
-      category: "Food",
-      comment: "Dinner",
-      date: "2026-01-25",
-      time: "19:00",
-      sum: "500",
-      type: transactionType as "income" | "expense",
-    },
-  ];
+  const data = await getTransactionByType(transactionType);
 
   return (
     <main className={css.container}>
@@ -41,8 +33,8 @@ export default async function TransactionsHistoryPage(
       <div className={css.historyContent}>
         <TransactionsSearchTools />
 
-        <Suspense fallback={<p>Loading transactions...</p>}>
-          <TransactionsList type={transactionType} data={mockData} />
+        <Suspense fallback={<Loader />}>
+          <TransactionsList data={data} />
         </Suspense>
       </div>
     </main>
