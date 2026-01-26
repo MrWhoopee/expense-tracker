@@ -163,7 +163,7 @@ export default function SignUp() {
               </label>
 
               <button className={css.submitButton} type="submit">
-                {loading ? "Signing up..." : "Sign up"}
+                Sign up
               </button>
               <p className={css.actionText}>
                 Already have account? &#160;

@@ -134,7 +134,7 @@ export default function SignIn() {
                 type="submit"
                 disabled={loading}
               >
-                {loading ? "Signing in..." : "Sign in"}
+                Sign in
               </button>
               <p className={css.actionText}>
                 {"Don't have an account?"} &#160;
