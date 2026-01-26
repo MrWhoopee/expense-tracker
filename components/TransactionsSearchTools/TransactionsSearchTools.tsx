@@ -5,11 +5,11 @@ import * as Yup from "yup";
 import css from "./TransactionsSearchTools.module.css";
 import Image from "next/image";
 import CustomDatePicker from "../ui/CustomDatePicker";
+import toast from "react-hot-toast";
 
 interface SearchFormValues {
   search: string;
   date: Date | null;
-  category?: string;
 }
 
 const validationSchema = Yup.object({
@@ -28,23 +28,19 @@ const initialValues: SearchFormValues = {
 const TransactionsSearchTools = () => {
   const handleSubmit = (
     values: SearchFormValues,
-    actions: FormikHelpers<SearchFormValues>,
+    // actions: FormikHelpers<SearchFormValues>,
   ) => {
-    console.log("Form submitted:", values);
-    actions.resetForm();
+    // console.log("Form submitted:", values);
+    // actions.resetForm();
+    try {
+      console.log("Searching by comment keyword:", values.search);
+      console.log("Filtering by date:", values.date);
+
+      // await getTransactionByQuery(values.search, values.date);
+    } catch (error) {
+      toast.error("Failed to fetch transactions. Please try again.");
+    }
   };
-
-  // const FormErrorObserver = () => {
-  //   const { errors, touched } = useFormikContext<SearchFormValues>();
-
-  //   useEffect(() => {
-  //     if (errors.date && touched.date) {
-  //       toast.error(errors.date as string);
-  //     }
-  //   }, [errors.date, touched.date]);
-
-  //   return null;
-  // };
 
   return (
     <Formik
@@ -56,10 +52,10 @@ const TransactionsSearchTools = () => {
     >
       {({ values, setFieldValue, submitForm }) => (
         <Form className={css.form}>
-          {/* <FormErrorObserver /> */}
           <div className={css.searchInputWrapper}>
             <Field
               name="search"
+              type="text"
               placeholder="Search for anything..."
               className={css.searchInput}
               onBlur={() => submitForm()}

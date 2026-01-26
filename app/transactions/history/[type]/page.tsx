@@ -3,7 +3,7 @@ import TransactionsSearchTools from "@/components/TransactionsSearchTools/Transa
 import { Suspense } from "react";
 // import TransactionsTotalAmount from "@/components/TransactionsTotalAmount/TransactionsTotalAmount";
 import css from "@/app/transactions/history/[type]/page.module.css";
-import { getTransactionByType } from "@/lib/clientApi";
+import { getTransactionByType } from "@/lib/serverApi";
 import Loader from "@/components/Loader/Loader";
 
 interface HistoryPageProps {

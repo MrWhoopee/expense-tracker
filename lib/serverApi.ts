@@ -3,6 +3,7 @@ import { apiNext } from "./api";
 import { cookies } from "next/headers";
 import { UserInfo } from "@/type/userInfo";
 import { Statistic } from "@/type/statistics";
+import { Transaction } from "@/type/transaction";
 
 export async function getCategoriesServer(): Promise<Category> {
   const cookieStore = await cookies();
@@ -54,4 +55,18 @@ export async function getStatisticsServer(): Promise<Statistic[]> {
   );
 
   return res.data;
+}
+
+export async function getTransactionByType(
+  type: string,
+): Promise<Transaction[]> {
+  const cookieStore = await cookies();
+  const cookieString = cookieStore.toString();
+  const { data } = await apiNext.get<Transaction[]>(`/transactions/${type}`, {
+    headers: {
+      Cookie: cookieString,
+    },
+  });
+
+  return data;
 }
