@@ -1,0 +1,206 @@
+.container {
+  background-color: var(--bg-component);
+  padding: 28px 20px 48px 20px;
+  border-radius: 30px;
+  color: var(--color-titles);
+  width: 100%;
+
+  @media only screen and (min-width: 768px) {
+    padding: 40px 60px 57px 40px;
+  }
+
+  @media only screen and (min-width: 1440px) {
+    max-width: 630px;
+    padding: 40px 40px 57px 40px;
+  }
+}
+
+.title {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 16px;
+  color: var(--color-paragraph);
+  margin-bottom: 54px;
+
+  @media only screen and (min-width: 768px) {
+    margin-bottom: 40px;
+  }
+}
+
+.contentWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 59px;
+
+  @media only screen and (min-width: 768px) {
+    flex-direction: row;
+    gap: 95px;
+  }
+
+  @media only screen and (min-width: 1440px) {
+    gap: 41px;
+  }
+}
+
+/* .chartContainer {
+  height: 170px; 
+  position: relative;
+  width: 100%; 
+  display: flex;
+  justify-content: center;
+
+  @media only screen and (min-width: 768px) {
+    width: 292px;
+    height: 170px;
+  }
+} */
+
+.chartContainer {
+  width: 100%;
+  max-width: 292px;
+  height: 285px;
+  position: relative;
+  margin-bottom: -143px;
+  margin-top: -22px;
+  aspect-ratio: 2 / 1;
+
+  @media only screen and (min-width: 768px) {
+    width: 292px;
+  }
+}
+
+.totalLabel {
+  font-family: var(--font-family);
+  position: absolute;
+  bottom: 120px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-titles);
+}
+
+.categoryList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex: 1;
+  max-height: 126px;
+  overflow-y: auto;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.categoryList.scrollable {
+  padding-right: 22px;
+}
+
+.categoryItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.categoryInfo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.noDataWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+  min-height: 100px; /* эту часть еще буду допиливать, пока криво*/
+}
+
+.noDataText {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-paragraph);
+  max-width: 250px;
+}
+.marker {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.categoryName {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 16px;
+  color: var(--color-paragraph);
+}
+
+.categoryPercentage {
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--color-titles);
+}
+
+/* полоса прокрутки */
+.categoryList::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* «ползунок» */
+.categoryList::-webkit-scrollbar-thumb {
+  background-color: #444446;
+  border-radius: 12px;
+}
+
+/* фон полосы прокрутки */
+.categoryList::-webkit-scrollbar-track {
+  background: #0c0d0d;
+  border-radius: 8px;
+}
+
+.skeletonWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.skeletonChart {
+  width: 200px;
+  height: 100px;
+  border: 20px solid var(--gray-light, #2a2a2b);
+  border-bottom: 0;
+  border-top-left-radius: 110px;
+  border-top-right-radius: 110px;
+  margin: 0 auto;
+  position: relative;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.skeletonList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.skeletonItem {
+  height: 20px;
+  width: 100%;
+  background: var(--gray-light, #2a2a2b);
+  border-radius: 4px;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}

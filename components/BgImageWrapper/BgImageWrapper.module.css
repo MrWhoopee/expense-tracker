@@ -1,0 +1,164 @@
+.bgImgWrapper {
+  position: relative;
+  width: 335px;
+  height: 381px;
+  border-radius: 20px;
+  box-sizing: border-box;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: image-set(
+    url(/bgImage/bgImg-mob.jpg) 1x,
+    url(/bgImage/bgImg-mob-2x.jpg) 2x
+  );
+
+  @media screen and (min-width: 768px) {
+    width: 704px;
+    height: 482px;
+    background-image: image-set(
+      url(/bgImage/bgImg-tab.jpg) 1x,
+      url(/bgImage/bgImg-tab-2x.jpg) 2x
+    );
+  }
+
+  @media screen and (min-width: 1440px) {
+    width: 611px;
+    height: 568px;
+    background-image: image-set(
+      url(/bgImage/bgImg-desc.jpg) 1x,
+      url(/bgImage/bgImg-desc-2x.jpg) 2x
+    );
+  }
+}
+
+@keyframes moveX {
+  0% {
+    left: calc(-1 * var(--offset));
+  }
+
+  100% {
+    left: calc(100% - var(--card-width) + var(--offset));
+  }
+}
+
+.infoCard {
+  --card-width: 248px;
+  position: absolute;
+  bottom: 60px;
+  left: calc(-1 * var(--offset));
+  --offset: 10px;
+  --duration: 2s;
+
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  align-items: center;
+
+  border-radius: 20px;
+  width: var(--card-width);
+  height: 81px;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #fafafa;
+
+  animation: moveX var(--duration) linear infinite alternate;
+  animation-play-state: running;
+
+  @media screen and (min-width: 768px) {
+    --offset: 16px;
+    --duration: 5.5s;
+    --card-width: 303px;
+    bottom: 46px;
+    width: var(--card-width);
+    height: 121px;
+  }
+
+  @media screen and (min-width: 1440px) {
+    --offset: 50px;
+    --duration: 5s;
+    bottom: 132px;
+  }
+  &:hover,
+  &:focus {
+    animation-play-state: paused;
+  }
+}
+
+.infoCardGrowth {
+  border-radius: 10px;
+  width: 36px;
+  height: 36px;
+  box-sizing: border-box;
+  background-color: #0ef387;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0c0d0d;
+
+  @media screen and (min-width: 768px) {
+    border-radius: 13px;
+    width: 43px;
+    height: 43px;
+  }
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+.infoCardBalance {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 4px;
+  width: 89px;
+  height: 41px;
+
+  @media screen and (min-width: 768px) {
+    gap: 7px;
+    width: 119px;
+    height: 55px;
+  }
+}
+
+.infoCardLabelBalance {
+  margin: 0;
+  font-weight: 400;
+  font-size: 12px;
+  color: rgba(17, 16, 28, 0.5);
+
+  @media screen and (min-width: 768px) {
+    font-size: 16px;
+  }
+}
+
+.infoCardBalanceAmount {
+  font-weight: 700;
+  font-size: 18px;
+  color: #11101c;
+  margin: 0;
+
+  @media screen and (min-width: 768px) {
+    font-size: 24px;
+  }
+}
+
+.infoCardPercentWrapper {
+  border-radius: 13px;
+  width: 58px;
+  height: 22px;
+  background-color: rgba(2, 177, 90, 0.15);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.infoCardPercent {
+  font-weight: 400;
+  font-size: 12px;
+  color: #02b15a;
+  margin: 0;
+}

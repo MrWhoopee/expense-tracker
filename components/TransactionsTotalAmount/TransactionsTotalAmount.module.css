@@ -1,0 +1,119 @@
+/* @media only screen and (min-width: 768px) {
+}
+
+@media only screen and (min-width: 1440px) {
+} */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  /* padding: 20px 0; */
+  border-radius: 20px;
+
+  @media only screen and (min-width: 768px) {
+    flex-direction: row;
+    gap: 24px;
+    /* padding: 32px 0; */
+  }
+
+  @media only screen and (min-width: 1440px) {
+    max-width: 630px;
+    /* padding: 0; */
+  }
+}
+
+.item {
+  display: flex;
+  gap: 12px;
+  border-radius: 20px;
+  align-items: center;
+  padding: 20px 20px;
+  width: 100%;
+  background-color: var(--bg-component);
+  /* margin: 0 auto; */
+
+  @media only screen and (min-width: 768px) {
+    padding: 32px 0 34px 24px;
+    gap: 22px;
+  }
+
+  @media only screen and (min-width: 1440px) {
+  }
+}
+
+.iconWrapper {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-contrast);
+
+  @media only screen and (min-width: 768px) {
+    width: 43px;
+    height: 43px;
+    border-radius: 13px;
+  }
+
+  @media only screen and (min-width: 1440px) {
+  }
+}
+
+.icon {
+  /* background-color: #00d97d; */
+
+  fill: var(--bg-page);
+  width: 14px;
+  height: 16px;
+}
+
+.title {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--color-paragraph);
+  margin: 0 0 4px 0;
+
+  @media only screen and (min-width: 768px) {
+    font-size: 16px;
+    margin-bottom: 7px;
+  }
+}
+
+.amount {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-titles);
+  margin: 0;
+  @media only screen and (min-width: 768px) {
+    font-size: 24px;
+  }
+
+  @media only screen and (min-width: 1440px) {
+  }
+}
+
+/* !!!!!!!Доделать для светлой темы!!!! */
+.skeleton {
+  height: 81px;
+  background: linear-gradient(90deg, #171719 25%, #222224 50%, #171719 75%);
+  background-size: 200% 100%;
+  animation: loading-pulse 1.5s infinite;
+  @media only screen and (min-width: 768px) {
+    height: 121px;
+  }
+
+  /* @media only screen and (min-width: 1440px) {
+  } */
+}
+
+@keyframes loading-pulse {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}

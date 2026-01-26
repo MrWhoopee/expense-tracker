@@ -11,6 +11,6 @@ export type Expenses = {
 };
 
 export type Category = {
-  income: Income[];
-  expense: Expenses[];
+  incomes: Income[];
+  expenses: Expenses[];
 };

@@ -1,0 +1,41 @@
+.transactionsNav {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+
+    @media screen and (min-width: 1440px) {
+        flex-direction: row;
+    }
+}
+
+.transactionsLink {
+    border-radius: 30px;
+    padding: 12px 21px;
+    border: 1px solid rgba(12, 13, 13, 0.4);
+    color: var(--bg-page);
+    transition: border-color var(--transition), transform var(--transition);
+
+    @media only screen and (min-width: 375px) {
+        &:first-child {
+            background-color: var(--bg-page);
+            border: 1px solid var(--bg-page);
+            color: var(--color-titles);
+        }
+    }
+
+    @media only screen and (min-width: 1440px) {
+        color: var(--color-titles);
+        border: 1px solid var(--color-titles);
+
+        &:first-child {
+            background-color: transparent;
+            border: 1px solid var(--color-titles);
+            color: var(--color-titles);
+        }
+    }
+
+    &:hover {
+        border-color: var(--color-contrast);
+    }
+}

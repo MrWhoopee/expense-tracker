@@ -18,6 +18,7 @@ export async function PATCH(request: NextRequest, { params }: Params) {
     const res = await api.patch(`/categories/${id}`, body, {
       headers: {
         Cookie: cookieStore.toString(),
+        "Content-Type": "application/json",
       },
     });
     return NextResponse.json(res.data, { status: res.status });
@@ -37,17 +38,18 @@ export async function PATCH(request: NextRequest, { params }: Params) {
   }
 }
 
-export async function DELETE({ params }: Params) {
+export async function DELETE(request: NextRequest, { params }: Params) {
   try {
     const cookieStore = await cookies();
     const { id } = await params;
 
-    const res = await api.delete(`/categories/${id}`, {
+    await api.delete(`/categories/${id}`, {
       headers: {
         Cookie: cookieStore.toString(),
       },
     });
-    return NextResponse.json(res.data, { status: res.status });
+
+    return new NextResponse(null, { status: 204 });
   } catch (error) {
     if (isAxiosError(error)) {
       logErrorResponse(error.response?.data);
