@@ -2,7 +2,7 @@ import { Category } from "@/type/category";
 import { apiNext } from "./api";
 import { cookies } from "next/headers";
 import { UserInfo } from "@/type/userInfo";
-import { GetStatistic } from "@/type/statistics";
+import { Statistic } from "@/type/statistics";
 
 export async function getCategoriesServer(): Promise<Category> {
   const cookieStore = await cookies();
@@ -17,7 +17,7 @@ export async function getCategoriesServer(): Promise<Category> {
   return res.data;
 }
 
-export async function checkSessionServer(): Promise<boolean> {
+export async function checkSessionServer() {
   const cookieStore = await cookies();
   const cookieString = cookieStore.toString();
   const res = await apiNext.get("/auth/session", {
@@ -26,7 +26,7 @@ export async function checkSessionServer(): Promise<boolean> {
     },
   });
 
-  return res.data.success;
+  return res;
 }
 
 export async function getUserServer(): Promise<UserInfo> {
@@ -41,10 +41,10 @@ export async function getUserServer(): Promise<UserInfo> {
   return res.data;
 }
 
-export async function getStasticsServer(): Promise<GetStatistic[]> {
+export async function getStatisticsServer(): Promise<Statistic[]> {
   const cookieStore = await cookies();
   const cookieString = cookieStore.toString();
-  const res = await apiNext.get<GetStatistic[]>(
+  const res = await apiNext.get<Statistic[]>(
     "/stats/categories/current-month",
     {
       headers: {

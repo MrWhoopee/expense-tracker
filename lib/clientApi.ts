@@ -3,7 +3,7 @@ import { apiNext } from "./api";
 import { User } from "@/type/user";
 import { Transaction } from "@/type/transaction";
 import { UserInfo } from "@/type/userInfo";
-import { GetStatistic } from "@/type/statistics";
+import { Statistic } from "@/type/statistics";
 
 interface UserCategory {
   type: string;
@@ -170,10 +170,8 @@ export async function getStatsCurrentMonth(): Promise<CategoryStats[]> {
 }
 //Statistics
 
-export async function getStastics(): Promise<GetStatistic[]> {
-  const res = await apiNext.get<GetStatistic[]>(
-    "/stats/categories/current-month",
-  );
+export async function getStastics(): Promise<Statistic[]> {
+  const res = await apiNext.get<Statistic[]>("/stats/categories/current-month");
 
   return res.data;
 }
