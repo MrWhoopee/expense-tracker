@@ -25,13 +25,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" >
       <body className={`${inter.variable}`}>
         <ThemeProvider>
           <Toaster
             position="bottom-right"
             toastOptions={{
-              duration: 13000,
+              duration: 3000,
               style: {
                 color: "#fff",
                 backgroundColor: "#17171a",
@@ -39,7 +39,7 @@ export default function RootLayout({
                 border: "1px solid #fff",
               },
               success: {
-                duration: 13000,
+                duration: 3000,
                 iconTheme: {
                   primary: "#0EF387",
                   secondary: "#fff",
@@ -49,7 +49,7 @@ export default function RootLayout({
                 },
               },
               error: {
-                duration: 13000,
+                duration: 3000,
                 iconTheme: {
                   primary: "#E74A3B",
                   secondary: "#fff",
