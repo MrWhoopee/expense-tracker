@@ -5,6 +5,7 @@ import AuthProvider from "@/components/AuthProvider/AuthProvider";
 import { Toaster } from "react-hot-toast";
 import TanStackProvider from "@/components/TanStackProvider/TanStackProvider";
 import Header from "@/components/Header/Header";
+import ThemeProvider from "@/components/ThemeProvider/ThemeProvider";
 
 const inter = Inter({
   weight: ["400", "500", "700"],
@@ -24,46 +25,48 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable}`}>
-        <Toaster
-          position="bottom-right"
-          toastOptions={{
-            duration: 13000,
-            style: {
-              color: "#fff",
-              backgroundColor: "#17171a",
-              borderRadius: "12px",
-              border: "1px solid #fff",
-            },
-            success: {
+        <ThemeProvider>
+          <Toaster
+            position="bottom-right"
+            toastOptions={{
               duration: 13000,
-              iconTheme: {
-                primary: "#0EF387",
-                secondary: "#fff",
-              },
               style: {
-                border: "1px solid #0EF387",
+                color: "#fff",
+                backgroundColor: "#17171a",
+                borderRadius: "12px",
+                border: "1px solid #fff",
               },
-            },
-            error: {
-              duration: 13000,
-              iconTheme: {
-                primary: "#E74A3B",
-                secondary: "#fff",
+              success: {
+                duration: 13000,
+                iconTheme: {
+                  primary: "#0EF387",
+                  secondary: "#fff",
+                },
+                style: {
+                  border: "1px solid #0EF387",
+                },
               },
-              style: {
-                border: "1px solid #E74A3B",
+              error: {
+                duration: 13000,
+                iconTheme: {
+                  primary: "#E74A3B",
+                  secondary: "#fff",
+                },
+                style: {
+                  border: "1px solid #E74A3B",
+                },
               },
-            },
-          }}
-        />
-        <TanStackProvider>
-          <AuthProvider>
-            <Header />
-            <main>{children}</main>
-          </AuthProvider>
-        </TanStackProvider>
+            }}
+          />
+          <TanStackProvider>
+            <AuthProvider>
+              <Header />
+              <main>{children}</main>
+            </AuthProvider>
+          </TanStackProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

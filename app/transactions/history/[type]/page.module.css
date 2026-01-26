@@ -22,5 +22,5 @@
   border-radius: 30px;
   width: 1240px;
   height: 450px;
-  background: #171719;
+  background: var(--bg-component);
 }

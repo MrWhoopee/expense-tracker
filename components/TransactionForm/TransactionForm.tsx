@@ -14,9 +14,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 import { useEffect, useRef, useState } from "react";
 import CategoriesModal from "../CategoriesModal/CategoriesModal";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useUserStore } from "@/store/useUserStore";
-import { createTransaction, getCategories } from "@/lib/clientApi";
+import { createTransaction } from "@/lib/clientApi";
 import { useTransactionStore } from "@/store/useTransactionStore";
 import { getYear, getMonth } from "date-fns";
 const MONTHS = [
@@ -72,9 +72,8 @@ interface TransactionFormProps {
 const TransactionForm = ({ transactionData }: TransactionFormProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const lastFocusedRef = useRef<HTMLElement | null>(null);
-  const [isLoader, setIsLoader] = useState(false);
 
-  const userData = useUserStore((s) => s.user);
+  useUserStore((s) => s.user);
   const formikRef = useRef<FormikProps<FormValues>>(null);
 
   const transactionDraft = useTransactionStore((s) => s.transactionDraft);
@@ -84,7 +83,7 @@ const TransactionForm = ({ transactionData }: TransactionFormProps) => {
   );
 
   const draftCategoryId = useTransactionStore((s) => s.draftCategoryId);
-  const setDraftCategoryId = useTransactionStore((s) => s.setDraftCategoryId);
+  useTransactionStore((s) => s.setDraftCategoryId);
   const clearDraftCategoryId = useTransactionStore(
     (s) => s.clearDraftCategoryId,
   );
@@ -151,8 +150,6 @@ const TransactionForm = ({ transactionData }: TransactionFormProps) => {
       clearDraftCategoryId();
     } catch (error) {
       console.log(error);
-    } finally {
-      setIsLoader(false);
     }
   };
 
@@ -367,32 +364,94 @@ const TransactionForm = ({ transactionData }: TransactionFormProps) => {
                                 }
                               >
                                 <button
+                                  type="button"
                                   className={css["button-calendar"]}
                                   onClick={decreaseMonth}
                                   disabled={prevMonthButtonDisabled}
                                 >
-                                  <svg className={css["icon-arrow"]}>
-                                    <use href="../../img/sprite.svg#icon-arrow-left"></use>
+                                  <svg
+                                    width="6"
+                                    height="10"
+                                    viewBox="0 0 6 10"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className={css["icon-arrow"]}
+                                  >
+                                    <path
+                                      d="M5 1L1 5L5 9"
+                                      stroke="currentColor"
+                                      strokeWidth="1.5"
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                    />
                                   </svg>
                                 </button>
                                 <p className={css["calendar-title"]}>
                                   {MONTHS[getMonth(date)] + " " + getYear(date)}
                                 </p>
                                 <button
+                                  type="button"
                                   className={css["button-calendar"]}
                                   onClick={increaseMonth}
                                   disabled={nextMonthButtonDisabled}
                                 >
-                                  <svg className={css["icon-arrow"]}>
-                                    <use href="../../img/sprite.svg#icon-arrow-right"></use>
+                                  <svg
+                                    width="6"
+                                    height="10"
+                                    viewBox="0 0 6 10"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className={css["icon-arrow"]}
+                                  >
+                                    <path
+                                      d="M1 9L5 5L1 1"
+                                      stroke="currentColor"
+                                      strokeWidth="1.5"
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                    />
                                   </svg>
                                 </button>
                               </div>
                             )}
                           />
                           <span className={css["modal-icon-wrapper-date"]}>
-                            <svg className={css["modal-icon-date"]}>
-                              <use href="../../img/sprite.svg#icon-calendar"></use>
+                            <svg
+                              width="16"
+                              height="16"
+                              viewBox="0 0 20 20"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                              className={css["modal-icon-date"]}
+                            >
+                              <path
+                                d="M15.8333 3.33337H4.16667C3.24619 3.33337 2.5 4.07957 2.5 5.00004V16.6667C2.5 17.5872 3.24619 18.3334 4.16667 18.3334H15.8333C16.7538 18.3334 17.5 17.5872 17.5 16.6667V5.00004C17.5 4.07957 16.7538 3.33337 15.8333 3.33337Z"
+                                stroke="currentColor"
+                                strokeWidth="1.5"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              />
+                              <path
+                                d="M13.3333 1.66663V4.99996"
+                                stroke="currentColor"
+                                strokeWidth="1.5"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              />
+                              <path
+                                d="M6.66675 1.66663V4.99996"
+                                stroke="currentColor"
+                                strokeWidth="1.5"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              />
+                              <path
+                                d="M2.5 8.33337H17.5"
+                                stroke="currentColor"
+                                strokeWidth="1.5"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              />
                             </svg>
                           </span>
                         </div>
@@ -450,8 +509,28 @@ const TransactionForm = ({ transactionData }: TransactionFormProps) => {
                             }
                           />
                           <span className={css["modal-icon-wrapper-date"]}>
-                            <svg className={css["modal-icon-date"]}>
-                              <use href="../../img/sprite.svg#icon-clock"></use>
+                            <svg
+                              width="16"
+                              height="16"
+                              viewBox="0 0 20 20"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                              className={css["modal-icon-date"]}
+                            >
+                              <path
+                                d="M10 5.83337V10L12.5 11.25"
+                                stroke="currentColor"
+                                strokeWidth="1.5"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              />
+                              <path
+                                d="M18.3333 10C18.3333 14.6024 14.6024 18.3334 10 18.3334C5.39763 18.3334 1.66667 14.6024 1.66667 10C1.66667 5.39763 5.39763 1.66663 10 1.66663C14.6024 1.66663 18.3333 5.39763 18.3333 10Z"
+                                stroke="currentColor"
+                                strokeWidth="1.5"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              />
                             </svg>
                           </span>
                         </div>

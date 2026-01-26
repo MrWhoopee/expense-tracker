@@ -39,11 +39,11 @@
 }
 
 .iconSun {
-  color: #0ef387;
+  color: var(--color-contrast);
 }
 
 .iconMoon {
-  color: #1be0e0;
+  color: var(--color-contrast);
 }
 
 :global([data-theme="light"]) .button {

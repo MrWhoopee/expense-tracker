@@ -1,9 +1,8 @@
 "use client";
 
-import { Field, Form, Formik, FormikHelpers } from "formik";
+import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import css from "./TransactionsSearchTools.module.css";
-import Image from "next/image";
 import CustomDatePicker from "../ui/CustomDatePicker";
 import toast from "react-hot-toast";
 
@@ -37,7 +36,7 @@ const TransactionsSearchTools = () => {
       console.log("Filtering by date:", values.date);
 
       // await getTransactionByQuery(values.search, values.date);
-    } catch (error) {
+    } catch {
       toast.error("Failed to fetch transactions. Please try again.");
     }
   };
@@ -61,7 +60,28 @@ const TransactionsSearchTools = () => {
               onBlur={() => submitForm()}
             />
             <div className={css.searchSvgContainer}>
-              <Image src="/search.svg" alt="search" width={20} height={20} />
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M17.5 17.5L13.875 13.875"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
             </div>
           </div>
 

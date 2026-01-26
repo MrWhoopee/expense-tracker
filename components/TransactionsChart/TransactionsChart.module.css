@@ -1,6 +1,5 @@
 .container {
   background-color: var(--bg-component);
-  padding: 28px 20px 48px 20px;
   border-radius: 30px;
   color: var(--color-titles);
   width: 100%;
@@ -151,13 +150,13 @@
 
 /* «ползунок» */
 .categoryList::-webkit-scrollbar-thumb {
-  background-color: #444446;
+  background-color: var(--color-paragraph);
   border-radius: 12px;
 }
 
 /* фон полосы прокрутки */
 .categoryList::-webkit-scrollbar-track {
-  background: #0c0d0d;
+  background: var(--bg-page);
   border-radius: 8px;
 }
 
@@ -170,7 +169,7 @@
 .skeletonChart {
   width: 200px;
   height: 100px;
-  border: 20px solid var(--gray-light, #2a2a2b);
+  border: 20px solid var(--bg-page);
   border-bottom: 0;
   border-top-left-radius: 110px;
   border-top-right-radius: 110px;
@@ -188,7 +187,7 @@
 .skeletonItem {
   height: 20px;
   width: 100%;
-  background: var(--gray-light, #2a2a2b);
+  background: var(--bg-page);
   border-radius: 4px;
   animation: pulse 1.5s infinite ease-in-out;
 }

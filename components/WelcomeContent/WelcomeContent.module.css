@@ -42,7 +42,7 @@
   font-size: 14px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: rgba(250, 250, 250, 0.4);
+  color: var(--color-paragraph);
   margin-bottom: 10px;
 }
 
@@ -51,7 +51,7 @@
   font-weight: 400;
   font-size: 32px;
   letter-spacing: -0.02em;
-  color: #fafafa;
+  color: var(--color-titles);
   margin-bottom: 14px;
 
   @media only screen and (min-width: 768px) {
@@ -67,11 +67,11 @@
 
   background: linear-gradient(
     90deg,
-    #0ef387,
-    rgba(250, 250, 250, 0.4),
-    rgba(250, 250, 250, 0.4),
-    #0ef387,
-    #0ef387
+    var(--color-contrast),
+    var(--color-paragraph),
+    var(--color-paragraph),
+    var(--color-contrast),
+    var(--color-contrast)
   );
 
   background-size: 200% auto;
@@ -96,7 +96,7 @@
   font-weight: 400;
   font-size: 14px;
   letter-spacing: -0.02em;
-  color: rgba(250, 250, 250, 0.4);
+  color: var(--color-paragraph);
   margin-bottom: 30px;
 
   @media only screen and (min-width: 768px) {

@@ -98,7 +98,12 @@
 /* !!!!!!!Доделать для светлой темы!!!! */
 .skeleton {
   height: 81px;
-  background: linear-gradient(90deg, #171719 25%, #222224 50%, #171719 75%);
+  background: linear-gradient(
+    90deg,
+    var(--bg-component) 25%,
+    var(--bg-page) 50%,
+    var(--bg-component) 75%
+  );
   background-size: 200% 100%;
   animation: loading-pulse 1.5s infinite;
   @media only screen and (min-width: 768px) {

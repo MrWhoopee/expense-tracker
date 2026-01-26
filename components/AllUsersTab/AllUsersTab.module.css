@@ -42,7 +42,7 @@
   font-weight: 400;
   font-size: 28px;
   letter-spacing: -0.02em;
-  color: #fafafa;
+  color: var(--color-titles);
 }
 
 .description {

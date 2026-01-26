@@ -47,7 +47,7 @@
   font-size: 56px;
   font-weight: 400;
   letter-spacing: -0.02em;
-  color: #fafafa;
+  color: var(--color-titles);
   margin-bottom: 20px;
 }
 
@@ -59,7 +59,7 @@
   font-size: 16px;
   line-height: 1.5;
   letter-spacing: -0.02em;
-  color: rgba(250, 250, 250, 0.4);
+  color: var(--color-paragraph);
 }
 
 .inputContainer {
@@ -94,22 +94,22 @@
   font-family: var(--font-inter), sans-serif;
   padding: 12px 18px;
   font-size: 14px;
-  border: 1px solid rgba(250, 250, 250, 0.2);
+  border: 1px solid var(--color-paragraph);
   background-color: rgba(250, 250, 250, 0);
   border-radius: 12px;
   outline: none;
   width: 100%;
-  color: #fafafa;
+  color: var(--color-titles);
   height: 48px;
-  caret-color: #fafafa;
+  caret-color: var(--color-titles);
   transition:
     border-color 0.3s ease,
     color 0.3s ease;
 
   &:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0 1000px #0c0d0d inset !important;
-    -webkit-text-fill-color: #fafafa !important;
-    border: 1px solid rgba(250, 250, 250, 0.2) !important;
+    -webkit-box-shadow: 0 0 0 1000px var(--bg-page) inset !important;
+    -webkit-text-fill-color: var(--color-titles) !important;
+    border: 1px solid var(--color-paragraph) !important;
     transition:
       background-color 5000s ease-in-out 0s,
       border-color 0.3s ease;
@@ -117,15 +117,16 @@
 
   &:-webkit-autofill:focus,
   &:-webkit-autofill:focus {
-    border-color: #0ef387 !important;
-    -webkit-text-fill-color: #fafafa !important;
-    -webkit-box-shadow: 0 0 0 1000px #0c0d0d inset !important;
+    border-color: var(--color-contrast) !important;
+    border-color: var(--color-contrast) !important;
+    -webkit-text-fill-color: var(--color-titles) !important;
+    -webkit-box-shadow: 0 0 0 1000px var(--bg-page) inset !important;
   }
 
   &:hover,
   &:focus {
-    border-color: #0ef387;
-    color: #fafafa;
+    border-color: var(--color-contrast);
+    color: var(--color-titles);
   }
 }
 
@@ -135,9 +136,9 @@
   width: 139px;
   height: 45px;
   border: 1px solid transparent;
-  background: #0ef387;
+  background: var(--color-contrast);
   letter-spacing: -0.02em;
-  color: #0c0d0d;
+  color: var(--bg-page);
   cursor: pointer;
   transition: all 0.3s ease;
   font-weight: 500;
@@ -145,7 +146,7 @@
 
   &:hover:not(:disabled),
   &:focus {
-    background: #0ebb69;
+    background: var(--color-contrast);
   }
 
   &:disabled {
@@ -164,11 +165,11 @@
 .actionTextLink {
   font-family: var(--font-family);
   text-decoration: underline;
-  color: #fafafa;
+  color: var(--color-titles);
   transition: color 0.3s ease;
 
   &:hover {
-    color: #0ef387;
+    color: var(--color-contrast);
   }
 }
 
