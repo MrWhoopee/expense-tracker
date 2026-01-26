@@ -1,6 +1,6 @@
 "use client";
 
-import css from "./WelcomePage.module.css";
+import css from "../components/WelcomeContent/WelcomeContent.module.css";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
