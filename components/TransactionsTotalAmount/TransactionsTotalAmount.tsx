@@ -29,7 +29,7 @@ export default function TransactionsTotalAmount() {
       <div className={css.item}>
         <div className={`${css.iconWrapper} ${css.iconIncome}`}>
           <svg className={css.icon}>
-            <use href="/symbol-defs.svg#icon-Arrow-15" />
+            <use href="/img/sprite.svg#icon-Arrow-15" />
           </svg>
         </div>
         <div className={css.info}>
@@ -44,7 +44,7 @@ export default function TransactionsTotalAmount() {
       <div className={css.item}>
         <div className={`${css.iconWrapper} ${css.iconExpense}`}>
           <svg className={css.icon}>
-            <use href="/symbol-defs.svg#icon-Arrow-14" />
+            <use href="/img/sprite.svg#icon-Arrow-14" />
           </svg>
         </div>
         <div className={css.info}>
