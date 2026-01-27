@@ -10,7 +10,7 @@
   gap: 12px;
   width: 100%;
   /* padding: 20px 0; */
-  border-radius: 20px;
+  border-radius: 30px;
 
   @media only screen and (min-width: 768px) {
     flex-direction: row;
@@ -19,7 +19,6 @@
   }
 
   @media only screen and (min-width: 1440px) {
-    max-width: 630px;
     /* padding: 0; */
   }
 }
@@ -27,15 +26,15 @@
 .item {
   display: flex;
   gap: 12px;
-  border-radius: 20px;
+  border-radius: 30px;
   align-items: center;
-  padding: 20px 20px;
+  padding: 20px;
   width: 100%;
   background-color: var(--bg-component);
   /* margin: 0 auto; */
 
   @media only screen and (min-width: 768px) {
-    padding: 32px 0 34px 24px;
+    padding: 32px 24px 34px 24px;
     gap: 22px;
   }
 
@@ -71,6 +70,7 @@
 }
 
 .title {
+  line-height: 1.25;
   font-size: 12px;
   font-weight: 400;
   color: var(--color-paragraph);
@@ -83,10 +83,10 @@
 }
 
 .amount {
+  line-height: 1.25;
   font-size: 18px;
   font-weight: 700;
   color: var(--color-titles);
-  margin: 0;
   @media only screen and (min-width: 768px) {
     font-size: 24px;
   }
