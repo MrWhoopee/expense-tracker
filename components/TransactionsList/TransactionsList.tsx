@@ -14,10 +14,7 @@ import { ICellRendererParams } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
 import Image from "next/image";
 import { Transaction } from "@/type/transaction";
-import {
-  RiMoneyDollarCircleFill,
-  RiMoneyDollarCircleLine,
-} from "react-icons/ri";
+import { RiMoneyDollarCircleLine } from "react-icons/ri";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { deleteTransaction, getTransactionByType } from "@/lib/clientApi";
 import toast from "react-hot-toast";
@@ -93,18 +90,19 @@ export const LoadingOverlay = () => (
 
 interface TransactionsListProps {
   type: string;
-  isLoading?: boolean;
+  date?: string;
+  search?: string;
 }
 
-const TransactionsList = ({ type, isLoading }: TransactionsListProps) => {
+const TransactionsList = ({ type, date, search }: TransactionsListProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const queryClient = useQueryClient();
   const [selectedTransaction, setSelectedTransaction] =
     useState<Transaction | null>(null);
 
   const { data } = useQuery({
-    queryKey: ["transactions", type],
-    queryFn: () => getTransactionByType(type),
+    queryKey: ["transactions", type, date, search],
+    queryFn: () => getTransactionByType({ type, date, search }),
     refetchOnMount: false,
   });
 
@@ -208,8 +206,8 @@ const TransactionsList = ({ type, isLoading }: TransactionsListProps) => {
         cellClass: css.actionsColumn,
         resizable: false,
         minWidth: isMobile || isTablet ? 120 : 265,
-        // maxWidth: isMobile || isTablet ? 140 : 327,
         flex: isMobile || isTablet ? 0.75 : 2,
+        enableCellChangeFlash: false,
 
         // suppress this keyboard event in the ag grid cell
         suppressKeyboardEvent: (params) => {
@@ -271,20 +269,20 @@ const TransactionsList = ({ type, isLoading }: TransactionsListProps) => {
     wrapperBorderRadius: 0,
   });
 
-  if (isLoading) {
-    return (
-      <div
-        className={css.gridWrapper}
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <LoadingOverlay />
-      </div>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div
+  //       className={css.gridWrapper}
+  //       style={{
+  //         display: "flex",
+  //         justifyContent: "center",
+  //         alignItems: "center",
+  //       }}
+  //     >
+  //       <LoadingOverlay />
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className={css.gridWrapper}>
@@ -302,7 +300,8 @@ const TransactionsList = ({ type, isLoading }: TransactionsListProps) => {
         suppressMovableColumns={true}
         noRowsOverlayComponent={NoTransactionsOverlay}
         loadingOverlayComponentParams={{}}
-        suppressNoRowsOverlay={isLoading} // disabled the automatic display of "No Rows" so that it doesn't conflict with the loader
+        // suppressNoRowsOverlay={isLoading}
+        // disabled the automatic display of "No Rows" so that it doesn't conflict with the loader
 
         // ensureDomOrder={true}
         // debounceVerticalScrollbar={true} // smoother scrolling on slow machines

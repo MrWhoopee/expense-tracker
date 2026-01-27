@@ -1,10 +1,7 @@
 import TransactionsList from "@/components/TransactionsList/TransactionsList";
 import TransactionsSearchTools from "@/components/TransactionsSearchTools/TransactionsSearchTools";
-// import { Suspense } from "react";
-// import TransactionsTotalAmount from "@/components/TransactionsTotalAmount/TransactionsTotalAmount";
 import css from "@/app/transactions/history/[type]/page.module.css";
 import { getTransactionByType } from "@/lib/serverApi";
-// import Loader from "@/components/Loader/Loader";
 import {
   dehydrate,
   HydrationBoundary,
@@ -27,9 +24,12 @@ export default async function TransactionsHistoryPage({
 
   const queryClient = new QueryClient();
 
+  const queryKey = ["transactions", transactionType, date, search];
+
   await queryClient.prefetchQuery({
-    queryKey: ["transactions", transactionType],
-    queryFn: () => getTransactionByType(transactionType),
+    queryKey,
+    queryFn: () =>
+      getTransactionByType({ type: transactionType, date, search }),
   });
 
   return (
@@ -47,7 +47,11 @@ export default async function TransactionsHistoryPage({
         <TransactionsSearchTools />
 
         <HydrationBoundary state={dehydrate(queryClient)}>
-          <TransactionsList type={transactionType} />
+          <TransactionsList
+            type={transactionType}
+            date={date}
+            search={search}
+          />
         </HydrationBoundary>
       </div>
     </main>

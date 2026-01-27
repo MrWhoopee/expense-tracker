@@ -55,13 +55,15 @@ const TransactionsSearchTools = () => {
           <div className={css.searchInputWrapper}>
             <Field
               name="search"
+              minLength={3}
+              maxLength={24}
               type="text"
               placeholder="Search for anything..."
               className={css.searchInput}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                const val = e.target.value;
-                setFieldValue("search", val);
-                debouncedSearch(val);
+                const value = e.target.value;
+                setFieldValue("search", value);
+                debouncedSearch(value);
               }}
             />
             <div className={css.searchSvgContainer}>

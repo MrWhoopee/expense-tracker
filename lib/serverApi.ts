@@ -87,7 +87,7 @@ export async function getTransactionByType({
   const cookieString = cookieStore.toString();
 
   const filteredParams = Object.fromEntries(
-    Object.entries({ date, search }).filter(([_, value]) => Boolean(value)),
+    Object.entries({ date, search }).filter(([value]) => Boolean(value)),
   ); // no undefined
 
   const { data } = await apiNext.get<Transaction[]>(`/transactions/${type}`, {
