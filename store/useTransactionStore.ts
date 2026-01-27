@@ -2,12 +2,13 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 interface CreateTransaction {
+  _id?: string | null;
   type: string;
   date: Date | string | null;
   time: Date | string | null;
   category: string;
   sum: number | string;
-  comment: string;
+  comment?: string;
 }
 
 interface TransactionStore {
@@ -20,7 +21,8 @@ interface TransactionStore {
 }
 
 const initialTransactionDraft = {
-  type: "",
+  _id: null,
+  type: "Expense",
   date: new Date(),
   time: new Date(),
   category: "",

@@ -45,7 +45,7 @@ interface CreateTransaction {
   time: string;
   category: string;
   sum: number;
-  comment: string;
+  comment?: string;
 }
 
 interface UpdateTransaction {
@@ -53,7 +53,7 @@ interface UpdateTransaction {
   time: string;
   category: string;
   sum: number;
-  comment: string;
+  comment?: string;
 }
 
 export interface CategoryStats {

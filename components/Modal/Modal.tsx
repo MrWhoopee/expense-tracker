@@ -24,8 +24,6 @@ import { useRef } from "react";
 import { FormikProps } from "formik";
 import Loader from "../Loader/Loader";
 import { useTransactionStore } from "@/store/useTransactionStore";
-import toast from "react-hot-toast";
-import axios from "axios";
 
 interface UserCategory {
   type: string;
@@ -38,10 +36,10 @@ interface UpdateCategory {
 }
 
 interface CategoriesModalProps {
-  type: "Expense" | "Income" | string;
+  type: "Expense" | "Income";
   closeModal: () => void;
   setCategory: (name: string) => void;
-  setCategoryId: (cid: string) => void;
+  setCategoryId: Dispatch<SetStateAction<string>>;
   isModalOpen: boolean;
 }
 
@@ -101,12 +99,6 @@ const CategoriesModal = ({
     mutationFn: (params: UserCategory) => createCategory(params),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["getCategories"] });
-      toast.success("Category created successfully");
-    },
-    onError: (error: unknown) => {
-      if (axios.isAxiosError(error)) {
-        toast.error(error?.response?.data?.response.message);
-      }
     },
   });
 
@@ -115,12 +107,6 @@ const CategoriesModal = ({
     mutationFn: (id: string) => deleteCategory(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["getCategories"] });
-      toast.success("Category deleted");
-    },
-    onError: (error: unknown) => {
-      if (axios.isAxiosError(error)) {
-        toast.error(error?.response?.data?.response.message);
-      }
     },
   });
 
@@ -129,12 +115,6 @@ const CategoriesModal = ({
     mutationFn: (params: UpdateCategory) => updateCategory(params),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["getCategories"] });
-      toast.success("Category updated");
-    },
-    onError: (error: unknown) => {
-      if (axios.isAxiosError(error)) {
-        toast.error(error?.response?.data?.response.message);
-      }
     },
   });
   //* MUTATIONS END
@@ -194,10 +174,7 @@ const CategoriesModal = ({
   };
 
   const FormSchema = Yup.object().shape({
-    newNameCategory: Yup.string()
-      .min(2, "Min 2 chars")
-      .max(16, "Max 16 chars")
-      .required("Category name is required"),
+    newNameCategory: Yup.string().min(2, "Min 2 chars").max(16, "Max 16 chars"),
   });
 
   useEffect(() => {
@@ -257,8 +234,6 @@ const CategoriesModal = ({
             initialValues={initialValues}
             onSubmit={handleSubmit}
             validationSchema={FormSchema}
-            validateOnChange={false}
-            validateOnBlur={false}
             innerRef={formikRef}
           >
             <Form className={css.form}>

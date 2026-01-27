@@ -16,9 +16,17 @@ import { useEffect, useRef, useState } from "react";
 import CategoriesModal from "../CategoriesModal/CategoriesModal";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useUserStore } from "@/store/useUserStore";
-import { createTransaction, getCategories } from "@/lib/clientApi";
+import {
+  createTransaction,
+  getCategories,
+  updateTransaction,
+} from "@/lib/clientApi";
 import { useTransactionStore } from "@/store/useTransactionStore";
 import { getYear, getMonth } from "date-fns";
+import toast from "react-hot-toast";
+import axios, { AxiosError, AxiosResponse } from "axios";
+import { NextResponse } from "next/server";
+import Modal from "../Modal/Modal";
 const MONTHS = [
   "January",
   "February",
@@ -36,15 +44,16 @@ const MONTHS = [
 
 // import { createTransaction2, getUser } from "@/lib/clientApi";
 
-type TransactionType = "Expense" | "Income";
+type TransactionType = "Expense" | "Income" | string;
 
 export interface FormValues {
-  type: TransactionType;
-  date: Date | string;
-  time: Date | string;
+  _id?: string | null;
+  type: TransactionType | string;
+  date: Date | string | null;
+  time: Date | string | null;
   category: string;
   sum: string | number;
-  comment: string;
+  comment?: string;
 }
 
 interface CreateTransaction {
@@ -53,23 +62,61 @@ interface CreateTransaction {
   time: string;
   category: string;
   sum: number;
-  comment: string;
+  comment?: string;
 }
 
-const getInitialValues = (data?: FormValues): FormValues => ({
-  type: data?.type ?? "Expense",
-  date: data?.date ?? new Date(),
-  time: data?.time ?? new Date(),
-  category: data?.category ?? "",
-  sum: data?.sum ?? "",
-  comment: data?.comment ?? "",
-});
+interface UpdateTransaction {
+  date: string;
+  time: string;
+  category: string;
+  sum: number;
+  comment?: string;
+}
+
+type UpdateTransactionVars = {
+  type: string;
+  id: string;
+  body: UpdateTransaction;
+};
 
 interface TransactionFormProps {
   transactionData?: FormValues;
 }
 
-const TransactionForm = ({ transactionData }: TransactionFormProps) => {
+export interface Transaction {
+  _id: string;
+  type: string;
+  date: string;
+  time: string;
+  category: {
+    _id: string;
+    categoryName: string;
+  };
+  sum: number;
+  comment: string;
+}
+
+const tempTransactionData = (): Transaction => {
+  return {
+    _id: "6977ab98f65c9e355471078e",
+    category: {
+      _id: "6977a2a0f65c9e35547103e3",
+      categoryName: "666",
+    },
+    comment: "7772",
+    date: "2026-01-26",
+    sum: 5656,
+    time: "19:58",
+    type: "expenses",
+  };
+};
+
+interface Props {
+  transaction?: Transaction;
+  closeTransactionModal?: () => void;
+}
+
+const TransactionForm = ({ transaction, closeTransactionModal }: Props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const lastFocusedRef = useRef<HTMLElement | null>(null);
   const [isLoader, setIsLoader] = useState(false);
@@ -88,29 +135,38 @@ const TransactionForm = ({ transactionData }: TransactionFormProps) => {
   const clearDraftCategoryId = useTransactionStore(
     (s) => s.clearDraftCategoryId,
   );
-  const [categoryId, setCategoryId] = useState(draftCategoryId);
 
-  // const { data, error, isLoading } = useQuery({
-  //   queryKey: ["getUserCurrent"],
-  //   queryFn: () => getUser(),
-  //   refetchOnMount: false,
-  // });
-
-  // const isEditMode = !!transactionData;
+  // const isEditMode = !!transaction;
   const isEditMode = false;
+  // const isEditMode = true;
 
-  let initialValues = getInitialValues(transactionData);
-
-  if (transactionData == null) {
-    initialValues = {
-      type: transactionDraft?.type === "Income" ? "Income" : "Expense",
-      date: transactionDraft?.date ?? new Date(),
-      time: transactionDraft?.time ?? new Date(),
-      category: transactionDraft?.category ?? "",
-      sum: transactionDraft?.sum ?? "",
-      comment: transactionDraft?.comment ?? "",
+  useEffect(() => {
+    let transactionData: FormValues = {
+      _id: null,
+      type: "Expense",
+      date: new Date(),
+      time: new Date(),
+      category: "",
+      sum: "",
+      comment: "",
     };
-  }
+
+    transaction = tempTransactionData();
+    if (transaction) {
+      transactionData = {
+        _id: transaction._id,
+        type: transaction.type === "incomes" ? "Income" : "Expense",
+        date: new Date(transaction.date),
+        time: new Date(`${transaction.date}T${transaction.time}`),
+        category: transaction.category.categoryName,
+        sum: transaction.sum,
+        comment: transaction.comment,
+      };
+
+      setTransactionDraft(transactionData);
+      setDraftCategoryId(transaction.category._id);
+    }
+  }, []);
 
   const queryClient = useQueryClient();
 
@@ -121,6 +177,28 @@ const TransactionForm = ({ transactionData }: TransactionFormProps) => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["getTransactions"] });
       clearTransactionDraft();
+      toast.success("Transaction created successfully");
+    },
+    onError: (error: unknown) => {
+      if (axios.isAxiosError(error)) {
+        toast.error(error?.response?.data?.response.message);
+      }
+    },
+  });
+
+  const editTransactionMutation = useMutation({
+    mutationKey: ["updateTransaction"],
+    mutationFn: ({ type, id, body }: UpdateTransactionVars) =>
+      updateTransaction(type, id, body),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["getTransactions"] });
+      clearTransactionDraft();
+      toast.success("Transaction updated");
+    },
+    onError: (error: unknown) => {
+      if (axios.isAxiosError(error)) {
+        toast.error(error?.response?.data?.response.message);
+      }
     },
   });
   //* MUTATIONS END
@@ -133,57 +211,51 @@ const TransactionForm = ({ transactionData }: TransactionFormProps) => {
 
   const handleSubmit = (formData: FormValues) => {
     try {
-      const params = {
-        type: formData.type === "Expense" ? "expenses" : "incomes",
-        date: formData.date?.toString().split("T")[0],
-        time: new Date(formData.time?.toString()).toTimeString().slice(0, 5),
-        category: categoryId,
-        sum: Number.parseInt(formData.sum.toString()),
-        comment: formData.comment,
-      };
-      debugger;
+      setIsLoader(true);
+      if (!isEditMode) {
+        const params = {
+          type: formData.type === "Expense" ? "expenses" : "incomes",
+          date: new Date(formData.date?.toString() ?? "")
+            .toISOString()
+            .split("T")[0],
+          time: new Date(formData.time?.toString() ?? "")
+            .toTimeString()
+            .slice(0, 5),
+          category: draftCategoryId,
+          sum: Number.parseInt(formData.sum.toString()),
+          comment: (formData?.comment ?? "").trim(),
+        };
 
-      console.log(JSON.stringify(params));
+        createTransactionMutation.mutate(params);
+        debugger;
+        clearTransactionDraft();
+        clearFormikForm();
+        clearDraftCategoryId();
+        setIsLoader(false);
+      } else {
+        const editParams: UpdateTransactionVars = {
+          type: formData.type === "Expense" ? "expenses" : "incomes",
+          id: transactionDraft._id ?? "",
+          body: {
+            category: draftCategoryId,
+            date: new Date(formData.date?.toString() ?? "")
+              .toISOString()
+              .split("T")[0],
+            time: new Date(formData.time?.toString() ?? "")
+              .toTimeString()
+              .slice(0, 5),
+            sum: Number.parseInt(formData.sum.toString()),
+            comment: (formData?.comment ?? "").trim(),
+          },
+        };
 
-      createTransactionMutation.mutate(params);
-      clearTransactionDraft();
-      clearFormikForm();
-      clearDraftCategoryId();
+        editTransactionMutation.mutate(editParams);
+        setIsLoader(false);
+        if (closeTransactionModal) closeTransactionModal();
+      }
     } catch (error) {
       console.log(error);
-    } finally {
-      setIsLoader(false);
     }
-  };
-
-  const data2 = {
-    currency: "UAH",
-    categories: {
-      incomes: [
-        {
-          _id: "6522bf1f9027bb7d55d6512b",
-          categoryName: "Salary",
-          type: "incomes",
-        },
-      ],
-      expenses: [
-        {
-          _id: "6522bf1f9027bb7d55c1973a",
-          categoryName: "Car",
-          type: "expenses",
-        },
-        {
-          _id: "6522bf1f9027bb7d55c19731",
-          categoryName: "Carrot",
-          type: "expenses",
-        },
-        {
-          _id: "6522bf1f9027bb7d44c19731",
-          categoryName: "Fish",
-          type: "expenses",
-        },
-      ],
-    },
   };
 
   const FormSchema = Yup.object().shape({
@@ -199,13 +271,14 @@ const TransactionForm = ({ transactionData }: TransactionFormProps) => {
       .integer("Must be an integer")
       .min(1, "Must be at least 1")
       .max(1000000, "Must be at most 1000000"),
-    comment: Yup.string().min(3, "Min 3 chars").max(48, "Max 48 chars"),
+    comment: Yup.string()
+      .min(3, "Min 3 chars")
+      .max(48, "Max 48 chars")
+      .required("Comment is required"),
   });
 
   const openModal = () => {
-    if (formikRef.current) {
-      formikRef.current.setFieldValue("category", "");
-    }
+    clearCategoryInput();
     lastFocusedRef.current = document.activeElement as HTMLElement;
     setIsModalOpen(true);
   };
@@ -232,21 +305,39 @@ const TransactionForm = ({ transactionData }: TransactionFormProps) => {
   };
 
   const clearCategoryInput = () => {
-    setCategoryId("");
+    setDraftCategoryId("");
     clearDraftCategoryId();
+    setTransactionDraft({
+      ...transactionDraft,
+      ["category"]: "",
+    });
     if (formikRef.current) {
       formikRef.current.setFieldValue("category", "");
     }
+  };
+
+  const [openFormModal, handleOpenFormModal] = useState(false);
+
+  const handleModalOpen = () => {
+    handleOpenFormModal(true);
+  };
+
+  const handleModalClose = () => {
+    handleOpenFormModal(false);
   };
 
   return (
     <div
       className={`${css["transaction-form-wrapper"]} ${isEditMode ? css["transaction-form-wrapper-with-close"] : ""}`}
     >
+      {/* <button onClick={handleModalOpen}>Open Modal</button> */}
+
       <Formik
-        initialValues={initialValues}
+        initialValues={transactionDraft}
         onSubmit={handleSubmit}
         validationSchema={FormSchema}
+        validateOnChange={false}
+        validateOnBlur={false}
         innerRef={formikRef}
       >
         {({ handleChange, values, setFieldValue }) => (
@@ -263,6 +354,7 @@ const TransactionForm = ({ transactionData }: TransactionFormProps) => {
                     type="button"
                     className={css.closeButton}
                     aria-label="Close modal"
+                    onClick={closeTransactionModal}
                   >
                     <svg className={css["icon-close"]}>
                       <use href="../../img/sprite.svg#icon-x"></use>
@@ -558,7 +650,7 @@ const TransactionForm = ({ transactionData }: TransactionFormProps) => {
                         <span
                           className={`${css.currency} ${field.value ? css.filled : ""}`}
                         >
-                          {data2?.currency.toUpperCase() || "UAH"}
+                          {userData?.currency?.toUpperCase() || "UAH"}
                         </span>
                       </div>
                     )}
@@ -619,7 +711,7 @@ const TransactionForm = ({ transactionData }: TransactionFormProps) => {
                 {/* SEND/ADD BUTTON */}
                 <div className={css.actions}>
                   <button type="submit" className={css.submitEditButton}>
-                    {isEditMode ? "Send" : "Add"}
+                    {isEditMode ? "Edit" : "Add"}
                   </button>
                 </div>
               </Form>
@@ -638,13 +730,19 @@ const TransactionForm = ({ transactionData }: TransactionFormProps) => {
                   });
                   closeModal();
                 }}
-                setCategoryId={setCategoryId}
+                setCategoryId={setDraftCategoryId}
                 isModalOpen
               />
             )}
           </>
         )}
       </Formik>
+      {/* 
+      {
+        openFormModal && <Modal onClose={handleModalClose}>
+          <TransactionForm closeTransactionModal={handleModalClose} />
+        </Modal>
+      } */}
     </div>
   );
 };
