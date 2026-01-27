@@ -38,6 +38,7 @@ const TransactionsSearchTools = () => {
 
       // await getTransactionByQuery(values.search, values.date);
     } catch (error) {
+      console.log("Error:", error);
       toast.error("Failed to fetch transactions. Please try again.");
     }
   };

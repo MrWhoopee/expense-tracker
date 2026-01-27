@@ -1,44 +1,85 @@
-.pageWrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center; /* Центрируем всё содержимое по вертикали */
-  min-height: calc(100vh - 80px); /* 100vh минус примерная высота хедера */
-  padding-top: 40px;
-  padding-bottom: 40px;
-}
+.container {
+  max-width: 375px;
+  margin: 0 auto;
+  padding: 66px 20px 80px 20px;
+  display: grid;
+  grid-template-columns: 1fr;
 
-.headerSection {
-  margin-bottom: 40px;
-}
+  @media screen and (min-width: 768px) {
+    max-width: 768px;
+    padding: 60px 32px 80px 32px;
+  }
 
-.mainContent {
-  display: flex;
-  flex-direction: column; /* На мобилках всё в ряд */
-  gap: 40px;
-}
+  @media screen and (min-width: 1440px) {
+    max-width: 1440px;
+    padding: 60px 100px 50px 100px;
 
-@media screen and (min-width: 1440px) {
-  .mainContent {
-    flex-direction: row; /* На десктопе — две колонки */
-    align-items: flex-start;
-    justify-content: space-between;
+    grid-template-columns: 1fr 566px;
+    column-gap: 44px;
+    align-items: start;
   }
 }
 
-.leftColumn {
-  flex: 1;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
+.title {
+  line-height: 1.25;
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 32px;
+  letter-spacing: -0.02em;
+  color: #fafafa;
+  margin-bottom: 20px;
+
+  @media screen and (min-width: 768px) {
+    font-size: 38px;
+    margin-bottom: 12px;
+  }
+
+  @media screen and (min-width: 1440px) {
+    grid-column: 1 / 2;
+  }
 }
 
-.rightColumn {
-  width: 100%;
+.description {
+  line-height: 1.2;
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 14px;
+  letter-spacing: -0.02em;
+  color: rgba(250, 250, 250, 0.4);
+  margin-bottom: 20px;
+
+  @media screen and (min-width: 768px) {
+    max-width: 499px;
+    margin-bottom: 40px;
+    font-size: 16px;
+  }
+
+  @media screen and (min-width: 1440px) {
+    max-width: 630px;
+    grid-column: 1 / 2;
+  }
 }
 
-@media screen and (min-width: 1440px) {
-  .rightColumn {
-    width: 500px; /* Фиксируем ширину формы на десктопе */
+.totalWrapper {
+  margin-bottom: 40px;
+
+  @media screen and (min-width: 1440px) {
+    grid-column: 1 / 2;
+  }
+}
+
+.formWrapper {
+  margin-bottom: 40px;
+
+  @media screen and (min-width: 1440px) {
+    margin-bottom: 0;
+    grid-column: 2 / 3;
+    grid-row: 1 / 5;
+  }
+}
+
+:global(.TransactionsChart) {
+  @media screen and (min-width: 1440px) {
+    grid-column: 1 / 2;
   }
 }

@@ -7,7 +7,7 @@ import TanStackProvider from "@/components/TanStackProvider/TanStackProvider";
 import Header from "@/components/Header/Header";
 
 const inter = Inter({
-  weight: ["400", "500", "700"],
+  weight: ["300", "400", "500", "700"],
   subsets: ["latin"],
   variable: "--font-inter",
   display: "swap",
