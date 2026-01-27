@@ -151,7 +151,7 @@ const TransactionForm = ({ transaction, closeTransactionModal }: Props) => {
       comment: "",
     };
 
-    transaction = tempTransactionData();
+    // transaction = tempTransactionData();
     if (transaction) {
       transactionData = {
         _id: transaction._id,
@@ -465,8 +465,12 @@ const TransactionForm = ({ transaction, closeTransactionModal }: Props) => {
                                 }
                               >
                                 <button
+                                  type="button"
                                   className={css["button-calendar"]}
-                                  onClick={decreaseMonth}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    decreaseMonth();
+                                  }}
                                   disabled={prevMonthButtonDisabled}
                                 >
                                   <svg className={css["icon-arrow"]}>
@@ -477,8 +481,12 @@ const TransactionForm = ({ transaction, closeTransactionModal }: Props) => {
                                   {MONTHS[getMonth(date)] + " " + getYear(date)}
                                 </p>
                                 <button
+                                  type="button"
                                   className={css["button-calendar"]}
-                                  onClick={increaseMonth}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    increaseMonth();
+                                  }}
                                   disabled={nextMonthButtonDisabled}
                                 >
                                   <svg className={css["icon-arrow"]}>
