@@ -8,7 +8,7 @@ import {
   ColDef,
   ModuleRegistry,
   themeQuartz,
-  // ValueFormatterParams,
+  ValueFormatterParams,
 } from "ag-grid-community";
 import { ICellRendererParams } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
@@ -159,6 +159,10 @@ const TransactionsList = ({ type, isLoading }: TransactionsListProps) => {
         headerName: "Category",
         minWidth: 100,
         flex: 1.5,
+
+        valueFormatter: (params) => {
+          return params.value?.categoryName || "";
+        },
       },
       {
         field: "comment",
