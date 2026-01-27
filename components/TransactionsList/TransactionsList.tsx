@@ -60,7 +60,6 @@ const ActionsRenderer = (props: ICellRendererParams<Transaction>) => {
 const NoTransactionsOverlay = () => (
   <div style={{ textAlign: "center", fontSize: "18px", color: "#fafafa" }}>
     <div style={{ fontSize: "50px", marginBottom: "-5px" }}>
-      {/* <RiMoneyDollarCircleFill /> */}
       <RiMoneyDollarCircleLine />
     </div>
     <p>No transactions found</p>
@@ -125,7 +124,6 @@ const TransactionsList = ({ type, isLoading }: TransactionsListProps) => {
     setSelectedTransaction(null);
   }, []);
 
-  // Створюємо стабільну функцію для редагування
   const handleEdit = useCallback((transaction: Transaction) => {
     setSelectedTransaction(transaction);
     setIsModalOpen(true);
@@ -141,7 +139,7 @@ const TransactionsList = ({ type, isLoading }: TransactionsListProps) => {
   const gridContext = useMemo(
     () => ({
       handleDelete,
-      handleEdit, // тепер доступно в ActionsRenderer
+      handleEdit,
     }),
     [handleDelete, handleEdit],
   );

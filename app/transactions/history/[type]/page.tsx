@@ -13,18 +13,20 @@ import {
 
 interface HistoryPageProps {
   params: Promise<{ type: string }>;
+  searchParams: Promise<{ date?: string }>;
 }
 
 export default async function TransactionsHistoryPage({
   params,
+  searchParams,
 }: HistoryPageProps) {
   const { type } = await params;
+  const { date } = await searchParams;
 
   const transactionType = type === "incomes" ? "incomes" : "expenses";
 
   const queryClient = new QueryClient();
 
-  // Префетч даних у кеш React Query
   await queryClient.prefetchQuery({
     queryKey: ["transactions", transactionType],
     queryFn: () => getTransactionByType(transactionType),
