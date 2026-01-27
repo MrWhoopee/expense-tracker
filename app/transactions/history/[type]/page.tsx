@@ -5,6 +5,11 @@ import { Suspense } from "react";
 import css from "@/app/transactions/history/[type]/page.module.css";
 import { getTransactionByType } from "@/lib/serverApi";
 import Loader from "@/components/Loader/Loader";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
 
 interface HistoryPageProps {
   params: Promise<{ type: string }>;
@@ -17,7 +22,13 @@ export default async function TransactionsHistoryPage({
 
   const transactionType = type === "incomes" ? "incomes" : "expenses";
 
-  const data = await getTransactionByType(transactionType);
+  const queryClient = new QueryClient();
+
+  // Префетч даних у кеш React Query
+  await queryClient.prefetchQuery({
+    queryKey: ["transactions", transactionType],
+    queryFn: () => getTransactionByType(transactionType),
+  });
 
   return (
     <main className={css.container}>
@@ -33,9 +44,9 @@ export default async function TransactionsHistoryPage({
       <div className={css.historyContent}>
         <TransactionsSearchTools />
 
-        <Suspense fallback={<Loader />}>
-          <TransactionsList data={data} isLoading={false} />
-        </Suspense>
+        <HydrationBoundary state={dehydrate(queryClient)}>
+          <TransactionsList type={transactionType} />
+        </HydrationBoundary>
       </div>
     </main>
   );
