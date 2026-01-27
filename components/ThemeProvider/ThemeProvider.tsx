@@ -9,10 +9,16 @@ interface ThemeProviderProps {
 
 export default function ThemeProvider({ children }: ThemeProviderProps) {
   return (
+    // <NextThemesProvider
+    //   attribute="data-theme"
+    //   defaultTheme="dark"
+    //   enableSystem={true}
+    //   storageKey="theme"
+    // >
     <NextThemesProvider
       attribute="data-theme"
-      defaultTheme="dark"
-      enableSystem={true}
+      defaultTheme="system"
+      enableSystem
       storageKey="theme"
     >
       {children}

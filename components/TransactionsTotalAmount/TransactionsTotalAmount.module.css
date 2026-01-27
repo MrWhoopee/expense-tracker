@@ -95,10 +95,14 @@
   }
 }
 
-/* !!!!!!!Доделать для светлой темы!!!! */
 .skeleton {
   height: 81px;
-  background: linear-gradient(90deg, #171719 25%, #222224 50%, #171719 75%);
+  background: linear-gradient(
+    90deg,
+    var(--skeleton-bg) 25%,
+    var(--skeleton-highlight) 50%,
+    var(--skeleton-bg) 75%
+  );
   background-size: 200% 100%;
   animation: loading-pulse 1.5s infinite;
   @media only screen and (min-width: 768px) {
