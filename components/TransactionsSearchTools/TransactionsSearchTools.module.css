@@ -1,8 +1,19 @@
 .form {
   display: flex;
-  gap: 13px;
-  padding: 20px 40px;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
   z-index: 999;
+
+  @media only screen and (min-width: 768px) {
+    flex-direction: row;
+    padding: 32px 32px 16px;
+    gap: 13px;
+  }
+
+  @media only screen and (min-width: 1440px) {
+    padding: 20px 40px;
+  }
 }
 
 .searchInputWrapper {
@@ -10,10 +21,10 @@
 }
 
 .searchInput {
-  width: 261px;
+  width: 100%;
   border: 1px solid rgba(17, 17, 17, 0.1);
   border-radius: 30px;
-  padding: 15px 80px 15px 30px;
+  padding: 15.5px 105px 15.5px 30px;
   outline: none;
 
   font-family: "Inter", sans-serif;
@@ -27,9 +38,19 @@
     outline-color 250ms linear,
     border-color 250ms linear;
 
+  &:hover {
+    outline-color: #0ef387;
+    border-color: #0ef387;
+  }
+
   &:focus {
-    outline-color: #fafafa;
-    border-color: #fafafa;
+    outline-color: #0ef387;
+    border-color: #0ef387;
+  }
+
+  @media only screen and (min-width: 768px) {
+    width: 261px;
+    padding: 15px 70px 15px 30px;
   }
 }
 

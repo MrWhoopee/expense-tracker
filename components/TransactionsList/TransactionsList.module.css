@@ -20,8 +20,29 @@
   }
 }
 
+/* .gridContainer.isLoading :global(.ag-header-cell-text) {
+  animation: none;
+  -webkit-text-fill-color: #6f6f70;
+} */
+
+.gridWrapper {
+  width: 100%;
+  height: 100%;
+  padding: 0 0 30px 0;
+  border-radius: 0;
+  z-index: 9;
+}
+
 .gridContainer :global(.ag-header-cell) {
   padding: 0 0 0 8px;
+}
+
+.actionsColumn {
+  min-width: 75px;
+
+  @media only screen and (min-width: 1440px) {
+    min-width: 327px;
+  }
 }
 
 .gridContainer :global(:where(.ag-ltr) .ag-header-cell-resize) {
@@ -35,7 +56,7 @@
 }
 
 .gridContainer :global(.ag-cell) {
-  font-weight: 100;
+  font-weight: 300;
   padding-left: 8px;
   padding-right: 0;
 }
@@ -45,19 +66,21 @@
 }
 
 .gridContainer :global(.ag-column-first) {
-  padding-left: 40px;
+  padding-left: 20px;
+
+  @media only screen and (min-width: 768px) {
+    padding-left: 32px;
+  }
+
+  @media only screen and (min-width: 1440px) {
+    padding-left: 40px;
+  }
 }
 
-.gridContainer :global(.ag-column-last) {
-  padding-right: 66px;
-}
-
+/* Modern Browsers */
 .gridContainer {
-  font-weight: 100;
-
-  /* Modern Browsers */
   scrollbar-width: 8px;
-  scrollbar-color: #434345 transparent;
+  scrollbar-color: #69696b #434345;
 }
 
 /* Older Browsers */
@@ -65,10 +88,10 @@
   width: 8px;
 }
 .gridContainer::-webkit-scrollbar-track {
-  background: transparent;
+  background: #434345;
 }
 .gridContainer::-webkit-scrollbar-thumb {
-  background: #434345;
+  background: #69696b;
 }
 
 /* buttons */
@@ -82,16 +105,10 @@
 
 .editBtn {
   border-radius: 40px;
-  padding: 14px 32px 14px 58px;
-  width: 119px;
+  height: 32px;
+  width: 32px;
 
   background: #0ef387;
-
-  font-family: var(--font-family);
-  font-weight: 400;
-  font-size: 16px;
-  letter-spacing: -0.02em;
-  color: #0c0d0d;
 
   border: none;
   outline: none;
@@ -112,20 +129,31 @@
   &:active {
     outline: 1px solid #fafafa;
   }
+
+  @media only screen and (min-width: 768px) {
+    height: 44px;
+    width: 44px;
+  }
+
+  @media only screen and (min-width: 1440px) {
+    border-radius: 40px;
+    padding: 14px 32px 14px 58px;
+    width: 119px;
+
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 16px;
+    letter-spacing: -0.02em;
+    color: #0c0d0d;
+  }
 }
 
 .deleteBtn {
   border-radius: 40px;
-  padding: 14px 30px 14px 56px;
-  width: 134px;
+  width: 32px;
+  height: 32px;
 
   background: #0c0d0d;
-
-  font-family: var(--font-family);
-  font-weight: 400;
-  font-size: 16px;
-  letter-spacing: -0.02em;
-  color: #fafafa;
 
   border: none;
   outline: none;
@@ -146,36 +174,75 @@
   &:active {
     outline: 1px solid #fafafa;
   }
+
+  @media only screen and (min-width: 768px) {
+    height: 44px;
+    width: 44px;
+  }
+
+  @media only screen and (min-width: 1440px) {
+    border-radius: 40px;
+    padding: 14px 30px 14px 56px;
+    width: 134px;
+
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 16px;
+    letter-spacing: -0.02em;
+    color: #fafafa;
+  }
+}
+
+@media (max-width: 1439px) {
+  .btnText {
+    display: none;
+  }
 }
 
 .editButtonContainer {
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .editSvgContainer {
   position: absolute;
-  top: 50%;
-  left: 32px;
-  transform: translateY(-50%);
+  left: 50%;
+  transform: translate(-50%);
   pointer-events: none;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media only screen and (min-width: 1440px) {
+    left: 32px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
 }
 
 .deleteButtonContainer {
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .deleteSvgContainer {
   position: absolute;
-  top: 50%;
-  left: 30px;
-  transform: translateY(-50%);
+  left: 50%;
+  transform: translate(-50%);
   pointer-events: none;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media only screen and (min-width: 1440px) {
+    left: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
 }
 
 .deleteButtonContainer:hover .deleteSvg {

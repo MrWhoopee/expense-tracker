@@ -34,7 +34,7 @@ export default async function TransactionsHistoryPage({
         <TransactionsSearchTools />
 
         <Suspense fallback={<Loader />}>
-          <TransactionsList data={data} />
+          <TransactionsList data={data} isLoading={false} />
         </Suspense>
       </div>
     </main>
