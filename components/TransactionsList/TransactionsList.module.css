@@ -108,7 +108,7 @@
   height: 32px;
   width: 32px;
 
-  background: #0ef387;
+  background: var(--color-contrast);
 
   border: none;
   outline: none;
@@ -119,15 +119,15 @@
     opacity 250ms linear; */
 
   &:hover {
-    background: #0ebb69;
+    background: var(--chart-color-2);
   }
 
   &:focus {
-    outline: 1px solid #fafafa;
+    outline: 1px solid var(--color-titles);
   }
 
   &:active {
-    outline: 1px solid #fafafa;
+    outline: 1px solid var(--color-titles);
   }
 
   @media only screen and (min-width: 768px) {
@@ -144,7 +144,7 @@
     font-weight: 400;
     font-size: 16px;
     letter-spacing: -0.02em;
-    color: #0c0d0d;
+    color: var(--bg-page);
   }
 }
 
@@ -153,7 +153,7 @@
   width: 32px;
   height: 32px;
 
-  background: #0c0d0d;
+  background: var(--bg-page);
 
   border: none;
   outline: none;
@@ -168,11 +168,11 @@
   }
 
   &:focus {
-    outline: 1px solid #fafafa;
+    outline: 1px solid var(--color-titles);
   }
 
   &:active {
-    outline: 1px solid #fafafa;
+    outline: 1px solid var(--color-titles);
   }
 
   @media only screen and (min-width: 768px) {
