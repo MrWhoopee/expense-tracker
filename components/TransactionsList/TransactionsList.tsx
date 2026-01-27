@@ -14,7 +14,10 @@ import { ICellRendererParams } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
 import Image from "next/image";
 import { Transaction } from "@/type/transaction";
-import { RiMoneyDollarCircleLine } from "react-icons/ri";
+import {
+  RiMoneyDollarCircleFill,
+  RiMoneyDollarCircleLine,
+} from "react-icons/ri";
 
 // Register all Community features
 ModuleRegistry.registerModules([AllCommunityModule]);
