@@ -14,10 +14,7 @@ import { ICellRendererParams } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
 import Image from "next/image";
 import { Transaction } from "@/type/transaction";
-import {
-  RiMoneyDollarCircleFill,
-  RiMoneyDollarCircleLine,
-} from "react-icons/ri";
+import { RiMoneyDollarCircleLine } from "react-icons/ri";
 
 // Register all Community features
 ModuleRegistry.registerModules([AllCommunityModule]);
@@ -65,7 +62,6 @@ const ActionsRenderer = (props: ICellRendererParams<Transaction>) => {
 const NoTransactionsOverlay = () => (
   <div style={{ textAlign: "center", fontSize: "18px", color: "#fafafa" }}>
     <div style={{ fontSize: "50px", marginBottom: "-5px" }}>
-      {/* <RiMoneyDollarCircleFill /> */}
       <RiMoneyDollarCircleLine />
     </div>
     <p>No transactions found</p>
