@@ -112,7 +112,7 @@ const tempTransactionData = (): Transaction => {
 };
 
 interface Props {
-  transaction?: Transaction;
+  transaction?: Transaction | null;
   closeTransactionModal?: () => void;
 }
 

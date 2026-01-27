@@ -18,11 +18,11 @@ export const metadata: Metadata = {
   description: "Expense Tracker",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
+interface RootLayoutProps {
   children: React.ReactNode;
-}>) {
+}
+
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
       <body className={`${inter.variable}`}>
@@ -63,6 +63,7 @@ export default function RootLayout({
             <ThemeProvider>
               <Header />
               <main>{children}</main>
+              <div id="modal-root"></div>
             </ThemeProvider>
           </AuthProvider>
         </TanStackProvider>
