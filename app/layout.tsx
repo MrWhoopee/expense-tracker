@@ -16,6 +16,22 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Expense Tracker",
   description: "Expense Tracker",
+  icons: {
+    icon: [
+      {
+        media: "(prefers-color-scheme: dark)",
+        url: "/images/favicon-dark.ico",
+        href: "/images/favicon-dark.ico",
+        type: "image/x-icon",
+      },
+      {
+        media: "(prefers-color-scheme: light)",
+        url: "/images/favicon-light.svg",
+        href: "/images/favicon-light.svg",
+        type: "image/svg+xml",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({
