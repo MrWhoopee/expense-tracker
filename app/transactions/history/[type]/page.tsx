@@ -1,10 +1,10 @@
 import TransactionsList from "@/components/TransactionsList/TransactionsList";
 import TransactionsSearchTools from "@/components/TransactionsSearchTools/TransactionsSearchTools";
-import { Suspense } from "react";
+// import { Suspense } from "react";
 // import TransactionsTotalAmount from "@/components/TransactionsTotalAmount/TransactionsTotalAmount";
 import css from "@/app/transactions/history/[type]/page.module.css";
 import { getTransactionByType } from "@/lib/serverApi";
-import Loader from "@/components/Loader/Loader";
+// import Loader from "@/components/Loader/Loader";
 import {
   dehydrate,
   HydrationBoundary,
