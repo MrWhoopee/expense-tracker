@@ -151,6 +151,15 @@ const CategoriesModal = ({
     const categoryType = type === "Expense" ? "expenses" : "incomes";
     const newNameCategory = formData?.newNameCategory;
 
+    const duplicateCategoryCheck = categories?.find(
+      (x) => x.categoryName === newNameCategory,
+    );
+    if (duplicateCategoryCheck) {
+      toast.error("Duplicate category name.");
+      setIsLoader(false);
+      return;
+    }
+
     if (!isEditMode) {
       const createCategoryParams = {
         type: categoryType,
@@ -158,14 +167,6 @@ const CategoriesModal = ({
       };
 
       try {
-        const duplicateCategoryCheck = categories?.find(
-          (x) => x.categoryName === newNameCategory,
-        );
-        if (duplicateCategoryCheck) {
-          toast.error("Duplicate category name.");
-          return;
-        }
-
         createCategoryMutation.mutate(createCategoryParams);
       } catch (error) {
         console.log(error);
@@ -262,6 +263,7 @@ const CategoriesModal = ({
             className={css.closeButton}
             onClick={closeModal}
             aria-label="Close modal"
+            ref={firstFocusRef} // перееервіііііііііііііііііііііііііірииииииииииитиииииииии
           >
             <svg className={css["icon-close"]}>
               <use href="/img/sprite.svg#icon-x"></use>
@@ -295,63 +297,65 @@ const CategoriesModal = ({
                   </p>
                 ) : (
                   <ul className={css.categoryList}>
-                    {categories?.map((cat, index) => (
-                      <li className={css.categoryItem} key={cat._id}>
-                        <p className={css.categoryText}>{cat.categoryName}</p>
+                    {categories
+                      ?.slice()
+                      .reverse()
+                      .map((cat) => (
+                        <li className={css.categoryItem} key={cat._id}>
+                          <p className={css.categoryText}>{cat.categoryName}</p>
 
-                        <div className={css.buttonWrapper}>
-                          <button
-                            type="button"
-                            className={css.buttonModal}
-                            onClick={() => {
-                              setCategory(cat.categoryName);
-                              setCategoryId(cat._id);
-                              setDraftCategoryId(cat._id);
-                            }}
-                            ref={index === 0 ? firstFocusRef : null}
-                            aria-label={`Select category ${cat.categoryName}`}
-                          >
-                            <svg
-                              width="16"
-                              height="16"
-                              className={css.iconModal}
+                          <div className={css.buttonWrapper}>
+                            <button
+                              type="button"
+                              className={css.buttonModal}
+                              onClick={() => {
+                                setCategory(cat.categoryName);
+                                setCategoryId(cat._id);
+                                setDraftCategoryId(cat._id);
+                              }}
+                              aria-label={`Select category ${cat.categoryName}`}
                             >
-                              <use href="/img/sprite.svg#icon-check"></use>
-                            </svg>
-                          </button>
+                              <svg
+                                width="16"
+                                height="16"
+                                className={css.iconModal}
+                              >
+                                <use href="/img/sprite.svg#icon-check"></use>
+                              </svg>
+                            </button>
 
-                          <button
-                            type="button"
-                            className={css.buttonModal}
-                            onClick={() => toggleEditMode(cat._id)}
-                            aria-label={`Edit category ${cat.categoryName}`}
-                          >
-                            <svg
-                              width="16"
-                              height="16"
-                              className={css.iconModal}
+                            <button
+                              type="button"
+                              className={css.buttonModal}
+                              onClick={() => toggleEditMode(cat._id)}
+                              aria-label={`Edit category ${cat.categoryName}`}
                             >
-                              <use href="/img/sprite.svg#icon-edit"></use>
-                            </svg>
-                          </button>
+                              <svg
+                                width="16"
+                                height="16"
+                                className={css.iconModal}
+                              >
+                                <use href="/img/sprite.svg#icon-edit"></use>
+                              </svg>
+                            </button>
 
-                          <button
-                            type="button"
-                            className={css.buttonModal}
-                            onClick={() => handleDelete(cat._id)}
-                            aria-label={`Delete category ${cat.categoryName}`}
-                          >
-                            <svg
-                              width="16"
-                              height="16"
-                              className={css.iconModal}
+                            <button
+                              type="button"
+                              className={css.buttonModal}
+                              onClick={() => handleDelete(cat._id)}
+                              aria-label={`Delete category ${cat.categoryName}`}
                             >
-                              <use href="/img/sprite.svg#icon-trash"></use>
-                            </svg>
-                          </button>
-                        </div>
-                      </li>
-                    ))}
+                              <svg
+                                width="16"
+                                height="16"
+                                className={css.iconModal}
+                              >
+                                <use href="/img/sprite.svg#icon-trash"></use>
+                              </svg>
+                            </button>
+                          </div>
+                        </li>
+                      ))}
                   </ul>
                 )}
 

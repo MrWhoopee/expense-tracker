@@ -241,6 +241,18 @@
   color: var(--chart-color-2);
 }
 
+.categoryItem .buttonWrapper {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.categoryItem:hover .buttonWrapper {
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+}
+
 /* ! BUTTONS END */
 
 /* ! NEW CATEGORY */
