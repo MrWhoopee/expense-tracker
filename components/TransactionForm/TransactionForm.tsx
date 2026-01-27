@@ -357,7 +357,7 @@ const TransactionForm = ({ transaction, closeTransactionModal }: Props) => {
                     onClick={closeTransactionModal}
                   >
                     <svg className={css["icon-close"]}>
-                      <use href="../../img/sprite.svg#icon-x"></use>
+                      <use href="/img/sprite.svg#icon-x"></use>
                     </svg>
                   </button>
                 )}
@@ -464,7 +464,7 @@ const TransactionForm = ({ transaction, closeTransactionModal }: Props) => {
                                   disabled={prevMonthButtonDisabled}
                                 >
                                   <svg className={css["icon-arrow"]}>
-                                    <use href="../../img/sprite.svg#icon-arrow-left"></use>
+                                    <use href="/img/sprite.svg#icon-arrow-left"></use>
                                   </svg>
                                 </button>
                                 <p className={css["calendar-title"]}>
@@ -476,7 +476,7 @@ const TransactionForm = ({ transaction, closeTransactionModal }: Props) => {
                                   disabled={nextMonthButtonDisabled}
                                 >
                                   <svg className={css["icon-arrow"]}>
-                                    <use href="../../img/sprite.svg#icon-arrow-right"></use>
+                                    <use href="/img/sprite.svg#icon-arrow-right"></use>
                                   </svg>
                                 </button>
                               </div>
@@ -484,7 +484,7 @@ const TransactionForm = ({ transaction, closeTransactionModal }: Props) => {
                           />
                           <span className={css["modal-icon-wrapper-date"]}>
                             <svg className={css["modal-icon-date"]}>
-                              <use href="../../img/sprite.svg#icon-calendar"></use>
+                              <use href="/img/sprite.svg#icon-calendar"></use>
                             </svg>
                           </span>
                         </div>
@@ -543,7 +543,7 @@ const TransactionForm = ({ transaction, closeTransactionModal }: Props) => {
                           />
                           <span className={css["modal-icon-wrapper-date"]}>
                             <svg className={css["modal-icon-date"]}>
-                              <use href="../../img/sprite.svg#icon-clock"></use>
+                              <use href="/img/sprite.svg#icon-clock"></use>
                             </svg>
                           </span>
                         </div>

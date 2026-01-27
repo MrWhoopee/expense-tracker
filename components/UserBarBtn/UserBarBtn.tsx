@@ -43,7 +43,7 @@ export default function UserBarBtn({ onAction }: Props) {
           width="20"
           height="20"
         >
-          <use href="/sprite.svg#chevron-down"></use>
+          <use href="/img/sprite.svg#chevron-down"></use>
         </svg>
       </button>
 

@@ -14,7 +14,7 @@ export default function BurgerMenuBtn() {
     <>
       <button type="button" className={css.burgerBtn} onClick={openMenu}>
         <svg width="36" height="36">
-          <use href="/sprite.svg#burger-menu"></use>
+          <use href="/img/sprite.svg#burger-menu"></use>
         </svg>
       </button>
 

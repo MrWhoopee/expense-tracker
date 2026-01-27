@@ -5,7 +5,7 @@ import AuthProvider from "@/components/AuthProvider/AuthProvider";
 import { Toaster } from "react-hot-toast";
 import TanStackProvider from "@/components/TanStackProvider/TanStackProvider";
 import Header from "@/components/Header/Header";
-
+import ThemeProvider from "@/components/ThemeProvider/ThemeProvider";
 const inter = Inter({
   weight: ["300", "400", "500", "700"],
   subsets: ["latin"],
@@ -29,7 +29,7 @@ export default function RootLayout({
         <Toaster
           position="bottom-right"
           toastOptions={{
-            duration: 13000,
+            duration: 3000,
             style: {
               color: "#fff",
               backgroundColor: "#17171a",
@@ -37,7 +37,7 @@ export default function RootLayout({
               border: "1px solid #fff",
             },
             success: {
-              duration: 13000,
+              duration: 3000,
               iconTheme: {
                 primary: "#0EF387",
                 secondary: "#fff",
@@ -47,7 +47,7 @@ export default function RootLayout({
               },
             },
             error: {
-              duration: 13000,
+              duration: 3000,
               iconTheme: {
                 primary: "#E74A3B",
                 secondary: "#fff",
@@ -60,8 +60,10 @@ export default function RootLayout({
         />
         <TanStackProvider>
           <AuthProvider>
-            <Header />
-            <main>{children}</main>
+            <ThemeProvider>
+              <Header />
+              <main>{children}</main>
+            </ThemeProvider>
           </AuthProvider>
         </TanStackProvider>
       </body>
