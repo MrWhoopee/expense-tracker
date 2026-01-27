@@ -31,7 +31,7 @@
   align-items: flex-start;
   font-size: 14px;
   font-weight: 400;
-  color: #fafafa;
+  color: var(--color-titles);
   font-family: var(--font-family);
 
   @media screen and (min-width: 768px) {
@@ -62,7 +62,7 @@
 }
 
 .modal {
-  background-color: #171719;
+  background-color: var(--bg-component);
   max-width: 335px;
   width: 100%;
 
@@ -111,7 +111,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fafafa;
+  color: var(--color-titles);
   transition: color 250ms linear;
 }
 
@@ -132,7 +132,7 @@
   font-weight: 400;
   font-size: 24px;
   letter-spacing: -0.02em;
-  color: #fafafa;
+  color: var(--color-titles);
   opacity: 0.88;
   margin-bottom: 19px;
   padding: 0;
@@ -148,7 +148,7 @@
   font-family: var(--font-family);
   font-weight: 400;
   font-size: 12px;
-  color: rgba(250, 250, 250, 0.4);
+  color: var(--color-paragraph);
   margin-bottom: 9px;
 }
 /* ! PARAGRAPH ALL CATEGORY END */
@@ -159,7 +159,7 @@
   font-family: var(--font-family);
   font-weight: 400;
   font-size: 14px;
-  color: #fafafa;
+  color: var(--color-titles);
 }
 
 .categoryList {
@@ -194,7 +194,7 @@
   font-family: var(--font-family);
   font-weight: 400;
   font-size: 14px;
-  color: #fafafa;
+  color: var(--color-titles);
   @media screen and (min-width: 768px) {
     padding-left: 40px;
     padding-right: 40px;
@@ -232,13 +232,13 @@
 }
 
 .categoryItem:hover .buttonModal {
-  color: #0ef387;
+  color: var(--color-contrast);
   pointer-events: auto;
 }
 
 .categoryItem:hover .buttonModal:hover,
 .categoryItem:hover .buttonModal:focus {
-  color: #0ebb69;
+  color: var(--chart-color-2);
 }
 
 /* ! BUTTONS END */
@@ -249,7 +249,7 @@
   font-weight: 400;
   font-size: 14px;
   letter-spacing: -0.02em;
-  color: #0ef387;
+  color: var(--color-contrast);
   margin-bottom: 8px;
   @media screen and (min-width: 768px) {
     font-size: 16px;
@@ -265,14 +265,14 @@
   font-weight: 400;
   font-size: 14px;
   line-height: 129%;
-  color: #fafafa;
+  color: var(--color-titles);
   background-color: transparent;
   outline: none;
   border: 1px solid rgba(250, 250, 250, 0.2);
   border-radius: 12px;
   transition:
-    color 250ms linear,
-    border-color 250ms linear;
+    color var(--transition),
+    border-color var(--transition);
 
   @media screen and (min-width: 768px) {
     padding: 12px 18px;
@@ -282,17 +282,17 @@
 }
 
 .input::placeholder {
-  color: rgba(250, 250, 250, 0.4);
+  color: var(--color-paragraph);
 }
 
 .input:focus::placeholder,
 .input:hover::placeholder {
-  color: #fafafa;
+  color: var(--color-titles);
 }
 
 .input:hover,
 .input:focus {
-  border-color: #0ef387;
+  border-color: var(--color-contrast);
 }
 
 .error {
@@ -318,7 +318,7 @@
 .buttonAddEdit {
   border-radius: 12px;
   padding: 13px 13px;
-  background: #0ef387;
+  background: var(--color-contrast);
   border: none;
   min-width: 115px;
   max-height: 43px;
@@ -331,7 +331,7 @@
   font-size: 14px;
   letter-spacing: -0.02em;
   color: #0c0d0d;
-  transition: background-color 250ms linear;
+  transition: background-color var(--transition);
   @media screen and (min-width: 768px) {
     border-radius: 12px;
     padding: 14px 14px;
@@ -344,7 +344,7 @@
 
 .buttonAddEdit:hover,
 .buttonAddEdit:focus {
-  background-color: #0ebb69;
+  background-color: var(--chart-color-2);
 }
 /* ! BUTTON ADD OR EDIT END */
 

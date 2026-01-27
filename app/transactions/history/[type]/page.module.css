@@ -31,7 +31,7 @@
   border-radius: 30px;
   width: 100%;
   height: 526px;
-  background: #171719;
+  background: var(--bg-component);
 
   @media only screen and (min-width: 768px) {
     height: 554px;
