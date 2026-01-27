@@ -1,12 +1,14 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import DatePicker from "react-datepicker";
+import { PatternFormat } from "react-number-format";
 import "react-datepicker/dist/react-datepicker.css";
-import css from "./CustomDatePicker.module.css";
 import toast from "react-hot-toast";
+import { format, isValid, parse, isAfter } from "date-fns";
 import { offset } from "@floating-ui/dom";
+import css from "./CustomDatePicker.module.css";
 
 interface CustomDatePickerProps {
   values: Date | null;
@@ -19,85 +21,68 @@ const CustomDatePicker = ({
   setFieldValue,
   submitForm,
 }: CustomDatePickerProps) => {
+  const [inputText, setInputText] = useState("");
+
+  // Синхронізація: якщо дата змінилася через календар — оновлюємо текст в інпуті
+  useEffect(() => {
+    if (values && isValid(values)) {
+      setInputText(format(values, "dd/MM/yyyy"));
+    } else if (!values) {
+      setInputText("");
+    }
+  }, [values]);
+
+  // Функція для фінальної перевірки та відправки
+  const handleComplete = (val: string) => {
+    const parsed = parse(val, "dd/MM/yyyy", new Date());
+
+    if (isValid(parsed)) {
+      if (isAfter(parsed, new Date())) {
+        toast.error("Date cannot be in the future", { id: "future" });
+        return;
+      }
+      setFieldValue("date", parsed);
+      setTimeout(() => submitForm(), 50);
+    }
+  };
+
   return (
     <div className={css.datePickerWrapper}>
       <DatePicker
         selected={values}
         onChange={(date: Date | null) => {
-          if (date && date > new Date()) {
-            toast.error("Date cannot be in the future", {
-              id: "date-limit",
-            });
-            return;
-          }
           setFieldValue("date", date);
+          if (date) setTimeout(() => submitForm(), 50);
         }}
-        // onChange={(date: Date | null) => {
-        //   setFieldValue("date", date);
-        // }}
-        onChangeRaw={(
-          event?:
-            | React.MouseEvent<HTMLElement, MouseEvent>
-            | React.KeyboardEvent<HTMLElement>,
-        ) => {
-          const input = event?.target as HTMLInputElement;
-          if (!input || !input.value) return;
+        // Використовуємо PatternFormat як кастомний інпут
+        customInput={
+          <PatternFormat
+            format="##/##/####"
+            mask="_"
+            value={inputText}
+            onValueChange={(values) => {
+              const { formattedValue, value } = values;
+              setInputText(formattedValue);
 
-          // replace .,-_\ with "/"
-          let value = input.value.replace(/[.,\-_\\ ]/g, "/");
-
-          // only allow numbers and "/"
-          value = value.replace(/[^\d/]/g, "");
-
-          // only 8 digits + 2 "/" allowed
-          // added id to just show it once
-          if (value.length > 10) {
-            value = value.substring(0, 10);
-            toast.error("Maximum 8 digits allowed", {
-              id: "digits-limit",
-            });
-          }
-
-          input.value = value;
-        }}
-        onBlur={(e: React.FocusEvent<HTMLInputElement>) => {
-          const inputValue = e.target.value;
-
-          if (!inputValue) {
-            setFieldValue("date", null);
-            submitForm();
-            return;
-          }
-
-          // !doesn't work
-          //   const isCorrectLength = inputValue.length === 10;
-          //   const dateRegex =
-          //     /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
-          //   const isFormatValid = dateRegex.test(inputValue);
-          //   const isDateValid = values.date && !isNaN(values.date.getTime());
-
-          //   if (!isCorrectLength || !isFormatValid || !isDateValid) {
-          //     toast.error("Invalid date or format (dd/mm/yyyy)", {
-          //       id: "format-error",
-          //     });
-          //     setFieldValue("date", null);
-          //     e.target.value = "";
-          //   } else {
-          //     submitForm();
-          //   }
-
-          submitForm();
-        }}
-        popperModifiers={[offset(4)]} // space between input & calendar
-        dateFormat="dd/MM/yyyy"
+              // Якщо введено всі 8 цифр — тригеримо сабміт
+              if (value.length === 8) {
+                handleComplete(formattedValue);
+              }
+              // Якщо поле очистили
+              if (value.length === 0) {
+                setFieldValue("date", null);
+                setTimeout(() => submitForm(), 50);
+              }
+            }}
+            className={css.dateInput}
+            placeholder="dd/mm/yyyy"
+          />
+        }
+        popperModifiers={[offset(4)]}
         placeholderText="dd/mm/yyyy"
-        //   maxDate={new Date()}
-        className={css.dateInput}
+        dateFormat="dd/MM/yyyy"
         showPopperArrow={false}
-        autoComplete="off"
         calendarStartDay={1}
-        // timeZone="UTC"
-        // locale="uk-UA"
         previousMonthButtonLabel={
           <Image
             src="/arrow-left.svg"
@@ -119,7 +104,6 @@ const CustomDatePicker = ({
           />
         }
       />
-
       <div className={css.calendarSvgContainer}>
         <Image src="/calendar.svg" alt="calendar" width={20} height={20} />
       </div>
