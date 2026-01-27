@@ -39,17 +39,17 @@
 }
 
 .iconSun {
-  color: #0ef387;
+  color: #0ef387; /*на переменные не менять!*/
 }
 
 .iconMoon {
-  color: #1be0e0;
+  color: #1be0e0; /*на переменные не менять!*/
 }
 
 :global([data-theme="light"]) .button {
-  background-color: #171719;
+  background-color: #171719; /*на переменные не менять!*/
 }
 
 :global([data-theme="dark"]) .button {
-  background-color: #f4f4f4;
+  background-color: #f4f4f4; /*на переменные не менять!*/
 }

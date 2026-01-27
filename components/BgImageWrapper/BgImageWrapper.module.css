@@ -59,7 +59,7 @@
   height: 81px;
   padding: 20px;
   box-sizing: border-box;
-  background-color: #fafafa;
+  background-color: var(--color-titles);
 
   animation: moveX var(--duration) linear infinite alternate;
   animation-play-state: running;
@@ -89,11 +89,11 @@
   width: 36px;
   height: 36px;
   box-sizing: border-box;
-  background-color: #0ef387;
+  background-color: var(--color-contrast);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #0c0d0d;
+  color: var(--bg-page);
 
   @media screen and (min-width: 768px) {
     border-radius: 13px;
