@@ -8,16 +8,19 @@ import Loader from "@/components/Loader/Loader";
 
 interface HistoryPageProps {
   params: Promise<{ type: string }>;
+  searchParams: Promise<{ date?: string }>;
 }
 
 export default async function TransactionsHistoryPage({
   params,
+  searchParams,
 }: HistoryPageProps) {
   const { type } = await params;
+  const { date } = await searchParams;
 
   const transactionType = type === "incomes" ? "incomes" : "expenses";
 
-  const data = await getTransactionByType(transactionType);
+  const data = await getTransactionByType(transactionType, date);
 
   return (
     <main className={css.container}>
@@ -33,7 +36,7 @@ export default async function TransactionsHistoryPage({
       <div className={css.historyContent}>
         <TransactionsSearchTools />
 
-        <Suspense fallback={<Loader />}>
+        <Suspense key={date || "all"} fallback={<Loader />}>
           <TransactionsList data={data} isLoading={false} />
         </Suspense>
       </div>
