@@ -5,7 +5,7 @@ import AuthProvider from "@/components/AuthProvider/AuthProvider";
 import { Toaster } from "react-hot-toast";
 import TanStackProvider from "@/components/TanStackProvider/TanStackProvider";
 import Header from "@/components/Header/Header";
-
+import ThemeProvider from "@/components/ThemeProvider/ThemeProvider";
 const inter = Inter({
   weight: ["300", "400", "500", "700"],
   subsets: ["latin"],
@@ -60,8 +60,10 @@ export default function RootLayout({
         />
         <TanStackProvider>
           <AuthProvider>
-            <Header />
-            <main>{children}</main>
+            <ThemeProvider>
+              <Header />
+              <main>{children}</main>
+            </ThemeProvider>
           </AuthProvider>
         </TanStackProvider>
       </body>
