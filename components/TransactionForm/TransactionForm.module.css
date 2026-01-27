@@ -92,6 +92,7 @@ TransactionForm .container {
   }
 }
 
+/* ! INPUTS */
 .input {
   width: 100%;
   border: 1px solid var(--chart-color-6);
@@ -143,14 +144,15 @@ TransactionForm .container {
   }
 }
 
-.input:focus::placeholder,
+/* .input:focus::placeholder,
 .input:hover::placeholder {
   color: var(--color-titles);
-}
+} */
 
 .activeInput {
   border-color: var(--color-contrast);
 }
+/* ! INPUTS END */
 
 /* ! RADIO */
 .radio-wrapper {
@@ -251,7 +253,7 @@ TransactionForm .container {
 
 .input-date-time:hover,
 .input-date-time:focus-within {
-  border-color: var(--transition);
+  border-color: var(--color-contrast);
 }
 
 .input-date-tablet {
@@ -433,10 +435,10 @@ TransactionForm .container {
   transition: color var(--transition);
 }
 
-.textarea:focus::placeholder,
+/* .textarea:focus::placeholder,
 .textarea:hover::placeholder {
   color: var(--color-titles);
-}
+} */
 /* ! COMMENT END */
 
 /* ! SUBMIT / EDIT BUTTON */
@@ -536,6 +538,8 @@ TransactionForm .container {
   .transaction-calendar-for-transaction-form .react-datepicker__day:hover
 ) {
   border-radius: 50% !important;
+  background-color: #0ebb69 !important;
+  color: #fafafa;
 }
 
 :global(
@@ -556,24 +560,40 @@ TransactionForm .container {
   .transaction-calendar-for-transaction-form
     .react-datepicker__day--keyboard-selected
 ) {
-  background-color: #0ebb69 !important;
-
-  border-radius: 50%;
-}
-
-:global(
-  .transaction-calendar-for-transaction-form
-    .react-datepicker__day--keyboard-selected:hover
-) {
-  background-color: #4dc274 !important;
+  background-color: transparent !important;
 }
 
 :global(
   .transaction-calendar-for-transaction-form .react-datepicker__day--selected
 ) {
-  color: var(--color-titles) !important;
-  background-color: #040404 !important;
+  color: #0c0d0d !important;
+  background-color: transparent !important;
+  outline: 1px solid #040404 !important;
   border-radius: 50% !important;
+}
+
+:global(
+  .transaction-calendar-for-transaction-form
+    .react-datepicker__day--selected:hover
+) {
+  color: #0c0d0d !important;
+  border-radius: 50% !important;
+}
+
+:global(
+  .transaction-calendar-for-transaction-form .react-datepicker__day--today
+) {
+  color: #fafafa !important;
+  border-radius: 50% !important;
+  background-color: black !important;
+}
+
+:global(
+  .transaction-calendar-for-transaction-form .react-datepicker__day--today:hover
+) {
+  color: #fafafa !important;
+  border-radius: 50% !important;
+  background-color: #040404 !important;
 }
 
 :global(
@@ -633,7 +653,6 @@ TransactionForm .container {
   width: 100%;
   height: 100%;
 }
-
 /* ! CALENDAR DATE END */
 
 /* ! CALENDAR TIME  */
@@ -694,7 +713,6 @@ TransactionForm .container {
 }
 
 :global(.react-datepicker__time-list-item--selected) {
-  background-color: #040404 !important;
   border: 1px solid #040404 !important;
   border-radius: 15px;
   font-family: var(--font-family) !important;
@@ -702,10 +720,7 @@ TransactionForm .container {
   font-size: 14px !important;
   line-height: 129% !important;
   letter-spacing: -0.02em !important;
-  color: var(--color-titles) !important;
+  color: #0c0d0d !important;
 }
 
-:global(.react-datepicker__time-list-item--selected:hover) {
-  background-color: #040404 !important;
-}
-/* ! CALENDAR DATE END */
+/* ! CALENDAR TIME END */

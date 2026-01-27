@@ -152,6 +152,14 @@ const CategoriesModal = ({
       };
 
       try {
+        const duplicateCategoryCheck = categories?.find(
+          (x) => x.categoryName === newNameCategory,
+        );
+        if (duplicateCategoryCheck) {
+          toast.error("Duplicate category name.");
+          return;
+        }
+
         createCategoryMutation.mutate(createCategoryParams);
       } catch (error) {
         console.log(error);
