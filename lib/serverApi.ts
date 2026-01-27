@@ -72,21 +72,29 @@ export async function getStatisticsServer(): Promise<Statistic[]> {
 //   return data;
 // }
 
-export async function getTransactionByType(
-  type: string,
-  date?: string,
-): Promise<Transaction[]> {
+interface GetTransactionByTypeParams {
+  type: string;
+  date?: string;
+  search?: string;
+}
+
+export async function getTransactionByType({
+  type,
+  date,
+  search,
+}: GetTransactionByTypeParams): Promise<Transaction[]> {
   const cookieStore = await cookies();
   const cookieString = cookieStore.toString();
 
-  const endpoint = date
-    ? `/transactions/${type}?date=${date}`
-    : `/transactions/${type}`;
+  const filteredParams = Object.fromEntries(
+    Object.entries({ date, search }).filter(([_, value]) => Boolean(value)),
+  ); // no undefined
 
-  const { data } = await apiNext.get<Transaction[]>(endpoint, {
+  const { data } = await apiNext.get<Transaction[]>(`/transactions/${type}`, {
     headers: {
       Cookie: cookieString,
     },
+    params: filteredParams,
   });
 
   return data;

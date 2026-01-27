@@ -13,7 +13,7 @@ import {
 
 interface HistoryPageProps {
   params: Promise<{ type: string }>;
-  searchParams: Promise<{ date?: string }>;
+  searchParams: Promise<{ date?: string; search?: string }>;
 }
 
 export default async function TransactionsHistoryPage({
@@ -21,7 +21,7 @@ export default async function TransactionsHistoryPage({
   searchParams,
 }: HistoryPageProps) {
   const { type } = await params;
-  const { date } = await searchParams;
+  const { date, search } = await searchParams;
 
   const transactionType = type === "incomes" ? "incomes" : "expenses";
 
