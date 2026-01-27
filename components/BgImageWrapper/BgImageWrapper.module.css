@@ -62,7 +62,6 @@
 
   background-color: var(--bg-component);
 
-
   animation: moveX var(--duration) linear infinite alternate;
   animation-play-state: running;
 
@@ -130,7 +129,7 @@
   margin: 0;
   font-weight: 400;
   font-size: 12px;
-  color: rgba(17, 16, 28, 0.5);
+  color: var(--color-paragraph);
 
   @media screen and (min-width: 768px) {
     font-size: 16px;
@@ -140,7 +139,7 @@
 .infoCardBalanceAmount {
   font-weight: 700;
   font-size: 18px;
-  color: #11101c;
+  color: var(--color-titles);
   margin: 0;
 
   @media screen and (min-width: 768px) {
