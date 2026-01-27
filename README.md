@@ -1,36 +1,187 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Expense Tracker
 
-## Getting Started
+An easy-to-use expense tracker for recording spending, organizing finances, and staying in control of your money.
 
-First, run the development server:
+🌐 Live Demo
+https://expense-tracker-pied-eta.vercel.app/
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+🎯 Project Purpose
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Expense Tracker was created as a collaborative team project to practice modern frontend development. The project focuses on building a real-world financial tracking application with dynamic UI updates, state management, data visualization, and responsive design.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+🚀 Features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+💸 Expense Management
 
-## Learn More
+Add, edit, and delete expenses
 
-To learn more about Next.js, take a look at the following resources:
+Categorize transactions
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Track expenses by date
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+📊 Analytics & Insights
 
-## Deploy on Vercel
+Charts for visualizing spending
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Category-based expense analysis
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Clear overview of financial habits
+
+📝 Forms & Validation
+
+User-friendly forms
+
+Input validation
+
+Notifications for successful actions and errors
+
+📱 Responsive Design
+
+Optimized for desktop and mobile
+
+Smooth UI interactions and transitions
+
+🛠️ Libraries & Tools
+
+Core
+
+React — for building user interfaces
+
+React DOM — for rendering React components
+
+Next.js — for server-side rendering, routing, and app structure
+
+TypeScript — for static typing and better developer experience
+
+State & Data
+
+Zustand — for global state management
+
+@tanstack/react-query-devtools — for debugging server state and queries
+
+Axios — for HTTP requests and API communication
+
+Forms & Validation
+
+Formik — for building and managing forms
+
+Yup — for form validation schemas
+
+UI & UX
+
+ag-grid-community / ag-grid-react — for advanced data tables and grids
+
+react-select — for customizable select components
+
+react-datepicker — for date selection inputs
+
+react-icons — for scalable icon components
+
+clsx — for conditional class name management
+
+normalize.css — for CSS normalization across browsers
+
+simplebar-react — for custom scrollbars
+
+overlayscrollbars / overlayscrollbars-react — for enhanced scrollbar styling and behavior
+
+react-hot-toast — for toast notifications
+
+Dates & Utilities
+
+date-fns — for date manipulation and formatting
+
+cookie — for cookie parsing and management
+
+Charts
+
+Recharts — for data visualization and charts
+
+⚙️ Dependencies
+Core
+
+react — for building user interfaces
+
+react-dom — for rendering React components
+
+next — for routing, SSR, and application structure
+
+State & Data
+
+zustand — for global state management
+
+axios — for HTTP requests and API communication
+
+Forms & Validation
+
+formik — for form state management
+
+yup — for form validation
+
+UI & UX
+
+ag-grid-community / ag-grid-react — for advanced data tables and grids
+
+react-select — for customizable select inputs
+
+react-datepicker — for date selection
+
+react-icons — for icon components
+
+clsx — for conditional class name handling
+
+normalize.css — for consistent styling across browsers
+
+simplebar-react — for custom scrollbars
+
+overlayscrollbars / overlayscrollbars-react — for enhanced scrollbar behavior
+
+react-hot-toast — for toast notifications
+
+Charts & Analytics
+
+recharts — for data visualization and charts
+
+Utilities
+
+date-fns — for date manipulation and formatting
+
+cookie — for cookie handling
+
+🧪 Dev Dependencies
+
+TypeScript — for static typing
+
+@types/node — TypeScript definitions for Node.js
+
+@types/react / @types/react-dom — TypeScript definitions for React
+
+ESLint — for linting and code quality
+
+eslint-config-next — Next.js ESLint rules
+
+Prettier — for consistent code formatting
+
+babel-plugin-react-compiler — for optimizing React compilation
+
+🧑‍💻 Team
+
+Artemii Holovko - Team Lead
+
+Rostyslav Miasnykov - Scrum Master
+
+Olha Poliukhovych - Developer
+
+Vadym Buynov - Developer
+
+Yelyzaveta Hotsko - Developer
+
+Olesia Tsaturian - Developer
+
+Ivan Olefirenko - Developer
+
+Vitalii Ishchenko - Developer
+
+Maksym Khlysta - Developer
+
+Roksolana Fedyna - Developer
