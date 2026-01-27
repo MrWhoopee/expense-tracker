@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import css from "./TransactionsList.module.css";
 import {
   AllCommunityModule,
@@ -8,13 +8,21 @@ import {
   ColDef,
   ModuleRegistry,
   themeQuartz,
-  // ValueFormatterParams,
+  ValueFormatterParams,
 } from "ag-grid-community";
 import { ICellRendererParams } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
 import Image from "next/image";
 import { Transaction } from "@/type/transaction";
-import { RiMoneyDollarCircleLine } from "react-icons/ri";
+import {
+  RiMoneyDollarCircleFill,
+  RiMoneyDollarCircleLine,
+} from "react-icons/ri";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { deleteTransaction, getTransactionByType } from "@/lib/clientApi";
+import toast from "react-hot-toast";
+import Modal from "../MainModal/MainModal";
+import TransactionForm from "../TransactionForm/TransactionForm";
 
 // Register all Community features
 ModuleRegistry.registerModules([AllCommunityModule]);
@@ -22,38 +30,28 @@ ModuleRegistry.registerModules([AllCommunityModule]);
 // buttons renderer
 const ActionsRenderer = (props: ICellRendererParams<Transaction>) => {
   const onEdit = () => {
-    console.log("Edit transaction:", props.data);
+    if (props.data) {
+      props.context.handleEdit(props.data);
+    }
   };
 
   const onDelete = () => {
-    console.log("Delete transaction ID:", props.data?._id);
+    const id = props.data?._id;
+    if (id) {
+      props.context.handleDelete(id);
+    }
   };
 
   return (
     <div className={css.actionsCell}>
-      <div className={css.editButtonContainer}>
-        <button tabIndex={0} onClick={onEdit} className={css.editBtn}>
-          <span className={css.btnText}>Edit</span>
-        </button>
-        <div className={css.editSvgContainer}>
-          <Image src="/edit.svg" alt="Edit" width={16} height={16} />
-        </div>
-      </div>
-
-      <div className={css.deleteButtonContainer}>
-        <button tabIndex={0} onClick={onDelete} className={css.deleteBtn}>
-          <span className={css.btnText}>Delete</span>
-        </button>
-        <div className={css.deleteSvgContainer}>
-          <Image
-            src="/delete.svg"
-            alt="Delete"
-            width={16}
-            height={16}
-            className={css.deleteSvg}
-          />
-        </div>
-      </div>
+      <button tabIndex={0} onClick={onEdit} className={css.editBtn}>
+        <Image src="/edit.svg" alt="Edit" width={16} height={16} />
+        <span className={css.btnText}>Edit</span>
+      </button>
+      <button tabIndex={0} onClick={onDelete} className={css.deleteBtn}>
+        <Image src="/delete.svg" alt="Delete" width={16} height={16} />
+        <span className={css.btnText}>Delete</span>
+      </button>
     </div>
   );
 };
@@ -94,18 +92,64 @@ export const LoadingOverlay = () => (
 );
 
 interface TransactionsListProps {
-  data: Transaction[];
-  isLoading: boolean;
+  type: string;
+  isLoading?: boolean;
 }
 
-const TransactionsList = ({ data, isLoading }: TransactionsListProps) => {
+const TransactionsList = ({ type, isLoading }: TransactionsListProps) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const queryClient = useQueryClient();
+  const [selectedTransaction, setSelectedTransaction] =
+    useState<Transaction | null>(null);
+
+  const { data } = useQuery({
+    queryKey: ["transactions", type],
+    queryFn: () => getTransactionByType(type),
+    refetchOnMount: false,
+  });
+
+  const { mutate } = useMutation({
+    mutationFn: (id: string) => deleteTransaction(id),
+    onSuccess: () => {
+      toast.success("Transaction deleted");
+      queryClient.invalidateQueries({ queryKey: ["transactions", type] });
+    },
+    onError: () => {
+      toast.error("Failed to delete");
+    },
+  });
+
+  const closeModal = useCallback(() => {
+    setIsModalOpen(false);
+    setSelectedTransaction(null);
+  }, []);
+
+  const handleEdit = useCallback((transaction: Transaction) => {
+    setSelectedTransaction(transaction);
+    setIsModalOpen(true);
+  }, []);
+
+  const handleDelete = useCallback(
+    (id: string) => {
+      mutate(id);
+    },
+    [mutate],
+  );
+
+  const gridContext = useMemo(
+    () => ({
+      handleDelete,
+      handleEdit,
+    }),
+    [handleDelete, handleEdit],
+  );
+
   const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
   const isTablet =
     typeof window !== "undefined" &&
     window.innerWidth >= 768 &&
     window.innerWidth < 1200;
 
-  // Column Definitions: Defines the columns to be displayed.
   const columnDefs = useMemo<ColDef<Transaction>[]>(
     () => [
       {
@@ -113,6 +157,10 @@ const TransactionsList = ({ data, isLoading }: TransactionsListProps) => {
         headerName: "Category",
         minWidth: 100,
         flex: 1.5,
+
+        valueFormatter: (params) => {
+          return params.value?.categoryName || "";
+        },
       },
       {
         field: "comment",
@@ -246,6 +294,8 @@ const TransactionsList = ({ data, isLoading }: TransactionsListProps) => {
         columnDefs={columnDefs}
         defaultColDef={defaultColDef}
         theme={myTheme}
+        context={gridContext}
+        getRowId={(params) => params.data._id}
         suppressCellFocus={true}
         autoSizeStrategy={autoSizeStrategy}
         suppressHorizontalScroll={false} // just in case
@@ -257,6 +307,14 @@ const TransactionsList = ({ data, isLoading }: TransactionsListProps) => {
         // ensureDomOrder={true}
         // debounceVerticalScrollbar={true} // smoother scrolling on slow machines
       />
+      {isModalOpen && (
+        <Modal onClose={closeModal}>
+          <TransactionForm
+            transaction={selectedTransaction}
+            closeTransactionModal={closeModal}
+          />
+        </Modal>
+      )}
     </div>
   );
 };

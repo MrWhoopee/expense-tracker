@@ -12,7 +12,7 @@ import * as Yup from "yup";
 import css from "./TransactionForm.module.css";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import CategoriesModal from "../CategoriesModal/CategoriesModal";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useUserStore } from "@/store/useUserStore";
@@ -112,7 +112,7 @@ const tempTransactionData = (): Transaction => {
 };
 
 interface Props {
-  transaction?: Transaction;
+  transaction?: Transaction | null;
   closeTransactionModal?: () => void;
 }
 
@@ -136,11 +136,25 @@ const TransactionForm = ({ transaction, closeTransactionModal }: Props) => {
     (s) => s.clearDraftCategoryId,
   );
 
-  // const isEditMode = !!transaction;
-  const isEditMode = false;
+  const isEditMode = !!transaction;
+
+  const disableExpense = Boolean(transaction?.type === "incomes");
+
+  // const isEditMode = false;
   // const isEditMode = true;
 
-  useEffect(() => {
+  const setFormikForm = (transactionData: FormValues) => {
+    if (formikRef.current) {
+      formikRef.current.setFieldValue("sum", transactionData.sum);
+      formikRef.current.setFieldValue("type", transactionData.type);
+      formikRef.current.setFieldValue("date", transactionData.date);
+      formikRef.current.setFieldValue("time", transactionData.time);
+      formikRef.current.setFieldValue("category", transactionData.category);
+      formikRef.current.setFieldValue("comment", transactionData.comment);
+    }
+  };
+
+  useLayoutEffect(() => {
     let transactionData: FormValues = {
       _id: null,
       type: "Expense",
@@ -151,7 +165,7 @@ const TransactionForm = ({ transaction, closeTransactionModal }: Props) => {
       comment: "",
     };
 
-    transaction = tempTransactionData();
+    // transaction = tempTransactionData();
     if (transaction) {
       transactionData = {
         _id: transaction._id,
@@ -163,10 +177,11 @@ const TransactionForm = ({ transaction, closeTransactionModal }: Props) => {
         comment: transaction.comment,
       };
 
+      setFormikForm(transactionData);
       setTransactionDraft(transactionData);
       setDraftCategoryId(transaction.category._id);
     }
-  }, []);
+  }, [transaction, setTransactionDraft, setDraftCategoryId]);
 
   const queryClient = useQueryClient();
 
@@ -176,6 +191,9 @@ const TransactionForm = ({ transaction, closeTransactionModal }: Props) => {
     mutationFn: (params: CreateTransaction) => createTransaction(params),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["getTransactions"] });
+      queryClient.invalidateQueries({ queryKey: ["transactions"] });
+      queryClient.invalidateQueries({ queryKey: ["user-info"] });
+
       clearTransactionDraft();
       toast.success("Transaction created successfully");
     },
@@ -192,6 +210,9 @@ const TransactionForm = ({ transaction, closeTransactionModal }: Props) => {
       updateTransaction(type, id, body),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["getTransactions"] });
+      queryClient.invalidateQueries({ queryKey: ["transactions"] });
+      queryClient.invalidateQueries({ queryKey: ["user-info"] });
+      queryClient.invalidateQueries({ queryKey: ["categories"] });
       clearTransactionDraft();
       toast.success("Transaction updated");
     },
@@ -205,7 +226,12 @@ const TransactionForm = ({ transaction, closeTransactionModal }: Props) => {
 
   const clearFormikForm = () => {
     if (formikRef.current) {
-      formikRef.current.resetForm();
+      formikRef.current.setFieldValue("sum", "");
+      formikRef.current.setFieldValue("type", "Expense");
+      formikRef.current.setFieldValue("date", new Date());
+      formikRef.current.setFieldValue("time", new Date());
+      formikRef.current.setFieldValue("category", "");
+      formikRef.current.setFieldValue("comment", "");
     }
   };
 
@@ -227,15 +253,14 @@ const TransactionForm = ({ transaction, closeTransactionModal }: Props) => {
         };
 
         createTransactionMutation.mutate(params);
-        debugger;
-        clearTransactionDraft();
         clearFormikForm();
+        clearTransactionDraft();
         clearDraftCategoryId();
         setIsLoader(false);
       } else {
         const editParams: UpdateTransactionVars = {
           type: formData.type === "Expense" ? "expenses" : "incomes",
-          id: transactionDraft._id ?? "",
+          id: transaction._id ?? "",
           body: {
             category: draftCategoryId,
             date: new Date(formData.date?.toString() ?? "")
@@ -316,16 +341,6 @@ const TransactionForm = ({ transaction, closeTransactionModal }: Props) => {
     }
   };
 
-  const [openFormModal, handleOpenFormModal] = useState(false);
-
-  const handleModalOpen = () => {
-    handleOpenFormModal(true);
-  };
-
-  const handleModalClose = () => {
-    handleOpenFormModal(false);
-  };
-
   return (
     <div
       className={`${css["transaction-form-wrapper"]} ${isEditMode ? css["transaction-form-wrapper-with-close"] : ""}`}
@@ -379,6 +394,7 @@ const TransactionForm = ({ transaction, closeTransactionModal }: Props) => {
                         setTimeout(() => updateTransactionDraftFromEvent(e), 0);
                       }}
                       className={css.radio}
+                      disabled={isEditMode && disableExpense}
                     />
                     <span className={css["circle-around"]}>
                       <span className={css.circle}></span>
@@ -396,6 +412,7 @@ const TransactionForm = ({ transaction, closeTransactionModal }: Props) => {
                         setTimeout(() => updateTransactionDraftFromEvent(e), 0);
                       }}
                       className={css.radio}
+                      disabled={isEditMode && !disableExpense}
                     />
                     <span className={css["circle-around"]}>
                       <span className={css.circle}></span>
@@ -459,8 +476,12 @@ const TransactionForm = ({ transaction, closeTransactionModal }: Props) => {
                                 }
                               >
                                 <button
+                                  type="button"
                                   className={css["button-calendar"]}
-                                  onClick={decreaseMonth}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    decreaseMonth();
+                                  }}
                                   disabled={prevMonthButtonDisabled}
                                 >
                                   <svg className={css["icon-arrow"]}>
@@ -471,8 +492,12 @@ const TransactionForm = ({ transaction, closeTransactionModal }: Props) => {
                                   {MONTHS[getMonth(date)] + " " + getYear(date)}
                                 </p>
                                 <button
+                                  type="button"
                                   className={css["button-calendar"]}
-                                  onClick={increaseMonth}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    increaseMonth();
+                                  }}
                                   disabled={nextMonthButtonDisabled}
                                 >
                                   <svg className={css["icon-arrow"]}>

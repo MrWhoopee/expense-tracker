@@ -34,11 +34,11 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
+interface RootLayoutProps {
   children: React.ReactNode;
-}>) {
+}
+
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable}`}>
@@ -79,6 +79,7 @@ export default function RootLayout({
             <ThemeProvider>
               <Header />
               <main>{children}</main>
+              <div id="modal-root"></div>
             </ThemeProvider>
           </AuthProvider>
         </TanStackProvider>
