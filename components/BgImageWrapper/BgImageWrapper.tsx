@@ -6,7 +6,7 @@ export default function BgImageWrapper() {
       <div className={css.infoCard}>
         <div className={css.infoCardGrowth}>
           <svg className={css.icon}>
-            <use href="/bgImage.svg#icon-arrow-up-right"></use>
+            <use href="/img/sprite.svg#icon-arrow-up-right"></use>
           </svg>
         </div>
 
