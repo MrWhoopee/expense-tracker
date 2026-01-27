@@ -57,12 +57,33 @@ export async function getStatisticsServer(): Promise<Statistic[]> {
   return res.data;
 }
 
+// export async function getTransactionByType(
+//   type: string,
+// ): Promise<Transaction[]> {
+//   const cookieStore = await cookies();
+//   const cookieString = cookieStore.toString();
+
+//   const { data } = await apiNext.get<Transaction[]>(`/transactions/${type}`, {
+//     headers: {
+//       Cookie: cookieString,
+//     },
+//   });
+
+//   return data;
+// }
+
 export async function getTransactionByType(
   type: string,
+  date?: string,
 ): Promise<Transaction[]> {
   const cookieStore = await cookies();
   const cookieString = cookieStore.toString();
-  const { data } = await apiNext.get<Transaction[]>(`/transactions/${type}`, {
+
+  const endpoint = date
+    ? `/transactions/${type}?date=${date}`
+    : `/transactions/${type}`;
+
+  const { data } = await apiNext.get<Transaction[]>(endpoint, {
     headers: {
       Cookie: cookieString,
     },

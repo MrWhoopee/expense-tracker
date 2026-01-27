@@ -5,7 +5,8 @@ import * as Yup from "yup";
 import css from "./TransactionsSearchTools.module.css";
 import Image from "next/image";
 import CustomDatePicker from "../ui/CustomDatePicker";
-import toast from "react-hot-toast";
+// import toast from "react-hot-toast";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 interface SearchFormValues {
   search: string;
@@ -15,32 +16,35 @@ interface SearchFormValues {
 const validationSchema = Yup.object({
   search: Yup.string(),
   date: Yup.date().nullable(),
-  // .typeError("Please enter a valid date (dd/mm/yyyy)")
-  // .max(new Date(), "Date cannot be in the future"),
 });
-// !check if typeError works
-
-const initialValues: SearchFormValues = {
-  search: "",
-  date: null,
-};
 
 const TransactionsSearchTools = () => {
-  const handleSubmit = (
-    values: SearchFormValues,
-    // actions: FormikHelpers<SearchFormValues>,
-  ) => {
-    // console.log("Form submitted:", values);
-    // actions.resetForm();
-    try {
-      console.log("Searching by comment keyword:", values.search);
-      console.log("Filtering by date:", values.date);
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
-      // await getTransactionByQuery(values.search, values.date);
-    } catch (error) {
-      console.log("Error:", error);
-      toast.error("Failed to fetch transactions. Please try again.");
+  const initialValues: SearchFormValues = {
+    search: searchParams.get("search") || "",
+    date: searchParams.get("date") ? new Date(searchParams.get("date")!) : null,
+  };
+
+  const handleSubmit = (values: SearchFormValues) => {
+    const params = new URLSearchParams(searchParams.toString());
+
+    if (values.search) params.set("search", values.search);
+    else params.delete("search");
+
+    // YYYY-MM-DD for URL
+    if (values.date) {
+      const yyyy = values.date.getFullYear();
+      const mm = String(values.date.getMonth() + 1).padStart(2, "0");
+      const dd = String(values.date.getDate()).padStart(2, "0");
+      params.set("date", `${yyyy}-${mm}-${dd}`);
+    } else {
+      params.delete("date");
     }
+
+    router.push(`${pathname}?${params.toString()}`);
   };
 
   return (
