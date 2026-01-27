@@ -59,7 +59,7 @@
   height: 81px;
   padding: 20px;
   box-sizing: border-box;
-  background-color: var(--color-titles);
+  background-color: var(--bg-component);
 
   animation: moveX var(--duration) linear infinite alternate;
   animation-play-state: running;
