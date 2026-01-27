@@ -101,6 +101,8 @@ const CategoriesModal = ({
     mutationFn: (params: UserCategory) => createCategory(params),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["getCategories"] });
+      queryClient.invalidateQueries({ queryKey: ["transactions"] });
+      queryClient.invalidateQueries({ queryKey: ["categories"] });
       toast.success("Category created successfully");
     },
     onError: (error: unknown) => {
@@ -115,6 +117,8 @@ const CategoriesModal = ({
     mutationFn: (id: string) => deleteCategory(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["getCategories"] });
+      queryClient.invalidateQueries({ queryKey: ["transactions"] });
+      queryClient.invalidateQueries({ queryKey: ["categories"] });
       toast.success("Category deleted");
     },
     onError: (error: unknown) => {
@@ -129,6 +133,8 @@ const CategoriesModal = ({
     mutationFn: (params: UpdateCategory) => updateCategory(params),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["getCategories"] });
+      queryClient.invalidateQueries({ queryKey: ["transactions"] });
+      queryClient.invalidateQueries({ queryKey: ["categories"] });
       toast.success("Category updated");
     },
     onError: (error: unknown) => {

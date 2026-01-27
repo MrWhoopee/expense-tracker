@@ -25,16 +25,6 @@ const COLORS = [
   "var(--chart-color-6)",
 ];
 
-// const DEFAULT_DATA = [
-//   { name: "Sex", value: 35 },
-//   { name: "Drugs", value: 25 },
-//   { name: "Rock'n'roll", value: 15 },
-//   { name: "Cinema", value: 7 },
-//   { name: "Some alcohol", value: 10 },
-//   { name: "Vandalism", value: 7 },
-//   { name: "Health", value: 1 },
-// ];
-
 export default function TransactionsChart() {
   const { data: stats = [], isLoading } = useQuery({
     queryKey: ["transactions", "stats", "current-month"],
@@ -47,12 +37,6 @@ export default function TransactionsChart() {
 
   const processedData: DataItem[] = useMemo(() => {
     if (!hasData) return [];
-
-    // const grouped = transactions.reduce((acc: Record<string, number>, curr) => {
-    //   const name = curr.category.categoryName;
-    //   acc[name] = (acc[name] || 0) + curr.sum;
-    //   return acc;
-    // }, {});
 
     const sortedData = [...stats].sort((a, b) => b.totalAmount - a.totalAmount);
     const totalSum = sortedData.reduce(
@@ -84,6 +68,10 @@ export default function TransactionsChart() {
     }));
   }, [stats, hasData]);
 
+  const chartKey = useMemo(() => {
+    return processedData.map((d) => `${d.name}-${d.value}`).join("|");
+  }, [processedData]);
+
   const layers: LayerItem[] = useMemo(() => {
     if (!hasData) {
       return [
@@ -98,6 +86,7 @@ export default function TransactionsChart() {
 
     const result: LayerItem[] = [];
     let cumulative = 100;
+
     for (let i = processedData.length - 1; i >= 0; i--) {
       result.push({
         ...processedData[i],
@@ -131,14 +120,22 @@ export default function TransactionsChart() {
       <h3 className={css.title}>Expenses categories</h3>
       <div className={css.contentWrapper}>
         <div className={css.chartContainer}>
-          <ResponsiveContainer width="100%" height="100%" minHeight={1}>
+          <ResponsiveContainer
+            key={chartKey}
+            width="100%"
+            height="100%"
+            minHeight={1}
+          >
             <PieChart margin={{ left: 0, right: 0, top: 0, bottom: 0 }}>
               {layers.map((layer) => (
                 <Pie
                   key={layer.name}
                   data={[
                     { value: layer.displayValue, fill: layer.fill },
-                    { value: 100 - layer.displayValue, fill: "transparent" },
+                    {
+                      value: Math.max(0, 100 - layer.displayValue),
+                      fill: "transparent",
+                    },
                   ]}
                   dataKey="value"
                   cx="50%"
@@ -160,7 +157,9 @@ export default function TransactionsChart() {
 
         {hasData ? (
           <ul
-            className={`${css.categoryList} ${processedData.length > 4 ? css.scrollable : ""}`}
+            className={`${css.categoryList} ${
+              processedData.length > 4 ? css.scrollable : ""
+            }`}
           >
             {processedData.map((item, index) => (
               <li key={index} className={css.categoryItem}>

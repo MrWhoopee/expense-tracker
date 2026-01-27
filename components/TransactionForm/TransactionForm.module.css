@@ -325,6 +325,7 @@ TransactionForm .container {
   pointer-events: none;
   width: 16px;
   height: 16px;
+  stroke: var(--color-paragraph);
   @media screen and (min-width: 768px) {
     right: 23px;
     width: 20px;
