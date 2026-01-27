@@ -67,11 +67,11 @@
 
   background: linear-gradient(
     90deg,
-    #0ef387,
-    rgba(250, 250, 250, 0.4),
-    rgba(250, 250, 250, 0.4),
-    #0ef387,
-    #0ef387
+    var(--chart-color-3),
+    var(--color-titles),
+    var(--color-titles),
+    var(--chart-color-3),
+    var(--chart-color-3)
   );
 
   background-size: 200% auto;
@@ -96,7 +96,7 @@
   font-weight: 400;
   font-size: 14px;
   letter-spacing: -0.02em;
-  color: rgba(250, 250, 250, 0.4);
+  color: var(--color-paragraph);
   margin-bottom: 30px;
 
   @media only screen and (min-width: 768px) {
