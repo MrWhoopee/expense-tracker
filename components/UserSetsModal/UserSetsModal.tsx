@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { changeUser, updatePhoto, deletePhoto } from "@/lib/clientApi";
 import { useUserStore } from "@/store/useUserStore";
+import { useQueryClient } from "@tanstack/react-query";
 import css from "./UserSetsModal.module.css";
 
 interface Props {
@@ -11,6 +12,7 @@ interface Props {
 
 export default function UserSetsModal({ onClose }: Props) {
   const { user, setUser } = useUserStore();
+  const queryClient = useQueryClient();
   const [name, setName] = useState(user?.name || "");
   const [currency, setCurrency] = useState(
     user?.currency?.toUpperCase() || "USD",
@@ -108,6 +110,7 @@ export default function UserSetsModal({ onClose }: Props) {
           name: updateData.name,
           currency: updateData.currency,
         }); // Оновлюємо глобальний стор
+      queryClient.invalidateQueries({ queryKey: ["user-info"] });
       alert("Profile updated successfully!");
       onClose();
     } catch (error: unknown) {
