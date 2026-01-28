@@ -66,33 +66,3 @@ export default async function TransactionsHistoryPage({
     </main>
   );
 }
-// export default async function TransactionsHistoryPage({
-//   params,
-// }: HistoryPageProps) {
-//   const { type } = await params;
-
-//   const transactionType = type === "incomes" ? "incomes" : "expenses";
-
-//   const data = await getTransactionByType(transactionType);
-
-//   return (
-//     <main className={css.container}>
-//       <h1 className={css.title}>
-//         {transactionType === "incomes" ? "All Incomes" : "All Expenses"}
-//       </h1>
-//       <p className={css.description}>
-//         {transactionType === "incomes"
-//           ? "Track and celebrate every bit of earnings effortlessly! Gain insights into your total revenue in a snap."
-//           : "View and manage every transaction seamlessly! Your entire financial landscape, all in one place."}
-//       </p>
-//       <TransactionsTotalAmount />
-//       <div className={css.historyContent}>
-//         <TransactionsSearchTools />
-
-//         <Suspense fallback={<Loader />}>
-//           <TransactionsList data={data} isLoading={false} />
-//         </Suspense>
-//       </div>
-//     </main>
-//   );
-// }

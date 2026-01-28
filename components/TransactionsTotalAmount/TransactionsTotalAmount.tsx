@@ -28,7 +28,7 @@ export default function TransactionsTotalAmount() {
     );
   }
 
-  const currencyCode = userInfo?.currency || user?.currency || "usd";
+  const currencyCode = user?.currency || "usd";
   const symbol = currencySymbols[currencyCode.toLowerCase()] || "$";
   const incomes = userInfo?.transactionsTotal?.incomes ?? 0;
   const expenses = userInfo?.transactionsTotal?.expenses ?? 0;

@@ -20,6 +20,7 @@ import { deleteTransaction, getTransactionByType } from "@/lib/clientApi";
 import toast from "react-hot-toast";
 import Modal from "../MainModal/MainModal";
 import TransactionForm from "../TransactionForm/TransactionForm";
+import { useUserStore } from "@/store/useUserStore";
 
 // Register all Community features
 ModuleRegistry.registerModules([AllCommunityModule]);
@@ -63,9 +64,6 @@ const NoTransactionsOverlay = () => (
       zIndex: "999",
     }}
   >
-    {/* <div style={{ fontSize: "50px", marginBottom: "5px" }}>
-      <RiMoneyDollarCircleLine />
-    </div> */}
     <p>No transactions found</p>
   </div>
 );
@@ -122,11 +120,7 @@ const TransactionsList = ({ type, date, search }: TransactionsListProps) => {
   const [selectedTransaction, setSelectedTransaction] =
     useState<Transaction | null>(null);
 
-  // const { data } = useQuery({
-  //   queryKey: ["transactions", type, date, search],
-  //   queryFn: () => getTransactionByType({ type, date, search }),
-  //   refetchOnMount: false,
-  // });
+  const userData = useUserStore((s) => s.user);
 
   const { mutate } = useMutation({
     mutationFn: (id: string) => deleteTransaction(id),
@@ -194,7 +188,6 @@ const TransactionsList = ({ type, date, search }: TransactionsListProps) => {
         field: "date",
         headerName: "Date",
         minWidth: 55,
-        // maxWidth: 150,
         flex: 0.5,
         sort: "desc", // new data first
         sortIndex: 0, // priority №1
@@ -235,13 +228,18 @@ const TransactionsList = ({ type, date, search }: TransactionsListProps) => {
       {
         field: "sum",
         headerName: "Sum",
-        minWidth: 55,
-        // maxWidth: 150,
+        minWidth: 155,
         flex: 1,
         cellRenderer: "agAnimateShowChangeCellRenderer",
 
         valueFormatter: (params: ValueFormatterParams) => {
-          return params.value != null ? `${params.value} UAH` : "";
+          if (params.value == null) return "";
+
+          const currency = userData?.currency?.toUpperCase() || "UAH";
+
+          const formattedValue = Number(params.value).toLocaleString("en-GB");
+
+          return `${formattedValue} ${currency}`;
         },
       },
       {
@@ -261,13 +259,14 @@ const TransactionsList = ({ type, date, search }: TransactionsListProps) => {
         },
       },
     ],
-    [isMobile, isTablet],
+    [isMobile, isTablet, userData?.currency],
   );
 
   const defaultColDef = useMemo(
     () => ({
       sortable: false,
       filter: false,
+      // resizable: false,
       enableCellChangeFlash: true,
     }),
     [],
@@ -337,7 +336,6 @@ const TransactionsList = ({ type, date, search }: TransactionsListProps) => {
         <AgGridReact
           className={css.gridContainer}
           rowData={data}
-          // rowData={data || []}
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
           theme={myTheme}
@@ -345,19 +343,17 @@ const TransactionsList = ({ type, date, search }: TransactionsListProps) => {
           getRowId={(params) => params.data._id}
           suppressCellFocus={true}
           autoSizeStrategy={autoSizeStrategy}
-          suppressHorizontalScroll={false} // just in case
+          suppressHorizontalScroll={true} // just in case
           suppressMovableColumns={true}
           loadingOverlayComponent={null}
           noRowsOverlayComponent={noRowsOverlayComponent}
           loadingOverlayComponentParams={{}}
           onGridReady={(params) => {
+            // params.api.sizeColumnsToFit();
             if (!data || data.length === 0) {
               params.api.showNoRowsOverlay();
             }
           }}
-
-          // ensureDomOrder={true}
-          // debounceVerticalScrollbar={true} // smoother scrolling on slow machines
         />
         {isModalOpen && (
           <Modal onClose={closeModal}>
