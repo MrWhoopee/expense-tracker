@@ -27,7 +27,7 @@
 
   &:hover,
   &:focus {
-    background-color: #0c0d0d;
+    background-color: transparent;
     border-color: var(--color-contrast);
     color: var(--color-titles);
   }
