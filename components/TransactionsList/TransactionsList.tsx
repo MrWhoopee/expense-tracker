@@ -125,13 +125,13 @@ const TransactionsList = ({ type, date, search }: TransactionsListProps) => {
   const { mutate } = useMutation({
     mutationFn: (id: string) => deleteTransaction(id),
     onSuccess: () => {
-      toast.success("Transaction deleted");
+      toast.success("Transaction deleted", { id: "delete-success" });
       queryClient.invalidateQueries({
         queryKey: ["transactions"],
       });
     },
     onError: () => {
-      toast.error("Failed to delete");
+      toast.error("Failed to delete", { id: "delete-error" });
     },
   });
 
@@ -266,7 +266,6 @@ const TransactionsList = ({ type, date, search }: TransactionsListProps) => {
     () => ({
       sortable: false,
       filter: false,
-      // resizable: false,
       enableCellChangeFlash: true,
     }),
     [],

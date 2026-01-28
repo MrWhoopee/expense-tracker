@@ -70,6 +70,7 @@ export default function UserSetsModal({ onClose }: Props) {
     } catch (error) {
       toast.error("Failed to upload photo", {
         position: "bottom-right",
+        id: "error-upload",
       });
     }
   };
@@ -116,16 +117,19 @@ export default function UserSetsModal({ onClose }: Props) {
       // alert("Profile updated successfully!");
       toast.success("Profile updated successfully!", {
         position: "bottom-right",
+        id: "profile-success",
       });
       onClose();
     } catch (error: unknown) {
       if (error instanceof Error) {
         toast.error(`Error: ${error.message}`, {
           position: "bottom-right",
+          id: "error-error",
         });
       } else {
         toast.error("Unknown error", {
           position: "bottom-right",
+          id: "unknown-error",
         });
       }
     } finally {

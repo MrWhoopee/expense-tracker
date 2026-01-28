@@ -9,7 +9,6 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@popperjs/core": "^2.11.8",
     "@tanstack/react-query-devtools": "^5.91.2",
     "ag-grid-community": "^35.0.0",
     "ag-grid-react": "^35.0.0",

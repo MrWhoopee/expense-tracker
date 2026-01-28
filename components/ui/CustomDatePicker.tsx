@@ -8,8 +8,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import toast from "react-hot-toast";
 import { format, isValid, parse, isAfter } from "date-fns";
 import css from "./CustomDatePicker.module.css";
-// import { offset } from "@floating-ui/dom";
-// import { offset } from "@popperjs/core";
+import { offset } from "@floating-ui/dom";
 
 interface CustomDatePickerProps {
   values: Date | null;
@@ -24,7 +23,6 @@ const CustomDatePicker = ({
 }: CustomDatePickerProps) => {
   const [inputText, setInputText] = useState("");
 
-  // Синхронізація: якщо дата змінилася через календар — оновлюємо текст в інпуті
   useEffect(() => {
     if (values && isValid(values)) {
       setInputText(format(values, "dd/MM/yyyy"));
@@ -33,13 +31,12 @@ const CustomDatePicker = ({
     }
   }, [values]);
 
-  // Функція для фінальної перевірки та відправки
   const handleComplete = (val: string) => {
     const parsed = parse(val, "dd/MM/yyyy", new Date());
 
     if (isValid(parsed)) {
       if (isAfter(parsed, new Date())) {
-        toast.error("Date cannot be in the future", { id: "future" });
+        toast.error("Date cannot be in the future", { id: "error" });
         return;
       }
       setFieldValue("date", parsed);
@@ -55,7 +52,6 @@ const CustomDatePicker = ({
           setFieldValue("date", date);
           if (date) setTimeout(() => submitForm(), 50);
         }}
-        // Використовуємо PatternFormat як кастомний інпут
         customInput={
           <PatternFormat
             format="##/##/####"
@@ -65,11 +61,9 @@ const CustomDatePicker = ({
               const { formattedValue, value } = values;
               setInputText(formattedValue);
 
-              // Якщо введено всі 8 цифр — тригеримо сабміт
               if (value.length === 8) {
                 handleComplete(formattedValue);
               }
-              // Якщо поле очистили
               if (value.length === 0) {
                 setFieldValue("date", null);
                 setTimeout(() => submitForm(), 50);
@@ -79,24 +73,7 @@ const CustomDatePicker = ({
             placeholder="dd/mm/yyyy"
           />
         }
-        // popperModifiers={[offset(4)]}
-        // popperModifiers={[
-        //   {
-        //     name: "offset",
-        //     options: {
-        //       offset: [0, 4], // 0 - по центру, 4 - відступ зверху/знизу
-        //     },
-        //   },
-        // ]}
-        // popperModifiers={[
-        //   {
-        //     name: "offset",
-        //     options: {
-        //       offset: [0, 10],
-        //     },
-        //     fn: (state) => state,
-        //   },
-        // ]}
+        popperModifiers={[offset(4)]}
         placeholderText="dd/mm/yyyy"
         dateFormat="dd/MM/yyyy"
         showPopperArrow={false}
