@@ -5,7 +5,12 @@ export const apiNext = axios.create({
   withCredentials: true,
 });
 
-// export const apiServer = axios.create({
-//   baseURL: `${process.env.SERVER_PUBLIC_API_URL}`,
-//   withCredentials: true,
-// });
+apiNext.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    if (error.response?.status === 401) {
+      window.location.href = "/";
+    }
+    return Promise.reject(error);
+  },
+);
