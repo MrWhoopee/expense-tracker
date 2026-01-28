@@ -1,4 +1,4 @@
-TransactionForm .container {
+.container {
   @media screen and (max-width: 374px) {
     max-width: 299px;
     margin-right: 10px;
@@ -13,6 +13,15 @@ TransactionForm .container {
 }
 
 .container-with-close {
+  @media screen and (max-width: 374px) {
+    max-width: 297px;
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+  @media screen and (min-width: 375px) {
+    width: 297px;
+  }
+
   @media screen and (min-width: 768px) {
     width: 423px;
   }
@@ -55,6 +64,13 @@ TransactionForm .container {
   margin: 0;
   padding-top: 40px;
   padding-bottom: 39px;
+  @media screen and (max-width: 374px) {
+    max-width: 335px;
+  }
+  @media screen and (min-width: 375px) {
+    width: 335px;
+  }
+
   @media screen and (min-width: 768px) {
     width: 500px;
     min-height: 599px;
@@ -523,10 +539,12 @@ TransactionForm .container {
 :global(.transaction-calendar-for-transaction-form) {
   background-color: var(--color-contrast) !important;
   border: none !important;
+  margin-top: 20px;
 }
 
 :global(.transaction-time-for-transaction-form) {
   border: none !important;
+  margin-top: 20px;
 }
 
 :global(.transaction-calendar-for-transaction-form .react-datepicker__day) {
