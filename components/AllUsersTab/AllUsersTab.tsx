@@ -7,7 +7,7 @@ export default function AllUsersTab() {
       <div className={css.avatarGroup}>
         <div className={css.avatarWrapper}>
           <Image
-            src="/image1.png"
+            src="/Image1.png"
             width={48}
             height={48}
             alt="User 1"
@@ -16,7 +16,7 @@ export default function AllUsersTab() {
         </div>
         <div className={css.avatarWrapper}>
           <Image
-            src="/image2.png"
+            src="/Image2.png"
             width={48}
             height={48}
             alt="User 2"
@@ -25,7 +25,7 @@ export default function AllUsersTab() {
         </div>
         <div className={css.avatarWrapper}>
           <Image
-            src="/image3.png"
+            src="/Image3.png"
             width={48}
             height={48}
             alt="User 3"
