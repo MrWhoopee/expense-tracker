@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import UserPanel from "../UserPanel/UserPanel";
 import { useUserStore } from "@/store/useUserStore";
 import css from "./UserBarBtn.module.css";
@@ -11,7 +11,7 @@ interface Props {
 
 export default function UserBarBtn({ onAction }: Props) {
   const [isOpen, setIsOpen] = useState(false);
-
+  const containerRef = useRef<HTMLDivElement>(null);
   const { user } = useUserStore();
   const username = user?.name || "User";
   const userAvatar = user?.avatarUrl;
@@ -23,8 +23,24 @@ export default function UserBarBtn({ onAction }: Props) {
     onAction?.();
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isOpen]);
+
   return (
-    <div className={css.relativeWrapper}>
+    <div className={css.relativeWrapper} ref={containerRef}>
       <button className={css.userBar} type="button" onClick={togglePanel}>
         <div className={css.avatarThumb}>
           {userAvatar ? (

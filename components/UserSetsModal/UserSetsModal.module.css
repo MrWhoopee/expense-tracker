@@ -1,4 +1,4 @@
-.backdrop {
+/* .backdrop {
     position: fixed;
     top: 0;
     left: 0;
@@ -24,6 +24,20 @@
     flex-direction: column;
     align-items: center;
     z-index: 2001;
+} */
+
+.modalContent {
+    background: var(--bg-component);
+    border-radius: 30px;
+    width: 335px;
+    padding: 40px 20px 60px;
+
+    position: relative;
+
+    @media only screen and (min-width:768px) {
+        width: 500px;
+        padding: 40px 40px 60px;
+    }
 }
 
 .closeBtn {
@@ -33,6 +47,11 @@
     top: 20px;
     right: 20px;
     cursor: pointer;
+
+    @media only screen and (min-width:768px) {
+        width: 24px;
+        height: 24px;
+    }
 }
 
 .title {
@@ -41,6 +60,12 @@
     margin-bottom: 39px;
     letter-spacing: -0.02em;
     align-self: flex-start;
+
+    line-height: 29px;
+
+    @media only screen and (min-width:768px) {
+        line-height: 34px
+    }
 }
 
 .avatarSection {
@@ -54,7 +79,7 @@
 .avatarCircle {
     width: 80px;
     height: 80px;
-    background: var(--bg-component);
+    background: var(--bg-page);
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -62,6 +87,11 @@
     overflow: hidden;
     position: relative;
     margin-bottom: 0;
+
+    @media only screen and (min-width:768px) {
+        height: 100px;
+        width: 100;
+    }
 }
 
 .avatarImg {
@@ -83,7 +113,7 @@
 
 .uploadBtn,
 .removeBtn {
-    background: var(--bg-component);
+    background: var(--skeleton-bg);
     border: none;
     border-radius: 40px;
     padding: 8px 16px;
@@ -92,6 +122,11 @@
     cursor: pointer;
     transition: color var(--transition), transform var(--transition);
 
+    &:hover {
+        opacity: 0.8;
+    }
+
+    background-color: rgba(128, 128, 128, 0.1);
 }
 
 .removeBtn:hover {
@@ -102,10 +137,14 @@
 .userSetsForm {
     width: 100%;
     display: flex;
-    gap: 16px;
+    gap: 8px;
     margin-bottom: 20px;
     overflow: visible;
     position: relative;
+
+    @media only screen and (min-width:768px) {
+        gap: 4px;
+    }
 }
 
 .customSelectContainer {
@@ -124,6 +163,11 @@
     color: var(--color-paragraph);
     cursor: pointer;
     transition: border-color var(--transition), transform var(--transition);
+    height: 42px;
+
+    @media only screen and (min-width:768px) {
+        height: 48px;
+    }
 
     &:hover,
     &.active {
@@ -149,6 +193,10 @@
 
 .closeIcon {
     color: var(--color-titles)
+}
+
+.inputWrapper {
+    flex: 1
 }
 
 .optionItem {
@@ -177,6 +225,12 @@
     outline: none;
     transition: border-color 0.3s;
 
+    height: 42px;
+
+    @media only screen and (min-width:768px) {
+        height: 48px;
+    }
+
     &:focus,
     &:hover {
         border-color: var(--color-contrast);
@@ -192,6 +246,11 @@
     border-radius: 30px;
     font-weight: 600;
     cursor: pointer;
+    height: 45px;
+
+    &:hover {
+        opacity: 0.8;
+    }
 }
 
 .chevron {

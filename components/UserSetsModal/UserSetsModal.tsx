@@ -5,6 +5,8 @@ import { changeUser, updatePhoto, deletePhoto } from "@/lib/clientApi";
 import { useUserStore } from "@/store/useUserStore";
 import { useQueryClient } from "@tanstack/react-query";
 import css from "./UserSetsModal.module.css";
+import MainModal from "../MainModal/MainModal";
+import toast from "react-hot-toast";
 
 interface Props {
   onClose: () => void;
@@ -66,7 +68,9 @@ export default function UserSetsModal({ onClose }: Props) {
         });
       }
     } catch (error) {
-      alert("Failed to upload photo");
+      toast.error("Failed to upload photo", {
+        position: "top-right",
+      });
     }
   };
 
@@ -86,10 +90,8 @@ export default function UserSetsModal({ onClose }: Props) {
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
       }
-      console.log("Avatar removed successfully from server and store");
     } catch (error: unknown) {
       if (error instanceof Error) {
-        console.warn("Server returned error, but UI remains updated.");
       }
     }
   };
@@ -109,38 +111,112 @@ export default function UserSetsModal({ onClose }: Props) {
           ...user,
           name: updateData.name,
           currency: updateData.currency,
-        }); // Оновлюємо глобальний стор
-      queryClient.invalidateQueries({ queryKey: ["user-info"] });
-      alert("Profile updated successfully!");
+        });
+      // queryClient.invalidateQueries({ queryKey: ["user-info"] });
+      // alert("Profile updated successfully!");
+      toast.success("Profile updated successfully!", {
+        position: "top-right",
+      });
       onClose();
     } catch (error: unknown) {
       if (error instanceof Error) {
-        alert(`Error: ${error.message}`);
+        toast.error(`Error: ${error.message}`, {
+          position: "top-right",
+        });
       } else {
-        alert("Unknown error");
+        toast.error("Unknown error", {
+          position: "top-right",
+        });
       }
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const handleBackdropClick = (e: React.MouseEvent) => {
-    if (e.target === e.currentTarget) {
-      if (isDirty) {
-        const confirmClose = window.confirm(
-          "You have unsaved changes. Do you really want to leave?",
-        );
-        if (!confirmClose) return;
-      }
+  const handleBeforeClose = () => {
+    // if (e.target === e.currentTarget) {
+    //   if (isDirty) {
+    //     const confirmClose = window.confirm(
+    //       "You have unsaved changes. Do you really want to leave?",
+    //     );
+    //     if (!confirmClose) return;
+    //   }
+    //   onClose();
+    // }
+
+    if (isDirty) {
+      toast(
+        (t) => (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "10px",
+            }}
+          >
+            <p
+              style={{
+                margin: 0,
+                fontWeight: 500,
+                color: "var(--color-titles)",
+              }}
+            >
+              You have unsaved changes. Leave anyway?
+            </p>
+            <div style={{ display: "flex", gap: "8px" }}>
+              <button
+                onClick={() => {
+                  toast.dismiss(t.id);
+                  onClose();
+                }}
+                style={{
+                  background: "var(--color-contrast)",
+                  color: "var(--bg-page)",
+                  border: "none",
+                  padding: "4px 12px",
+                  borderRadius: "8px",
+                  cursor: "pointer",
+                }}
+              >
+                Yes, leave
+              </button>
+              <button
+                onClick={() => toast.dismiss(t.id)}
+                style={{
+                  background: "transparent",
+                  color: "var(--color-titles)",
+                  border: "1px solid rgba(128, 128, 128, 0.2)",
+                  padding: "4px 12px",
+                  borderRadius: "8px",
+                  cursor: "pointer",
+                }}
+              >
+                Stay
+              </button>
+            </div>
+          </div>
+        ),
+        {
+          style: {
+            background: "var(--bg-page)",
+            border: "1px solid var(--color-titles)",
+            opacity: 0.8,
+            padding: "16px",
+          },
+          duration: 6000,
+          position: "top-center",
+        },
+      );
+    } else {
       onClose();
     }
   };
 
   return (
-    <div className={css.backdrop} onClick={handleBackdropClick}>
-      <div className={css.modal} onClick={(e) => e.stopPropagation()}>
-        <button className={css.closeBtn} onClick={onClose}>
-          <svg className={css.closeIcon} width="20" height="20">
+    <MainModal onClose={handleBeforeClose}>
+      <div className={css.modalContent}>
+        <button className={css.closeBtn} onClick={onClose} aria-label="Close">
+          <svg width="20" height="20">
             <use href="/img/sprite.svg#close-btn"></use>
           </svg>
         </button>
@@ -242,6 +318,16 @@ export default function UserSetsModal({ onClose }: Props) {
           {isSubmitting ? "Saving..." : "Save"}
         </button>
       </div>
-    </div>
+    </MainModal>
+    // <div className={css.backdrop} onClick={handleBackdropClick}>
+    //   <div className={css.modal} onClick={(e) => e.stopPropagation()}>
+    //     <button className={css.closeBtn} onClick={onClose}>
+    //       <svg className={css.closeIcon} width="20" height="20">
+    //         <use href="/img/sprite.svg#close-btn"></use>
+    //       </svg>
+    //     </button>
+
+    //   {/* </div>
+    // </div> */}
   );
 }

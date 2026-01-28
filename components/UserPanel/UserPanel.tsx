@@ -51,7 +51,9 @@ export default function UserPanel({ onClose }: Props) {
   }, [theme]);
 
   const handleProfileClick = () => {
-    setIsProfileOpen(true);
+    // setIsProfileOpen(true);
+    onClose();
+    window.dispatchEvent(new CustomEvent("open-modal", { detail: "profile" }));
   };
 
   const handleCloseModals = () => {
@@ -61,7 +63,9 @@ export default function UserPanel({ onClose }: Props) {
   };
 
   const handleLogoutClick = () => {
-    setIsLogoutOpen(true);
+    // setIsLogoutOpen(true);
+    onClose();
+    window.dispatchEvent(new CustomEvent("open-modal", { detail: "logout" }));
   };
 
   const confirmLogout = async () => {
