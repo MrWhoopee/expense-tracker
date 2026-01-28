@@ -4,6 +4,7 @@ import { User } from "@/type/user";
 import { Transaction } from "@/type/transaction";
 import { UserInfo } from "@/type/userInfo";
 import { Statistic } from "@/type/statistics";
+import { GetTransactionByTypeParams } from "./serverApi";
 
 interface UserCategory {
   type: string;
@@ -142,10 +143,17 @@ export async function createTransaction(
   await apiNext.post("/transactions", body);
 }
 
-export async function getTransactionByType(
-  type: string,
-): Promise<Transaction[]> {
-  const { data } = await apiNext.get<Transaction[]>(`/transactions/${type}`);
+export async function getTransactionByType({
+  type,
+  date,
+  search,
+}: GetTransactionByTypeParams): Promise<Transaction[]> {
+  const { data } = await apiNext.get<Transaction[]>(`/transactions/${type}`, {
+    params: {
+      date,
+      search,
+    },
+  });
 
   return data;
 }
@@ -168,6 +176,7 @@ export async function getStatsCurrentMonth(): Promise<CategoryStats[]> {
   );
   return data;
 }
+
 //Statistics
 
 export async function getStastics(): Promise<Statistic[]> {

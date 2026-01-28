@@ -55,17 +55,39 @@ const ActionsRenderer = (props: ICellRendererParams<Transaction>) => {
 
 // not found for ag grid
 const NoTransactionsOverlay = () => (
-  <div style={{ textAlign: "center", fontSize: "18px", color: "#fafafa" }}>
-    <div style={{ fontSize: "50px", marginBottom: "-5px" }}>
+  <div
+    style={{
+      textAlign: "center",
+      fontSize: "18px",
+      color: "#fafafa",
+      zIndex: "999",
+    }}
+  >
+    {/* <div style={{ fontSize: "50px", marginBottom: "5px" }}>
       <RiMoneyDollarCircleLine />
-    </div>
+    </div> */}
     <p>No transactions found</p>
   </div>
 );
 
 // loader for ag grid
 export const LoadingOverlay = () => (
-  <div style={{ textAlign: "center", fontSize: "18px", color: "#fafafa" }}>
+  <div
+    style={{
+      fontSize: "18px",
+      color: "#fafafa",
+      zIndex: "999",
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+    }}
+  >
     <div
       className="spinner"
       style={{
@@ -100,17 +122,19 @@ const TransactionsList = ({ type, date, search }: TransactionsListProps) => {
   const [selectedTransaction, setSelectedTransaction] =
     useState<Transaction | null>(null);
 
-  const { data } = useQuery({
-    queryKey: ["transactions", type, date, search],
-    queryFn: () => getTransactionByType({ type, date, search }),
-    refetchOnMount: false,
-  });
+  // const { data } = useQuery({
+  //   queryKey: ["transactions", type, date, search],
+  //   queryFn: () => getTransactionByType({ type, date, search }),
+  //   refetchOnMount: false,
+  // });
 
   const { mutate } = useMutation({
     mutationFn: (id: string) => deleteTransaction(id),
     onSuccess: () => {
       toast.success("Transaction deleted");
-      queryClient.invalidateQueries({ queryKey: ["transactions", type] });
+      queryClient.invalidateQueries({
+        queryKey: ["transactions"],
+      });
     },
     onError: () => {
       toast.error("Failed to delete");
@@ -170,16 +194,33 @@ const TransactionsList = ({ type, date, search }: TransactionsListProps) => {
         field: "date",
         headerName: "Date",
         minWidth: 55,
-        maxWidth: 150,
+        // maxWidth: 150,
         flex: 0.5,
 
-        // valueFormatter: (params: ValueFormatterParams) => {
-        //   if (!params.value) return "";
-        //   const date = new Date(params.value);
-        //   return date.toLocaleDateString("uk-UA");
-        // },
-        // !Number(params.value)???
+        valueFormatter: (params) => {
+          if (!params.value) return "";
+
+          const date = new Date(params.value);
+
+          const options: Intl.DateTimeFormatOptions = {
+            weekday: "short",
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+          };
+
+          const formatter = new Intl.DateTimeFormat("en-GB", options);
+          const parts = formatter.formatToParts(date);
+
+          const dayName = parts.find((p) => p.type === "weekday")?.value;
+          const day = parts.find((p) => p.type === "day")?.value;
+          const month = parts.find((p) => p.type === "month")?.value;
+          const year = parts.find((p) => p.type === "year")?.value;
+
+          return `${dayName}, ${day}.${month}.${year}`;
+        },
       },
+
       {
         field: "time",
         headerName: "Time",
@@ -191,14 +232,13 @@ const TransactionsList = ({ type, date, search }: TransactionsListProps) => {
         field: "sum",
         headerName: "Sum",
         minWidth: 55,
-        maxWidth: 150,
-        flex: 0.5,
-        enableCellChangeFlash: true,
+        // maxWidth: 150,
+        flex: 1,
         cellRenderer: "agAnimateShowChangeCellRenderer",
 
-        // valueFormatter: (params: ValueFormatterParams) => {
-        //   return params.value != null ? `${params.value} UAH` : "";
-        // },
+        valueFormatter: (params: ValueFormatterParams) => {
+          return params.value != null ? `${params.value} UAH` : "";
+        },
       },
       {
         headerName: "Action",
@@ -269,51 +309,61 @@ const TransactionsList = ({ type, date, search }: TransactionsListProps) => {
     wrapperBorderRadius: 0,
   });
 
-  // if (isLoading) {
-  //   return (
-  //     <div
-  //       className={css.gridWrapper}
-  //       style={{
-  //         display: "flex",
-  //         justifyContent: "center",
-  //         alignItems: "center",
-  //       }}
-  //     >
-  //       <LoadingOverlay />
-  //     </div>
-  //   );
-  // }
+  const { data, isPending, isFetching } = useQuery({
+    queryKey: ["transactions", type, date, search],
+    queryFn: async () => {
+      await new Promise((resolve) => setTimeout(resolve, 2000)); // watch my loader
+      return getTransactionByType({ type, date, search });
+    },
+    refetchOnMount: false,
+  });
+
+  const noRowsOverlayComponent = NoTransactionsOverlay;
 
   return (
     <div className={css.gridWrapper}>
-      <AgGridReact
-        className={css.gridContainer}
-        rowData={data}
-        columnDefs={columnDefs}
-        defaultColDef={defaultColDef}
-        theme={myTheme}
-        context={gridContext}
-        getRowId={(params) => params.data._id}
-        suppressCellFocus={true}
-        autoSizeStrategy={autoSizeStrategy}
-        suppressHorizontalScroll={false} // just in case
-        suppressMovableColumns={true}
-        noRowsOverlayComponent={NoTransactionsOverlay}
-        loadingOverlayComponentParams={{}}
-        // suppressNoRowsOverlay={isLoading}
-        // disabled the automatic display of "No Rows" so that it doesn't conflict with the loader
+      {(isPending || isFetching) && <LoadingOverlay />}
+      <div
+        style={{
+          visibility: isPending || isFetching ? "hidden" : "visible",
+          height: "100%",
+          width: "100%",
+        }}
+      >
+        <AgGridReact
+          className={css.gridContainer}
+          rowData={data}
+          // rowData={data || []}
+          columnDefs={columnDefs}
+          defaultColDef={defaultColDef}
+          theme={myTheme}
+          context={gridContext}
+          getRowId={(params) => params.data._id}
+          suppressCellFocus={true}
+          autoSizeStrategy={autoSizeStrategy}
+          suppressHorizontalScroll={false} // just in case
+          suppressMovableColumns={true}
+          loadingOverlayComponent={null}
+          noRowsOverlayComponent={noRowsOverlayComponent}
+          loadingOverlayComponentParams={{}}
+          onGridReady={(params) => {
+            if (!data || data.length === 0) {
+              params.api.showNoRowsOverlay();
+            }
+          }}
 
-        // ensureDomOrder={true}
-        // debounceVerticalScrollbar={true} // smoother scrolling on slow machines
-      />
-      {isModalOpen && (
-        <Modal onClose={closeModal}>
-          <TransactionForm
-            transaction={selectedTransaction}
-            closeTransactionModal={closeModal}
-          />
-        </Modal>
-      )}
+          // ensureDomOrder={true}
+          // debounceVerticalScrollbar={true} // smoother scrolling on slow machines
+        />
+        {isModalOpen && (
+          <Modal onClose={closeModal}>
+            <TransactionForm
+              transaction={selectedTransaction}
+              closeTransactionModal={closeModal}
+            />
+          </Modal>
+        )}
+      </div>
     </div>
   );
 };

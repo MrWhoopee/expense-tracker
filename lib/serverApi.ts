@@ -72,7 +72,7 @@ export async function getStatisticsServer(): Promise<Statistic[]> {
 //   return data;
 // }
 
-interface GetTransactionByTypeParams {
+export interface GetTransactionByTypeParams {
   type: string;
   date?: string;
   search?: string;

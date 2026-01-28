@@ -20,10 +20,14 @@
   }
 }
 
-/* .gridContainer.isLoading :global(.ag-header-cell-text) {
-  animation: none;
-  -webkit-text-fill-color: #6f6f70;
-} */
+.ag-theme-quartz {
+  --ag-cell-data-changed-color: var(--color-contrast);
+}
+
+.ag-cell-data-changed {
+  background-color: var(--ag-cell-data-changed-color) !important;
+  transition: background-color 1s ease-in-out;
+}
 
 .gridWrapper {
   width: 100%;
@@ -31,10 +35,19 @@
   padding: 0 0 30px 0;
   border-radius: 0;
   z-index: 9;
+  position: relative;
 }
 
 .gridContainer :global(.ag-header-cell) {
   padding: 0 0 0 8px;
+}
+
+.gridContainer {
+  width: 100%;
+}
+
+.gridContainer :global(.ag-row) {
+  width: 100%;
 }
 
 .actionsColumn {
