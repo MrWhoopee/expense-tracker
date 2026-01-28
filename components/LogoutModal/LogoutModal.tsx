@@ -1,5 +1,6 @@
 "use client";
 
+import MainModal from "../MainModal/MainModal";
 import css from "./LogoutModal.module.css";
 
 interface Props {
@@ -9,11 +10,8 @@ interface Props {
 
 export default function LogoutModal({ onClose, onConfirm }: Props) {
   return (
-    <div
-      className={css.backdrop}
-      onClick={(e) => e.target === e.currentTarget && onClose()}
-    >
-      <div className={css.modal}>
+    <MainModal onClose={onClose}>
+      <div className={css.modalContent}>
         <button className={css.closeBtn} onClick={onClose}>
           <svg width="20" height="20">
             <use href="/img/sprite.svg#close-btn"></use>
@@ -29,6 +27,14 @@ export default function LogoutModal({ onClose, onConfirm }: Props) {
           </button>
         </div>
       </div>
-    </div>
+      {/* <div
+        className={css.backdrop}
+        onClick={(e) => e.target === e.currentTarget && onClose()}
+      > */}
+      {/* <div className={css.modal}> */}
+
+      {/* </div> */}
+      {/* // </div> */}
+    </MainModal>
   );
 }

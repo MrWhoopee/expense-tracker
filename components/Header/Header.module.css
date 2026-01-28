@@ -46,7 +46,17 @@
 }
 
 .headerContainer.isGuest {
+  display: flex;
   justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 100%;
+}
+
+.isGuest .logoWrapper {
+  flex: none;
+  justify-content: center;
+  width: auto;
 }
 
 .logoWrapper {
