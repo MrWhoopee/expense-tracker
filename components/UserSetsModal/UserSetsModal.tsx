@@ -69,7 +69,7 @@ export default function UserSetsModal({ onClose }: Props) {
       }
     } catch (error) {
       toast.error("Failed to upload photo", {
-        position: "top-right",
+        position: "bottom-right",
       });
     }
   };
@@ -115,17 +115,17 @@ export default function UserSetsModal({ onClose }: Props) {
       // queryClient.invalidateQueries({ queryKey: ["user-info"] });
       // alert("Profile updated successfully!");
       toast.success("Profile updated successfully!", {
-        position: "top-right",
+        position: "bottom-right",
       });
       onClose();
     } catch (error: unknown) {
       if (error instanceof Error) {
         toast.error(`Error: ${error.message}`, {
-          position: "top-right",
+          position: "bottom-right",
         });
       } else {
         toast.error("Unknown error", {
-          position: "top-right",
+          position: "bottom-right",
         });
       }
     } finally {
@@ -204,7 +204,7 @@ export default function UserSetsModal({ onClose }: Props) {
             padding: "16px",
           },
           duration: 6000,
-          position: "top-center",
+          position: "bottom-right",
         },
       );
     } else {

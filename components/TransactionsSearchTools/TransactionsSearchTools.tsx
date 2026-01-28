@@ -58,7 +58,8 @@ const TransactionsSearchTools = () => {
               minLength={3}
               maxLength={24}
               type="text"
-              placeholder="Search for anything..."
+              autoComplete="off"
+              placeholder="Search by comment..."
               className={css.searchInput}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 const value = e.target.value;
