@@ -55,11 +55,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
             success: {
               duration: 3000,
               iconTheme: {
-                primary: "#0EF387",
+                primary: "#0ebb69",
                 secondary: "#fff",
               },
               style: {
-                border: "1px solid #0EF387",
+                border: "1px solid #0ebb69",
               },
             },
             error: {

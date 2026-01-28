@@ -46,7 +46,6 @@
 }
 
 /* date picker */
-
 .arrowRight {
   opacity: 0.5;
   right: -6px;
@@ -84,9 +83,6 @@
   border-radius: 12px;
   border: none;
   background-color: var(--color-contrast);
-  /* padding: 14px; */
-  /* width: 222px;
-  height: 236px; */
 }
 
 .react-datepicker-popper {
