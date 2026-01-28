@@ -22,8 +22,8 @@ const validationSchema = Yup.object().shape({
     .min(2, "Name must contain at least 2 characters")
     .max(32, "Name must contain no more than 32 characters")
     .matches(
-      /^[a-zA-Z\s]+$/,
-      "Name can only contain latin letters and spaces (no dots or special characters)",
+      /^[a-zA-Z0-9\s!@#$%^&*()_+={}\[\]:;"'<>,.?/-]+$/,
+      "Name must use Latin letters and can include numbers or special characters (Cyrillic is not allowed)",
     )
     .required("Name is required"),
   email: Yup.string()
