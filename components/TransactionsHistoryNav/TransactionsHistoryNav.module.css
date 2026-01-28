@@ -1,40 +1,46 @@
 .transactionsNav {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
 
-    @media screen and (min-width: 1440px) {
-        flex-direction: row;
-    }
+  @media screen and (min-width: 1440px) {
+    flex-direction: row;
+  }
 }
 
 .transactionsLink {
-    border-radius: 30px;
-    padding: 12px 21px;
-    border: 1px solid rgba(12, 13, 13, 0.4);
-    color: var(--bg-page);
-    transition: border-color var(--transition), transform var(--transition);
-    background-color: transparent;
+  border-radius: 30px;
+  padding: 12px 21px;
+  border: 1px solid rgba(12, 13, 13, 0.4);
+  color: var(--bg-page);
+  transition:
+    border-color var(--transition),
+    transform var(--transition);
+  background-color: transparent;
+  outline: none;
 
-    @media only screen and (min-width: 1440px) {
-        color: var(--color-titles);
-        border: 1px solid var(--color-titles);
-    }
+  @media only screen and (min-width: 1440px) {
+    color: var(--color-titles);
+    border: 1px solid var(--color-titles);
+  }
 
-    &:hover {
-        border-color: var(--color-contrast);
-    }
+  &:hover,
+  &:focus {
+    background-color: #0c0d0d;
+    border-color: var(--color-contrast);
+    color: var(--color-titles);
+  }
 }
 
 .active {
-    background-color: var(--bg-page);
-    border: 1px solid var(--bg-page);
-    color: var(--color-titles);
+  background-color: var(--bg-page);
+  border: 1px solid var(--bg-page);
+  color: var(--color-titles);
 
-    @media only screen and (min-width: 1440px) {
-        background-color: var(--color-contrast);
-        border-color: var(--color-contrast);
-        color: var(--bg-page);
-    }
+  @media only screen and (min-width: 1440px) {
+    background-color: var(--color-contrast);
+    border-color: var(--color-contrast);
+    color: var(--bg-page);
+  }
 }
