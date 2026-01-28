@@ -266,7 +266,6 @@ const TransactionsList = ({ type, date, search }: TransactionsListProps) => {
     () => ({
       sortable: false,
       filter: false,
-      // resizable: false,
       enableCellChangeFlash: true,
     }),
     [],
