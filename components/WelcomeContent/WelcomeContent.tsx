@@ -12,7 +12,7 @@ export default function WelcomeContent() {
         <div className={css["text-wrapper"]}>
           <h1 className={css["main-title"]}>
             Manage Your{" "}
-            <span className={css["main-title-accent"]}>Finances </span>
+            <span className={css["main-title-accent"]}>Finances</span>{" "}
             Masterfully!
           </h1>
           <p className={css.description}>
