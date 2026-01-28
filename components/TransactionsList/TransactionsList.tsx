@@ -22,10 +22,8 @@ import Modal from "../MainModal/MainModal";
 import TransactionForm from "../TransactionForm/TransactionForm";
 import { useUserStore } from "@/store/useUserStore";
 
-// Register all Community features
 ModuleRegistry.registerModules([AllCommunityModule]);
 
-// buttons renderer
 const ActionsRenderer = (props: ICellRendererParams<Transaction>) => {
   const onEdit = () => {
     if (props.data) {
@@ -54,13 +52,12 @@ const ActionsRenderer = (props: ICellRendererParams<Transaction>) => {
   );
 };
 
-// not found for ag grid
 const NoTransactionsOverlay = () => (
   <div
     style={{
       textAlign: "center",
       fontSize: "18px",
-      color: "#fafafa",
+      color: "var(--color-titles)",
       zIndex: "999",
     }}
   >
@@ -68,12 +65,11 @@ const NoTransactionsOverlay = () => (
   </div>
 );
 
-// loader for ag grid
 export const LoadingOverlay = () => (
   <div
     style={{
       fontSize: "18px",
-      color: "#fafafa",
+      color: "var(--color-titles)",
       zIndex: "999",
       position: "absolute",
       top: 0,
@@ -91,6 +87,7 @@ export const LoadingOverlay = () => (
       style={{
         fontSize: "50px",
         marginBottom: "-5px",
+        color: "var(--color-contrast)",
       }}
     >
       <RiMoneyDollarCircleLine />
@@ -189,8 +186,8 @@ const TransactionsList = ({ type, date, search }: TransactionsListProps) => {
         headerName: "Date",
         minWidth: 55,
         flex: 0.5,
-        sort: "desc", // new data first
-        sortIndex: 0, // priority №1
+        sort: "desc",
+        sortIndex: 0,
 
         valueFormatter: (params) => {
           if (!params.value) return "";
@@ -222,8 +219,8 @@ const TransactionsList = ({ type, date, search }: TransactionsListProps) => {
         minWidth: 55,
         maxWidth: 150,
         flex: 0.5,
-        sort: "desc", // new data first
-        sortIndex: 1, // priority №2
+        sort: "desc",
+        sortIndex: 1,
       },
       {
         field: "sum",
@@ -251,7 +248,6 @@ const TransactionsList = ({ type, date, search }: TransactionsListProps) => {
         flex: isMobile || isTablet ? 0.75 : 2,
         enableCellChangeFlash: false,
 
-        // suppress this keyboard event in the ag grid cell
         suppressKeyboardEvent: (params) => {
           const { event } = params;
           if (event.key === "Tab") return true;
@@ -278,10 +274,10 @@ const TransactionsList = ({ type, date, search }: TransactionsListProps) => {
   }, []);
 
   const myTheme = themeQuartz.withParams({
-    accentColor: "#6F6F70",
-    backgroundColor: "#171719",
+    accentColor: "var(--color-contrast)",
+    backgroundColor: "var(--bg-component)",
     borderRadius: 0,
-    browserColorScheme: "dark",
+    browserColorScheme: "inherit",
     cellHorizontalPaddingScale: 1,
     chromeBackgroundColor: {
       ref: "backgroundColor",
@@ -291,8 +287,8 @@ const TransactionsList = ({ type, date, search }: TransactionsListProps) => {
       googleFont: "Inter, sans-serif",
     },
     fontSize: isMobile ? 14 : 20,
-    foregroundColor: "#FAFAFA",
-    headerBackgroundColor: "#121214",
+    foregroundColor: "var(--color-titles)",
+    headerBackgroundColor: "var(--bg-component)",
     headerFontFamily: {
       googleFont: "Inter, sans-serif",
     },
@@ -300,11 +296,11 @@ const TransactionsList = ({ type, date, search }: TransactionsListProps) => {
     headerFontWeight: 400,
     headerHeight: isMobile ? 53 : 60,
     headerRowBorder: false,
-    headerTextColor: "#6F6F70",
+    headerTextColor: "var(--color-paragraph)",
     rowBorder: false,
     rowHeight: isMobile ? 46 : 72,
     spacing: 20,
-    rowHoverColor: "#4343453D",
+    rowHoverColor: "var(--chart-color-6)",
     rowVerticalPaddingScale: 1.2,
     sidePanelBorder: false,
     wrapperBorder: false,
@@ -314,7 +310,7 @@ const TransactionsList = ({ type, date, search }: TransactionsListProps) => {
   const { data, isPending, isFetching } = useQuery({
     queryKey: ["transactions", type, date, search],
     queryFn: async () => {
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // watch my loader
+      await new Promise((resolve) => setTimeout(resolve, 1000));
       return getTransactionByType({ type, date, search });
     },
     refetchOnMount: false,
@@ -342,13 +338,12 @@ const TransactionsList = ({ type, date, search }: TransactionsListProps) => {
           getRowId={(params) => params.data._id}
           suppressCellFocus={true}
           autoSizeStrategy={autoSizeStrategy}
-          suppressHorizontalScroll={true} // just in case
+          suppressHorizontalScroll={true}
           suppressMovableColumns={true}
           loadingOverlayComponent={null}
           noRowsOverlayComponent={noRowsOverlayComponent}
           loadingOverlayComponentParams={{}}
           onGridReady={(params) => {
-            // params.api.sizeColumnsToFit();
             if (!data || data.length === 0) {
               params.api.showNoRowsOverlay();
             }

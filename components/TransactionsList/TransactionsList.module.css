@@ -1,12 +1,12 @@
 .gridContainer :global(.ag-header-cell-text) {
   background: linear-gradient(
     90deg,
-    #0ef387,
-    #43f1a0,
-    #6f6f70,
-    #6f6f70,
-    #6f6f70,
-    #43f1a0
+    var(--color-contrast),
+    var(--chart-color-2),
+    var(--color-paragraph),
+    var(--color-paragraph),
+    var(--color-paragraph),
+    var(--chart-color-2)
   );
   animation: animatedTextGradient 2.5s linear infinite;
   background-clip: text;
@@ -18,6 +18,14 @@
   to {
     background-position: -200% center;
   }
+}
+
+.gridContainer :global(.ag-header) {
+  background: rgba(0, 0, 0, 0.2) !important;
+}
+
+:global([data-theme="light"]) .gridContainer :global(.ag-header) {
+  background: rgba(0, 0, 0, 0.05) !important;
 }
 
 .ag-theme-quartz {
@@ -47,8 +55,11 @@
   min-height: 360px;
 }
 
+.gridContainer :global(.ag-center-cols-viewport),
+.gridContainer :global(.ag-center-cols-container),
 .gridContainer :global(.ag-row) {
-  width: 100%;
+  width: 100% !important;
+  min-width: 100% !important;
 }
 
 .actionsColumn {
@@ -61,7 +72,7 @@
 
 .gridContainer :global(:where(.ag-ltr) .ag-header-cell-resize) {
   &:after {
-    background-color: #6f6f70;
+    background-color: var(--color-paragraph);
   }
 }
 
@@ -73,10 +84,6 @@
   font-weight: 300;
   padding-left: 8px;
   padding-right: 0;
-}
-
-.gridContainer :global(.ag-center-cols-container) {
-  width: 100%;
 }
 
 .gridContainer :global(.ag-header-cell-label) {
@@ -95,29 +102,24 @@
   }
 }
 
-/* Modern Browsers */
 .gridContainer {
   scrollbar-width: 8px;
-  scrollbar-color: #69696b #434345;
+  scrollbar-color: var(--color-paragraph) var(--chart-color-6);
 }
 
-/* Older Browsers */
 .gridContainer::-webkit-scrollbar {
   width: 8px;
 }
 .gridContainer::-webkit-scrollbar-track {
-  background: #434345;
+  background: var(--chart-color-6);
 }
 .gridContainer::-webkit-scrollbar-thumb {
-  background: #69696b;
+  background: var(--color-paragraph);
 }
-
-/* buttons */
 
 .actionsCell {
   display: flex;
   align-items: center;
-
   gap: 8px;
   height: 100%;
   margin-left: 1px;
@@ -131,13 +133,10 @@
   border-radius: 40px;
   height: 32px;
   width: 32px;
-
   background: var(--color-contrast);
-
   border: none;
   outline: none;
   cursor: pointer;
-
   transition:
     background var(--transition),
     opacity var(--transition);
@@ -155,7 +154,6 @@
   @media only screen and (min-width: 1440px) {
     padding: 14px 32px;
     width: 119px;
-
     font-family: var(--font-family);
     font-weight: 400;
     font-size: 16px;
@@ -172,13 +170,10 @@
   border-radius: 40px;
   width: 32px;
   height: 32px;
-
   background: var(--bg-page);
-
-  border: none;
+  border: 1px solid var(--color-paragraph);
   outline: none;
   cursor: pointer;
-
   transition:
     border var(--transition),
     opacity var(--transition);
@@ -196,12 +191,11 @@
   @media only screen and (min-width: 1440px) {
     padding: 14px 30px;
     width: 134px;
-
     font-family: var(--font-family);
     font-weight: 400;
     font-size: 16px;
     letter-spacing: -0.02em;
-    color: #fafafa;
+    color: var(--color-titles);
   }
 }
 
