@@ -7,12 +7,15 @@
 .container {
   padding: 66px 20px 80px 20px;
   margin: 0 auto;
+  max-width: 375px;
 
   @media (min-width: 768px) {
+    max-width: 768px;
     padding: 60px 32px 32px;
   }
 
   @media (min-width: 1440px) {
+    max-width: 1440px;
     padding: 60px 100px 50px;
   }
 }
@@ -55,6 +58,11 @@
   }
 }
 
+.totalAmount {
+  @media (min-width: 1440px) {
+    width: 630px;
+  }
+}
 .description {
   font-size: 14px;
   letter-spacing: -0.02em;
