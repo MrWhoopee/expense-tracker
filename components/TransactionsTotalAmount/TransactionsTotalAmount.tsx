@@ -65,7 +65,7 @@ export default function TransactionsTotalAmount() {
           <p className={css.amount}>
             {/* {`$${expenses.toLocaleString("en-US", { minimumFractionDigits: 3 })}`}
              */}
-            {`${symbol}${formatAmount(incomes)}`}
+            {`${symbol}${formatAmount(expenses)}`}
           </p>
         </div>
       </div>

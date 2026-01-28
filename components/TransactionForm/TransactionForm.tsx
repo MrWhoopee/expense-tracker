@@ -14,19 +14,13 @@ import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import CategoriesModal from "../CategoriesModal/CategoriesModal";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useUserStore } from "@/store/useUserStore";
-import {
-  createTransaction,
-  getCategories,
-  updateTransaction,
-} from "@/lib/clientApi";
+import { createTransaction, updateTransaction } from "@/lib/clientApi";
 import { useTransactionStore } from "@/store/useTransactionStore";
 import { getYear, getMonth } from "date-fns";
 import toast from "react-hot-toast";
-import axios, { AxiosError, AxiosResponse } from "axios";
-import { NextResponse } from "next/server";
-import Modal from "../Modal/Modal";
+import axios from "axios";
 const MONTHS = [
   "January",
   "February",
@@ -45,6 +39,11 @@ const MONTHS = [
 // import { createTransaction2, getUser } from "@/lib/clientApi";
 
 type TransactionType = "Expense" | "Income" | string;
+
+type PopperModifier = {
+  name: string;
+  options?: { offset?: [number, number] };
+};
 
 export interface FormValues {
   _id?: string | null;
@@ -135,6 +134,11 @@ const TransactionForm = ({ transaction, closeTransactionModal }: Props) => {
   const clearDraftCategoryId = useTransactionStore(
     (s) => s.clearDraftCategoryId,
   );
+
+  const offsetModifier: PopperModifier = {
+    name: "offset",
+    options: { offset: [0, 4] },
+  };
 
   const isEditMode = !!transaction;
 
@@ -452,6 +456,8 @@ const TransactionForm = ({ transaction, closeTransactionModal }: Props) => {
                             id="date"
                             aria-label="Transaction date"
                             aria-describedby="date-error"
+                            // popperModifiers={[offset(4)]}
+                            showPopperArrow={false}
                             selected={field.value || null}
                             onChange={(date: Date | null) => {
                               form.setFieldValue(field.name, date);
@@ -546,6 +552,8 @@ const TransactionForm = ({ transaction, closeTransactionModal }: Props) => {
                             id="time"
                             aria-label="Transaction date"
                             aria-describedby="time-error"
+                            // popperModifiers={[offset(4)]}
+                            showPopperArrow={false}
                             selected={field.value || null}
                             onChange={(date: Date | null) => {
                               form.setFieldValue(field.name, date);
