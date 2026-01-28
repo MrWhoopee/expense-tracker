@@ -60,7 +60,7 @@
   padding: 20px;
   box-sizing: border-box;
 
-  background-color: var(--color-titles);
+  background-color: #dfe4e1;
 
   animation: moveX var(--duration) linear infinite alternate;
   animation-play-state: running;
