@@ -23,6 +23,10 @@
     flex-direction: column;
 }
 
+.panelItem {
+    width: 100%;
+}
+
 .panelBtn {
     display: flex;
     align-items: center;
@@ -42,14 +46,14 @@
     padding: 7px 16px 8px;
     border-radius: 8px;
     transition: all var(--transition);
+    width: 100%;
 
     &:hover {
         color: var(--color-titles);
-        background: rgba(250, 250, 250, 0.05);
     }
 
     &:hover .iconUser {
-        color: var(--color-contrast) !important;
+        color: var(--color-contrast);
         transform: scale(1.1);
     }
 }
