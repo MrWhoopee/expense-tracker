@@ -74,13 +74,10 @@ export default function UserPanel({ onClose }: Props) {
       setUser(null);
       setIsLogoutOpen(false);
       onClose();
-      // await logout();
-      // clearIsAuthenticated();
       router.push("/");
     } catch (error) {
       console.log("logout failed:", error);
       setUser(null);
-      // clearIsAuthenticated();
       router.push("/");
     }
   };
