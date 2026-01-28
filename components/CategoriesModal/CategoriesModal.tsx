@@ -263,7 +263,7 @@ const CategoriesModal = ({
             className={css.closeButton}
             onClick={closeModal}
             aria-label="Close modal"
-            ref={firstFocusRef} // перееервіііііііііііііііііііііііііірииииииииииитиииииииии
+            ref={firstFocusRef}
           >
             <svg className={css["icon-close"]}>
               <use href="/img/sprite.svg#icon-x"></use>
