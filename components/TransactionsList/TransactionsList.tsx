@@ -312,7 +312,7 @@ const TransactionsList = ({ type, date, search }: TransactionsListProps) => {
   const { data, isPending, isFetching } = useQuery({
     queryKey: ["transactions", type, date, search],
     queryFn: async () => {
-      await new Promise((resolve) => setTimeout(resolve, 2000)); // watch my loader
+      await new Promise((resolve) => setTimeout(resolve, 1000)); // watch my loader
       return getTransactionByType({ type, date, search });
     },
     refetchOnMount: false,
