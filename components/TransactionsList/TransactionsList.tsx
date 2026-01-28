@@ -196,6 +196,8 @@ const TransactionsList = ({ type, date, search }: TransactionsListProps) => {
         minWidth: 55,
         // maxWidth: 150,
         flex: 0.5,
+        sort: "desc", // new data first
+        sortIndex: 0, // priority №1
 
         valueFormatter: (params) => {
           if (!params.value) return "";
@@ -227,6 +229,8 @@ const TransactionsList = ({ type, date, search }: TransactionsListProps) => {
         minWidth: 55,
         maxWidth: 150,
         flex: 0.5,
+        sort: "desc", // new data first
+        sortIndex: 1, // priority №2
       },
       {
         field: "sum",
