@@ -1,10 +1,8 @@
 import TransactionsList from "@/components/TransactionsList/TransactionsList";
 import TransactionsSearchTools from "@/components/TransactionsSearchTools/TransactionsSearchTools";
-import { Suspense } from "react";
-import { getTransactionByType } from "@/lib/serverApi";
-import Loader from "@/components/Loader/Loader";
-import TransactionsTotalAmount from "@/components/TransactionsTotalAmount/TransactionsTotalAmount";
 import css from "@/app/transactions/history/[type]/page.module.css";
+import { getTransactionByType } from "@/lib/serverApi";
+import TransactionsTotalAmount from "@/components/TransactionsTotalAmount/TransactionsTotalAmount";
 import {
   dehydrate,
   HydrationBoundary,
@@ -13,7 +11,7 @@ import {
 
 interface HistoryPageProps {
   params: Promise<{ type: string }>;
-  searchParams: Promise<{ date?: string }>;
+  searchParams: Promise<{ date?: string; search?: string }>;
 }
 
 export default async function TransactionsHistoryPage({
@@ -21,15 +19,18 @@ export default async function TransactionsHistoryPage({
   searchParams,
 }: HistoryPageProps) {
   const { type } = await params;
-  const { date } = await searchParams;
+  const { date, search } = await searchParams;
 
   const transactionType = type === "incomes" ? "incomes" : "expenses";
 
   const queryClient = new QueryClient();
 
+  const queryKey = ["transactions", transactionType, date, search];
+
   await queryClient.prefetchQuery({
-    queryKey: ["transactions", transactionType],
-    queryFn: () => getTransactionByType(transactionType),
+    queryKey,
+    queryFn: () =>
+      getTransactionByType({ type: transactionType, date, search }),
   });
 
   return (
@@ -55,7 +56,11 @@ export default async function TransactionsHistoryPage({
         <TransactionsSearchTools />
 
         <HydrationBoundary state={dehydrate(queryClient)}>
-          <TransactionsList type={transactionType} />
+          <TransactionsList
+            type={transactionType}
+            date={date}
+            search={search}
+          />
         </HydrationBoundary>
       </div>
     </main>
