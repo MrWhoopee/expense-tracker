@@ -7,8 +7,9 @@ import { PatternFormat } from "react-number-format";
 import "react-datepicker/dist/react-datepicker.css";
 import toast from "react-hot-toast";
 import { format, isValid, parse, isAfter } from "date-fns";
-import { offset } from "@floating-ui/dom";
 import css from "./CustomDatePicker.module.css";
+// import { offset } from "@floating-ui/dom";
+// import { offset } from "@popperjs/core";
 
 interface CustomDatePickerProps {
   values: Date | null;
@@ -78,7 +79,24 @@ const CustomDatePicker = ({
             placeholder="dd/mm/yyyy"
           />
         }
-        popperModifiers={[offset(4)]}
+        // popperModifiers={[offset(4)]}
+        // popperModifiers={[
+        //   {
+        //     name: "offset",
+        //     options: {
+        //       offset: [0, 4], // 0 - по центру, 4 - відступ зверху/знизу
+        //     },
+        //   },
+        // ]}
+        // popperModifiers={[
+        //   {
+        //     name: "offset",
+        //     options: {
+        //       offset: [0, 10],
+        //     },
+        //     fn: (state) => state,
+        //   },
+        // ]}
         placeholderText="dd/mm/yyyy"
         dateFormat="dd/MM/yyyy"
         showPopperArrow={false}

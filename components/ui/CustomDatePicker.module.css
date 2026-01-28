@@ -89,6 +89,10 @@
   height: 236px; */
 }
 
+.react-datepicker-popper {
+  padding-top: 4px !important;
+}
+
 .datePickerWrapper :global(.react-datepicker__day--outside-month) {
   color: rgba(12, 13, 13, 0.2) !important;
   pointer-events: none;
