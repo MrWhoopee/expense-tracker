@@ -3,10 +3,10 @@
 import { useEffect, useRef, useState } from "react";
 import { changeUser, updatePhoto, deletePhoto } from "@/lib/clientApi";
 import { useUserStore } from "@/store/useUserStore";
-import { useQueryClient } from "@tanstack/react-query";
 import css from "./UserSetsModal.module.css";
 import MainModal from "../MainModal/MainModal";
 import toast from "react-hot-toast";
+import Image from "next/image";
 
 interface Props {
   onClose: () => void;
@@ -14,7 +14,6 @@ interface Props {
 
 export default function UserSetsModal({ onClose }: Props) {
   const { user, setUser } = useUserStore();
-  const queryClient = useQueryClient();
   const [name, setName] = useState(user?.name || "");
   const [currency, setCurrency] = useState(
     user?.currency?.toUpperCase() || "USD",
@@ -67,7 +66,7 @@ export default function UserSetsModal({ onClose }: Props) {
           currency: currency.toLowerCase(),
         });
       }
-    } catch (error) {
+    } catch {
       toast.error("Failed to upload photo", {
         position: "bottom-right",
         id: "error-upload",
@@ -113,8 +112,7 @@ export default function UserSetsModal({ onClose }: Props) {
           name: updateData.name,
           currency: updateData.currency,
         });
-      // queryClient.invalidateQueries({ queryKey: ["user-info"] });
-      // alert("Profile updated successfully!");
+
       toast.success("Profile updated successfully!", {
         position: "bottom-right",
         id: "profile-success",
@@ -138,16 +136,6 @@ export default function UserSetsModal({ onClose }: Props) {
   };
 
   const handleBeforeClose = () => {
-    // if (e.target === e.currentTarget) {
-    //   if (isDirty) {
-    //     const confirmClose = window.confirm(
-    //       "You have unsaved changes. Do you really want to leave?",
-    //     );
-    //     if (!confirmClose) return;
-    //   }
-    //   onClose();
-    // }
-
     if (isDirty) {
       toast(
         (t) => (
@@ -230,7 +218,13 @@ export default function UserSetsModal({ onClose }: Props) {
         <div className={css.avatarSection}>
           <div className={css.avatarCircle}>
             {avatarPreview ? (
-              <img src={avatarPreview} alt="User" className={css.avatarImg} />
+              <Image
+                src={avatarPreview}
+                width="40"
+                height="40"
+                alt="User"
+                className={css.avatarImg}
+              />
             ) : (
               <svg width="40" height="40" className={css.userIcon}>
                 <use href="/img/sprite.svg#user-bold"></use>

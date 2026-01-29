@@ -36,14 +36,7 @@ const MONTHS = [
   "December",
 ] as const;
 
-// import { createTransaction2, getUser } from "@/lib/clientApi";
-
 type TransactionType = "Expense" | "Income" | string;
-
-type PopperModifier = {
-  name: string;
-  options?: { offset?: [number, number] };
-};
 
 export interface FormValues {
   _id?: string | null;
@@ -78,10 +71,6 @@ type UpdateTransactionVars = {
   body: UpdateTransaction;
 };
 
-interface TransactionFormProps {
-  transactionData?: FormValues;
-}
-
 export interface Transaction {
   _id: string;
   type: string;
@@ -94,21 +83,6 @@ export interface Transaction {
   sum: number;
   comment: string;
 }
-
-const tempTransactionData = (): Transaction => {
-  return {
-    _id: "6977ab98f65c9e355471078e",
-    category: {
-      _id: "6977a2a0f65c9e35547103e3",
-      categoryName: "666",
-    },
-    comment: "7772",
-    date: "2026-01-26",
-    sum: 5656,
-    time: "19:58",
-    type: "expenses",
-  };
-};
 
 interface Props {
   transaction?: Transaction | null;
@@ -135,17 +109,9 @@ const TransactionForm = ({ transaction, closeTransactionModal }: Props) => {
     (s) => s.clearDraftCategoryId,
   );
 
-  const offsetModifier: PopperModifier = {
-    name: "offset",
-    options: { offset: [0, 4] },
-  };
-
   const isEditMode = !!transaction;
 
   const disableExpense = Boolean(transaction?.type === "incomes");
-
-  // const isEditMode = false;
-  // const isEditMode = true;
 
   const setFormikForm = (transactionData: FormValues) => {
     if (formikRef.current) {
@@ -158,6 +124,30 @@ const TransactionForm = ({ transaction, closeTransactionModal }: Props) => {
     }
   };
 
+  // Додай цей ефект у TransactionForm
+  useEffect(() => {
+    if (!isEditMode) {
+      // Якщо ми НЕ в режимі редагування (немає об'єкта transaction)
+      // Очищаємо стор, щоб форма була порожньою
+      clearTransactionDraft();
+      clearDraftCategoryId();
+
+      // Також примусово очищаємо поля Formik, якщо він вже примонтований
+      if (formikRef.current) {
+        formikRef.current.resetForm({
+          values: {
+            type: "Expense",
+            date: new Date(),
+            time: new Date(),
+            category: "",
+            sum: "",
+            comment: "",
+          },
+        });
+      }
+    }
+  }, [isEditMode, clearTransactionDraft, clearDraftCategoryId]);
+
   useLayoutEffect(() => {
     let transactionData: FormValues = {
       _id: null,
@@ -169,7 +159,6 @@ const TransactionForm = ({ transaction, closeTransactionModal }: Props) => {
       comment: "",
     };
 
-    // transaction = tempTransactionData();
     if (transaction) {
       transactionData = {
         _id: transaction._id,
@@ -349,9 +338,8 @@ const TransactionForm = ({ transaction, closeTransactionModal }: Props) => {
     <div
       className={`${css["transaction-form-wrapper"]} ${isEditMode ? css["transaction-form-wrapper-with-close"] : ""}`}
     >
-      {/* <button onClick={handleModalOpen}>Open Modal</button> */}
-
       <Formik
+        enableReinitialize
         initialValues={transactionDraft}
         onSubmit={handleSubmit}
         validationSchema={FormSchema}
@@ -456,8 +444,8 @@ const TransactionForm = ({ transaction, closeTransactionModal }: Props) => {
                             id="date"
                             aria-label="Transaction date"
                             aria-describedby="date-error"
-                            // popperModifiers={[offset(4)]}
                             showPopperArrow={false}
+                            calendarStartDay={1}
                             selected={field.value || null}
                             onChange={(date: Date | null) => {
                               form.setFieldValue(field.name, date);
@@ -770,12 +758,6 @@ const TransactionForm = ({ transaction, closeTransactionModal }: Props) => {
           </>
         )}
       </Formik>
-      {/* 
-      {
-        openFormModal && <Modal onClose={handleModalClose}>
-          <TransactionForm closeTransactionModal={handleModalClose} />
-        </Modal>
-      } */}
     </div>
   );
 };

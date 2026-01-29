@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import UserPanel from "../UserPanel/UserPanel";
 import { useUserStore } from "@/store/useUserStore";
 import css from "./UserBarBtn.module.css";
+import Image from "next/image";
 
 interface Props {
   onAction?: () => void;
@@ -44,7 +45,13 @@ export default function UserBarBtn({ onAction }: Props) {
       <button className={css.userBar} type="button" onClick={togglePanel}>
         <div className={css.avatarThumb}>
           {userAvatar ? (
-            <img src={userAvatar} alt={username} className={css.avatarImg} />
+            <Image
+              src={userAvatar}
+              width="32"
+              height="32"
+              alt={username}
+              className={css.avatarImg}
+            />
           ) : (
             <span className={css.avatarLetter}>
               {username.charAt(0).toUpperCase()}
