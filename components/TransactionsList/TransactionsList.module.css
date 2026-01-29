@@ -204,3 +204,16 @@
     display: none;
   }
 }
+
+.iconEdit {
+  width: 16px;
+  height: 16px;
+  background-color: var(--bg-page);
+
+  mask-image: url("/edit.svg");
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  -webkit-mask-image: url("/edit.svg");
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+}
