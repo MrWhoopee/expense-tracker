@@ -41,7 +41,7 @@ const ActionsRenderer = (props: ICellRendererParams<Transaction>) => {
   return (
     <div className={css.actionsCell}>
       <button tabIndex={0} onClick={onEdit} className={css.editBtn}>
-        <Image src="/edit.svg" alt="Edit" width={16} height={16} />
+        <span className={css.iconEdit} />
         <span className={css.btnText}>Edit</span>
       </button>
       <button tabIndex={0} onClick={onDelete} className={css.deleteBtn}>
