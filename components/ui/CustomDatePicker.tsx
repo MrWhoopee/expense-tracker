@@ -56,6 +56,7 @@ const CustomDatePicker = ({
           <PatternFormat
             format="##/##/####"
             mask="_"
+            inputMode="numeric" // display a numeric virtual keyboard on mobile devices and tablets
             value={inputText}
             onValueChange={(values) => {
               const { formattedValue, value } = values;
