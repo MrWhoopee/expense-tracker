@@ -124,30 +124,6 @@ const TransactionForm = ({ transaction, closeTransactionModal }: Props) => {
     }
   };
 
-  // Додай цей ефект у TransactionForm
-  useEffect(() => {
-    if (!isEditMode) {
-      // Якщо ми НЕ в режимі редагування (немає об'єкта transaction)
-      // Очищаємо стор, щоб форма була порожньою
-      clearTransactionDraft();
-      clearDraftCategoryId();
-
-      // Також примусово очищаємо поля Formik, якщо він вже примонтований
-      if (formikRef.current) {
-        formikRef.current.resetForm({
-          values: {
-            type: "Expense",
-            date: new Date(),
-            time: new Date(),
-            category: "",
-            sum: "",
-            comment: "",
-          },
-        });
-      }
-    }
-  }, [isEditMode, clearTransactionDraft, clearDraftCategoryId]);
-
   useLayoutEffect(() => {
     let transactionData: FormValues = {
       _id: null,
@@ -188,6 +164,7 @@ const TransactionForm = ({ transaction, closeTransactionModal }: Props) => {
       queryClient.invalidateQueries({ queryKey: ["user-info"] });
 
       clearTransactionDraft();
+      clearDraftCategoryId();
       toast.success("Transaction created successfully");
     },
     onError: (error: unknown) => {
