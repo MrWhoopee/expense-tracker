@@ -16,7 +16,7 @@
 
     grid-template-columns: 1fr 566px;
     column-gap: 44px;
-    align-items: start;
+    align-items: stretch;
   }
 }
 

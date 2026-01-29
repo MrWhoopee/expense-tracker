@@ -5,8 +5,7 @@ import Image from "next/image";
 import DatePicker from "react-datepicker";
 import { PatternFormat } from "react-number-format";
 import "react-datepicker/dist/react-datepicker.css";
-import toast from "react-hot-toast";
-import { format, isValid, parse, isAfter } from "date-fns";
+import { format, isValid, parse } from "date-fns";
 import css from "./CustomDatePicker.module.css";
 import { offset } from "@floating-ui/dom";
 
@@ -35,10 +34,6 @@ const CustomDatePicker = ({
     const parsed = parse(val, "dd/MM/yyyy", new Date());
 
     if (isValid(parsed)) {
-      if (isAfter(parsed, new Date())) {
-        toast.error("Date cannot be in the future", { id: "error" });
-        return;
-      }
       setFieldValue("date", parsed);
       setTimeout(() => submitForm(), 50);
     }
